@@ -22,11 +22,6 @@ public class EquipmentManager : MonoBehaviour
         Debug.Log("after: " +runtimeStats.GetStatInt("health", 10));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void PrintCharacterStat()
     {

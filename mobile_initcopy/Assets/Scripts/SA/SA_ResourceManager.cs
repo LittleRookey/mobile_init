@@ -21,6 +21,7 @@ public struct MainStats
 public struct SubStats
 {
     public float _HP;
+    public int _Defense;
     public float _Mana;
     public float _Attack;
     public float _MagicAttack;
@@ -58,7 +59,7 @@ public class SA_ResourceManager: MonoBehaviour
     public static readonly int MOVESPEED = 1;
     public static readonly float HPREGEN = 0.1f;
     public static readonly float MANAREGEN = 0f;
-
+    public static readonly int DEFENSE = 1;
 
 
     private void Awake()

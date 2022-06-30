@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.fluid.stats": "1.1.0",
+    "com.goodcat.un-inventory": "https://github.com/GoodCatGames/UnInventory.git",
     "com.unity.collab-proxy": "1.15.15",
     "com.unity.feature.2d": "1.0.0",
     "com.unity.ide.rider": "3.0.13",

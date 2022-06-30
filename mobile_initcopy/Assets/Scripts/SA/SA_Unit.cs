@@ -19,7 +19,18 @@ public class SA_Unit : MonoBehaviour
     public SA_Unit _target;
 
     [Header("Stats")]
-    public int _level = 1;
+    private int _level = 1;
+    public int _Level
+    {
+        get
+        {
+            return _level;
+        }
+        set
+        {
+            _level = value; 
+        }
+    }
     private int _exp;
     private int _maxExp;
     public StatsContainer _mStatContainer;
@@ -32,20 +43,24 @@ public class SA_Unit : MonoBehaviour
     public float _unitHP;
     public float _unitMana;
     public float _unitAttack;
+    public int _unitDefense;
+
     public float _unitMagicAttack;
     public float _unitAttackSpeed;
 
     public float _unitAttackRange;
     public float _unitFightRange;
 
-    private float _unitHPRegen;
-    private float _unitManaRegen;
+    public float _unitHPRegen;
+    public float _unitManaRegen;
 
     public float _unitMoveSpeed;
 
     private float _findTimer;
     private float _attackTimer;
     public static float FINDRANGE;
+
+    public int _statPoint = 0;
 
     Vector2 _dirVec;
     Vector2 _tempDist;
@@ -98,7 +113,6 @@ public class SA_Unit : MonoBehaviour
         _mStatContainer = SA_ResourceManager.Instance.GetCharacterStat();
         InitStat();
         _moveList = new List<Vector2>();
-        Talent sword = new SwordsMan(null, "Ä®À» Àß¾¹´Ï´Ù.", 10);
         //talents.Add(sword);
 
         ApplyStats();
@@ -126,6 +140,7 @@ public class SA_Unit : MonoBehaviour
         _unitAttack = SA_ResourceManager.ATTACK;
         _unitMagicAttack = SA_ResourceManager.MAGICATTACK;
         _unitHPRegen = SA_ResourceManager.HPREGEN;
+        _unitDefense = SA_ResourceManager.DEFENSE;
         _unitManaRegen = SA_ResourceManager.MANAREGEN;
         _unitAttackSpeed = SA_ResourceManager.ATTACKSPEED;
         _unitMaxHP = SA_ResourceManager.HP;
@@ -134,6 +149,7 @@ public class SA_Unit : MonoBehaviour
         _unitHP = _unitMaxHP;
     }
 
+    // takes care of stat calculation
     void ApplyStats()
     {
         // TODO reset stat to default
@@ -141,8 +157,17 @@ public class SA_Unit : MonoBehaviour
         AddStrength(_mStats._Strength);
         AddIntelligence(_mStats._Intelligence);
         AddVitality(_mStats._Vitality);
+
     }
 
+    public void LevelUpStats()
+    {
+        _unitAttack += 3;
+        _unitMagicAttack += 3;
+        _unitHPRegen += 0.1f;
+
+
+    }
     public void AddDexterity(int num)
     {
         for (int i = 0; i < num; i++)
@@ -177,6 +202,7 @@ public class SA_Unit : MonoBehaviour
         {
             _unitMaxHP += 25.0f;
             _unitHPRegen += 0.5f;
+            _unitDefense += 2;
         }
     }
 

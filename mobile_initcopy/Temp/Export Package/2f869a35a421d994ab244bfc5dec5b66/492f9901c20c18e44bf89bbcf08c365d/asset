@@ -1,1 +1,0 @@
-﻿// TODO Removed in version 1.2.5
