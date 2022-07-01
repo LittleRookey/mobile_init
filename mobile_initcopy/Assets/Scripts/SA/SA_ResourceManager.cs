@@ -11,6 +11,7 @@ public enum DamageType
     critical
 };
 
+[System.Serializable]
 public struct MainStats
 {
     public int _Strength;
@@ -18,8 +19,10 @@ public struct MainStats
     public int _Intelligence;
     public int _Vitality;
 }
+[System.Serializable]
 public struct SubStats
 {
+    public float _MaxHP;
     public float _HP;
     public int _Defense;
     public float _Mana;
@@ -34,6 +37,8 @@ public struct SubStats
     public float _MoveSpeed;
 
     public float _AttackRange;
+
+    public float _FightRange;
 }
 
 public class SA_ResourceManager: MonoBehaviour 
@@ -47,6 +52,7 @@ public class SA_ResourceManager: MonoBehaviour
     public DamageNumber _swordNormalDamage, _bowNormalDamage, _magicNormalDamage;
 
     public GameObject _hpBar;
+    public GameObject _hpBarWithLevel;
 
     [Header("Stats")]
     public StatsContainer normalCharacterStats;

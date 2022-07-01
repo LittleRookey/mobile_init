@@ -48,7 +48,7 @@ public class SA_Manager : MonoBehaviour
         for (int i = 0; i < tList.Count; i++)
         {
             float tDis = ((Vector2)tList[i].transform.localPosition - (Vector2)unit.transform.localPosition).sqrMagnitude;
-            if (tDis <= unit._unitFightRange * unit._unitAttackRange)
+            if (tDis <= unit._mSubStat._FightRange * unit._mSubStat._AttackRange)
             {
                 if (tList[i].gameObject.activeInHierarchy)
                 {

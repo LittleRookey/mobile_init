@@ -73,7 +73,7 @@ public class SA_UnitSet : MonoBehaviour
         //hplist[0]은 전체 hp
         // hplist[2]는 pivot 
         _UnitSubset._hpList[0].gameObject.SetActive(true);
-        float tValue = _unitST._unitHP * (1/_unitST._unitMaxHP);
+        float tValue = _unitST._mSubStat._HP * (1/_unitST._mSubStat._MaxHP);
         _UnitSubset._hpList[2].transform.localScale = new Vector3(tValue, 1, 1);
 
         _timerForHP = 0;
@@ -187,8 +187,8 @@ public class SA_UnitSet : MonoBehaviour
     void UnitInitSet()
     {
         _unitST.InitStat();
-        _unitST._unitFightRange = 200f;
-        _unitST._unitAttackRange = 1f;
+        _unitST._mSubStat._FightRange = 200f;
+        _unitST._mSubStat._AttackRange = 1f;
 
         //_unitST._unitHP = 100f;
         //_unitST._unitMaxHP = _unitST._unitHP;

@@ -386,6 +386,7 @@
 "Assets/Scripts/AStar/JPS.cs"
 "Assets/Scripts/AStar/JPSMapMaker.cs"
 "Assets/Scripts/AStar/Tile.cs"
+"Assets/Scripts/EquipmentEntity.cs"
 "Assets/Scripts/EquipmentManager.cs"
 "Assets/Scripts/ObjectPool/Core/ObjectPool.cs"
 "Assets/Scripts/ObjectPool/Core/ObjectPoolContainer.cs"
