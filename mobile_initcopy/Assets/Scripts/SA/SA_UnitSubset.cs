@@ -8,17 +8,8 @@ public class SA_UnitSubset : MonoBehaviour
 {
     public List<GameObject> _hpList;
     public SpriteRenderer _hpBar;
+    public SpriteRenderer _levelFrame;
+    public TextMeshProUGUI _levelText;
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

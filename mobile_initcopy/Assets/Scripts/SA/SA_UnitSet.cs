@@ -38,6 +38,7 @@ public class SA_UnitSet : MonoBehaviour
         {
             _UnitSubset._hpList[0].gameObject.SetActive(false);
         }
+        if (SA_ResourceManager.Instance.turnOnHPBarAlways) _UnitSubset._hpList[0].gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -55,7 +56,7 @@ public class SA_UnitSet : MonoBehaviour
         {
             transform.localPosition = new Vector3(transform.position.x, transform.position.y, transform.position.y * 0.1f);
             if (_UnitSubset == null) return;
-            if (_UnitSubset._hpList[0].gameObject.activeInHierarchy)
+            if (!SA_ResourceManager.Instance.turnOnHPBarAlways && _UnitSubset._hpList[0].gameObject.activeInHierarchy)
             {
                 _timerForHP += Time.deltaTime;
                 if (_timerForHP > 1f)
@@ -176,11 +177,12 @@ public class SA_UnitSet : MonoBehaviour
             }
         }
         //Debug.Log(SA_ResourceManager.Instance._hpBar.name);
-        _UnitSubset = Instantiate(SA_ResourceManager.Instance._hpBar).GetComponent<SA_UnitSubset>();
+        _UnitSubset = Instantiate(SA_ResourceManager.Instance._hpBarWithLevel).GetComponent<SA_UnitSubset>();
         _UnitSubset.gameObject.name = "SA_UnitSubset";
         _UnitSubset.transform.SetParent(transform);
         _UnitSubset.transform.localScale = Vector3.one;
         _UnitSubset.transform.localPosition = Vector3.zero;
+        _UnitSubset._levelText.text = "1";
 
     }
 

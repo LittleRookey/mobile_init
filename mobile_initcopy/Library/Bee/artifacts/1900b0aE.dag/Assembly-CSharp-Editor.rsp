@@ -421,6 +421,7 @@
 -r:"D:/Clone/mobile_init/mobile_initcopy/Library/PackageCache/com.unity.visualscripting@1.7.6/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/AllIn1SpriteShaderAssembly.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Coffee.UIParticle.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/com.fluid.adnc-utilities.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/com.fluid.adnc-utilities.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/com.fluid.stats.Editor.ref.dll"

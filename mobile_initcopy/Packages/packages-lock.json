@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.coffee.ui-particle": {
+      "version": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4edcef1bbf49519ed2b841e669adb82fdc6a3d9b"
+    },
     "com.fluid.adnc-utilities": {
       "version": "1.0.0",
       "depth": 1,

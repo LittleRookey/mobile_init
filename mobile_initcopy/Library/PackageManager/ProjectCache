@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637921899660319646
-    m_Hash: 222216121
+      ticks: 637923587004096959
+    m_Hash: 1782531705
   m_LockFileStatus:
     m_FilePath: D:/Clone/mobile_init/mobile_initcopy/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637921899660379692
-    m_Hash: 3372044172
+      ticks: 637923587004191081
+    m_Hash: 1382624855
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -22,6 +22,57 @@ m_LocalPackages:
 m_ProjectPath: D:/Clone/mobile_init/mobile_initcopy/Packages
 m_EditorVersion: 2021.3.1f1 (3b70a0754835)
 m_ResolvedPackages:
+- packageId: com.coffee.ui-particle@https://github.com/mob-sakai/ParticleEffectForUGUI.git
+  testable: 0
+  isDirectDependency: 1
+  version: 4.1.4
+  source: 5
+  resolvedPath: D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.coffee.ui-particle@4edcef1bbf
+  assetPath: Packages/com.coffee.ui-particle
+  name: com.coffee.ui-particle
+  displayName: UI Particle
+  author:
+    name: mob-sakai
+    email: sakai861104@gmail.com
+    url: https://github.com/mob-sakai
+  category: 
+  type: 
+  description: 'This plugin provide a component to render particle effect for uGUI.
+
+    The
+    particle rendering is maskable and sortable, without Camera, RenderTexture or
+    Canvas.'
+  status: 4
+  errors: []
+  versions:
+    all: []
+    compatible: []
+    verified: 
+  dependencies: []
+  resolvedDependencies: []
+  keywords:
+  - ui
+  - particle
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+  hideInEditor: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 0
+  documentationUrl: 
+  hasRepository: 1
+  repository:
+    type: git
+    url: git+https://github.com/mob-sakai/ParticleEffectForUGUI.git
+    revision: 
+    path: 
+  unityLifecycle:
+    version: 
+    nextVersion: 
 - packageId: com.fluid.stats@1.1.0
   testable: 0
   isDirectDependency: 1

@@ -20,18 +20,8 @@ public class SA_Unit : MonoBehaviour
     public SA_Unit _target;
 
     [Header("Stats")]
-    private int _level = 1;
-    public int _Level
-    {
-        get
-        {
-            return _level;
-        }
-        set
-        {
-            _level = value; 
-        }
-    }
+    public int _level = 1;
+
     private int _exp;
     private int _maxExp;
     public StatsContainer _mStatContainer;
@@ -125,7 +115,6 @@ public class SA_Unit : MonoBehaviour
         //_mStatContainer.
         _mStatContainer.SetModifier(OperatorType.Add, "attack", "modifierID", 100);
         //_mstatcontainer.onstatchangesubscribe(attack_id, callback);
-        ApplyStats();
     }
 
     // Update is called once per frame
@@ -151,6 +140,7 @@ public class SA_Unit : MonoBehaviour
         _mSubStat._MagicAttack = SA_ResourceManager.MAGICATTACK;
         _mSubStat._HealthRegen = SA_ResourceManager.HPREGEN;
         _mSubStat._Defense = SA_ResourceManager.DEFENSE;
+        _mSubStat._MagicDefense = SA_ResourceManager.MAGICDEFENSE;
         _mSubStat._ManaRegen = SA_ResourceManager.MANAREGEN;
         _mSubStat._AttackSpeed = SA_ResourceManager.ATTACKSPEED;
         _mSubStat._MaxHP = SA_ResourceManager.HP;
@@ -159,6 +149,7 @@ public class SA_Unit : MonoBehaviour
         _mSubStat._HP = _mSubStat._MaxHP;
         _mSubStat._AttackRange = 1;
         _mSubStat._FightRange = 200;
+        _level = 1;
         //_unitAttack = SA_ResourceManager.ATTACK;
         //_unitMagicAttack = SA_ResourceManager.MAGICATTACK;
         //_unitHPRegen = SA_ResourceManager.HPREGEN;
@@ -172,16 +163,37 @@ public class SA_Unit : MonoBehaviour
     }
 
     // takes care of stat calculation
-    void ApplyStats()
+    public void ApplyStats(int addStr, int addDex, int addInt, int addVit)
     {
         // TODO reset stat to default
-        AddDexterity(_mStats._Dexterity);
-        AddStrength(_mStats._Strength);
-        AddIntelligence(_mStats._Intelligence);
-        AddVitality(_mStats._Vitality);
+        if (addDex != 0) AddDexteritySubstats(addDex);
+        if (addStr != 0) AddStrengthSubstats(addStr);
+        if (addInt != 0) AddIntelligenceSubstats(addInt);
+        if (addVit != 0) AddVitalitySubstats(addVit);
 
     }
 
+    public void AddDex(int val)
+    {
+        _mStats._Dexterity += val;
+        ApplyStats(0, val, 0, 0);
+    }
+
+    public void AddStr(int val)
+    {
+        _mStats._Strength += val;
+        ApplyStats(val, 0, 0, 0);
+    }
+    public void AddInt(int val)
+    {
+        _mStats._Intelligence += val;
+        ApplyStats(0, 0, val, 0);
+    }
+    public void AddVit(int val)
+    {
+        _mStats._Intelligence += val;
+        ApplyStats(0, 0, 0, val);
+    }
     // updates stat from mstatcontainer to the variables here
     void UpdateStats()
     {
@@ -194,46 +206,51 @@ public class SA_Unit : MonoBehaviour
     {
         _mSubStat._MaxHP += 8;
         _mSubStat._Attack += 3;
+        _mSubStat._Defense += 2;
+        _mSubStat._MagicDefense += 1;
         _mSubStat._MagicAttack += 3;
         _mSubStat._HealthRegen += 0.1f;
+        _mSubStat._HealthRegen = StatManager.Round(_mSubStat._HealthRegen, 1);
 
-
+        //_UnitSet._UnitSubset._levelText.text = _level.ToString();
     }
-    public void AddDexterity(int num)
+    public void AddDexteritySubstats(int num)
     {
         for (int i = 0; i < num; i++)
         {
-            _mSubStat._Attack += 1f;
-            _mSubStat._AttackSpeed -= 0.01f;
+            _mSubStat._Attack += StatManager.DEX_ATTACKGROW;
+            _mSubStat._AttackSpeed -= StatManager.DEX_ATTACKSPEEDGROW;
+            _mSubStat._MoveSpeed += StatManager.DEX_MOVESPEEDGROW;
         }
     }
 
-    public void AddStrength(int num)
+    public void AddStrengthSubstats(int num)
     {
         for (int i = 0; i < num; i++)
         {
-            _mSubStat._Attack += 3.0f;
-            _mSubStat._MaxHP += 10.0f;
+            _mSubStat._Attack += StatManager.STR_ATTACKGROW;
+            _mSubStat._MaxHP += StatManager.STR_MAXHPGROW;
         }
     }
 
-    public void AddIntelligence(int num)
+    public void AddIntelligenceSubstats(int num)
     {
         for (int i = 0; i < num; i++)
         {
-            _mSubStat._MagicAttack += 4.0f;
-            _mSubStat._Mana += 5.0f;
-            _mSubStat._ManaRegen += 0.1f;
+            _mSubStat._MagicAttack += StatManager.INT_MAGICATTACKGROW;
+            _mSubStat._Mana += StatManager.INT_MANAGROW;
+            _mSubStat._ManaRegen += StatManager.INT_MANAGENGROW;
         }
     }
 
-    public void AddVitality(int num)
+    public void AddVitalitySubstats(int num)
     {
         for (int i = 0; i < num; i++)
         {
-            _mSubStat._MaxHP += 25.0f;
-            _mSubStat._HealthRegen += 0.5f;
-            _mSubStat._Defense += 2;
+            _mSubStat._MaxHP += StatManager.VIT_MAXHPGROW;
+            _mSubStat._HealthRegen += StatManager.VIT_HPGENGROW;
+            _mSubStat._Defense += StatManager.VIT_DEFENSEGROW;
+            _mSubStat._MagicDefense += StatManager.VIT_MAGICDEFENSEGROW;
         }
     }
 

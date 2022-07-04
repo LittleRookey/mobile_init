@@ -24,7 +24,8 @@ public struct SubStats
 {
     public float _MaxHP;
     public float _HP;
-    public int _Defense;
+    public float _Defense;
+    public float _MagicDefense;
     public float _Mana;
     public float _Attack;
     public float _MagicAttack;
@@ -57,6 +58,8 @@ public class SA_ResourceManager: MonoBehaviour
     [Header("Stats")]
     public StatsContainer normalCharacterStats;
 
+    public bool turnOnHPBarAlways;
+
     public static readonly int HP = 100;
     public static readonly int MANA = 0;
     public static readonly int ATTACK = 10;
@@ -66,6 +69,7 @@ public class SA_ResourceManager: MonoBehaviour
     public static readonly float HPREGEN = 0.1f;
     public static readonly float MANAREGEN = 0f;
     public static readonly int DEFENSE = 1;
+    public static readonly int MAGICDEFENSE = 0;
 
 
     private void Awake()

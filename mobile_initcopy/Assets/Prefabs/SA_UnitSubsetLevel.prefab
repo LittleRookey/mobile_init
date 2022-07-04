@@ -554,6 +554,8 @@ MonoBehaviour:
   - {fileID: 4718440522742284492}
   - {fileID: 4718440521379927378}
   _hpBar: {fileID: 4718440522334791897}
+  _levelFrame: {fileID: 4718440522756627732}
+  _levelText: {fileID: 4718440521456008606}
 --- !u!1 &4718440522742284492
 GameObject:
   m_ObjectHideFlags: 0
