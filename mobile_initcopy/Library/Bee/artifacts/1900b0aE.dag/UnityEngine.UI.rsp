@@ -116,6 +116,7 @@
 -define:ENABLE_TILEMAP
 -define:ENABLE_TIMELINE
 -define:ENABLE_LEGACY_INPUT_MANAGER
+-define:TEXTMESH_PRO_PRESENT
 -define:PACKAGE_PHYSICS
 -define:PACKAGE_PHYSICS2D
 -define:PACKAGE_TILEMAP
@@ -123,6 +124,13 @@
 -define:PACKAGE_UITOOLKIT
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
+-r:"Assets/AstarPathfindingProject/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll"
+-r:"Assets/Opsive/Shared/Editor/UIElements/Opsive.Shared.Editor.UIElements.dll"
+-r:"Assets/Opsive/Shared/Editor/Utility/Opsive.Shared.Editor.Utility.dll"
+-r:"Assets/Opsive/Shared/Events/Opsive.Shared.Events.dll"
+-r:"Assets/Opsive/Shared/Game/Opsive.Shared.Game.dll"
+-r:"Assets/Opsive/Shared/Inventory/Opsive.Shared.Inventory.dll"
+-r:"Assets/Opsive/Shared/Utility/Opsive.Shared.Utility.dll"
 -r:"D:/2021.3.1f1/Editor/Data/Managed/UnityEditor.Graphs.dll"
 -r:"D:/2021.3.1f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
 -r:"D:/2021.3.1f1/Editor/Data/Managed/UnityEngine/UnityEditor.DeviceSimulatorModule.dll"

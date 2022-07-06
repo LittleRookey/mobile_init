@@ -23,13 +23,6 @@
       },
       "url": "https://registry.npmjs.org"
     },
-    "com.goodcat.un-inventory": {
-      "version": "https://github.com/GoodCatGames/UnInventory.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "b1651c1c43e2e3253e30fd4b04c92e7e000087bd"
-    },
     "com.unity.2d.animation": {
       "version": "7.0.4",
       "depth": 1,

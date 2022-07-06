@@ -165,6 +165,7 @@ public class SA_Unit : MonoBehaviour
     // takes care of stat calculation
     public void ApplyStats(int addStr, int addDex, int addInt, int addVit)
     {
+        Debug.Log(addStr + " " + addDex + " " + addInt + " " + addVit);
         // TODO reset stat to default
         if (addDex != 0) AddDexteritySubstats(addDex);
         if (addStr != 0) AddStrengthSubstats(addStr);
@@ -191,7 +192,7 @@ public class SA_Unit : MonoBehaviour
     }
     public void AddVit(int val)
     {
-        _mStats._Intelligence += val;
+        _mStats._Vitality += val;
         ApplyStats(0, 0, 0, val);
     }
     // updates stat from mstatcontainer to the variables here

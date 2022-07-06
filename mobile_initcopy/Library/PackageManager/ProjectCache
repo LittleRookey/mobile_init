@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637923587004096959
-    m_Hash: 1782531705
+      ticks: 637926202075504089
+    m_Hash: 1271567916
   m_LockFileStatus:
     m_FilePath: D:/Clone/mobile_init/mobile_initcopy/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637923587004191081
-    m_Hash: 1382624855
+      ticks: 637926202075544433
+    m_Hash: 1303731438
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -128,55 +128,6 @@ m_ResolvedPackages:
   repository:
     type: git
     url: git+https://github.com/ashblue/fluid-stats.git
-    revision: 
-    path: 
-  unityLifecycle:
-    version: 
-    nextVersion: 
-- packageId: com.goodcat.un-inventory@https://github.com/GoodCatGames/UnInventory.git
-  testable: 0
-  isDirectDependency: 1
-  version: 1.0.0
-  source: 5
-  resolvedPath: D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.goodcat.un-inventory@b1651c1c43
-  assetPath: Packages/com.goodcat.un-inventory
-  name: com.goodcat.un-inventory
-  displayName: UnInventory
-  author:
-    name: GoodCat
-    email: 
-    url: 
-  category: 
-  type: 
-  description: UnInventory - Inventory framework for Unity (inventories, hotbar,
-    skill trees, etc)
-  status: 4
-  errors: []
-  versions:
-    all: []
-    compatible: []
-    verified: 
-  dependencies: []
-  resolvedDependencies: []
-  keywords:
-  - goodcat
-  - inventory
-  - hotbar
-  registry:
-    id: main
-    name: 
-    url: https://packages.unity.com
-    scopes: []
-    isDefault: 1
-    capabilities: 7
-  hideInEditor: 1
-  isAssetStorePackage: 0
-  datePublishedTicks: 0
-  documentationUrl: 
-  hasRepository: 1
-  repository:
-    type: git
-    url: https://github.com/GoodCatGames/UnInventory.git
     revision: 
     path: 
   unityLifecycle:

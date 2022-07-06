@@ -525,6 +525,7 @@ public class StatManager : MonoBehaviour
         }
         if (tempStatStr != 0)
         {
+            Debug.Log(tempStatStr);
             _player.AddStr(tempStatStr);
         }
         if (tempStatInt != 0)

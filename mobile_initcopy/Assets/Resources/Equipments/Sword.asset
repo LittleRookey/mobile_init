@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6397d06f8ce274fa486dd7c1b1f640, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 653975ca47ce8714c897b6d8a6bf571f, type: 3}
   _amountMax: 1
   _amount: 1
   _dimensions: {x: 1, y: 1}
-  _requiredLevel: 0
+  _requiredLevel: 10
+  stats:
+  - def: {fileID: 11400000, guid: 3b34dc95cb006734e9cafa9126958e8a, type: 2}
+    value: 5
+  - def: {fileID: 11400000, guid: 3b34dc95cb006734e9cafa9126958e8a, type: 2}
+    value: 5

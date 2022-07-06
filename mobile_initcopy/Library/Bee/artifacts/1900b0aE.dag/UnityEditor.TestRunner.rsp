@@ -116,6 +116,7 @@
 -define:ENABLE_TILEMAP
 -define:ENABLE_TIMELINE
 -define:ENABLE_LEGACY_INPUT_MANAGER
+-define:TEXTMESH_PRO_PRESENT
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
 -r:"D:/2021.3.1f1/Editor/Data/Managed/UnityEditor.Graphs.dll"
