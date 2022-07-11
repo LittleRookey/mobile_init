@@ -25,10 +25,10 @@ public struct SubStats
     public float _MaxHP;
     public float _HP;
     public float _Defense;
-    public float _MagicDefense;
+
     public float _Mana;
     public float _Attack;
-    public float _MagicAttack;
+    public float _MagicForce; // penetrates armor
 
     public float _HealthRegen;
     public float _ManaRegen;
@@ -60,16 +60,22 @@ public class SA_ResourceManager: MonoBehaviour
 
     public bool turnOnHPBarAlways;
 
+    // Stats for base values
     public static readonly int HP = 100;
     public static readonly int MANA = 0;
     public static readonly int ATTACK = 10;
-    public static readonly int MAGICATTACK = 10;
-    public static readonly int ATTACKSPEED = 2;
+    public static readonly int MAGICFORCE = 0;
+    public static readonly int ATTACKSPEED = 1;
+    public static readonly float ATTACKDELAY = 0.5f;
     public static readonly int MOVESPEED = 1;
     public static readonly float HPREGEN = 0.1f;
     public static readonly float MANAREGEN = 0f;
     public static readonly int DEFENSE = 1;
-    public static readonly int MAGICDEFENSE = 0;
+
+    public static readonly int ATTACKRANGE_BOW = 10;
+    public static readonly int ATTACKRANGESWORD= 1;
+    public static readonly int ATTACKRANGE_MAGIC = 10;
+    //public static readonly int MAGICDEFENSE = 0;
 
 
     private void Awake()

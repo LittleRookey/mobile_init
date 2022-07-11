@@ -28,31 +28,31 @@ public class SA_Unit : MonoBehaviour
 
 
 
-    public MainStats _mStats;
-    public SubStats _mSubStat;
     public bool isPlayer;
-    //public float _unitMaxHP;
-    //public float _unitHP;
-    //public int _unitDefense;
-    //public float _unitMana;
-    //public float _unitAttack;
 
-    //public float _unitMagicAttack;
-    //public float _unitAttackSpeed;
+    public float _unitMaxHP;
+    public float _unitHP;
+    public int _unitDefense;
+    public float _unitMana;
+    public float _unitAttack;
 
-    //public float _unitAttackRange;
-    //public float _unitFightRange;
+    public float _unitMagicForce; // amplifies skills by charge
+    public float _unitAttackSpeed; 
+    public float _unitAttackDelay; // delay time between every attack
 
-    //public float _unitHPRegen;
-    //public float _unitManaRegen;
+    public float _unitAttackRange;
+    public float _unitFightRange;
 
-    //public float _unitMoveSpeed;
+    public float _unitHPRegen;
+    public float _unitManaRegen;
+
+    public float _unitMoveSpeed;
 
     private float _findTimer;
     private float _attackTimer;
     public static float FINDRANGE;
 
-    public int _statPoint = 0;
+    private int _statPoint = 0;
 
     Vector2 _dirVec;
     Vector2 _tempDist;
@@ -84,13 +84,13 @@ public class SA_Unit : MonoBehaviour
         switch(_attackType)
         {
             case AttackType.sword:
-                _mSubStat._AttackRange = 1;
+                _unitAttackRange = 1;
                 break;
             case AttackType.bow:
-                _mSubStat._AttackRange = 10;
+                _unitAttackRange = 10;
                 break;
             case AttackType.magic:
-                _mSubStat._AttackRange = 10;
+                _unitAttackRange = 10;
                 break;
         }
 #endif
@@ -110,7 +110,7 @@ public class SA_Unit : MonoBehaviour
         //_mStatContainer.OnStatChangeSubscribe(StatManager.ATTACK_ID, callBacks);
         if (isPlayer)
         {
-            StatManager.Instance.SubscribeEvents();
+            //StatManager.Instance.SubscribeEvents();
         }
         //_mStatContainer.
         _mStatContainer.SetModifier(OperatorType.Add, "attack", "modifierID", 100);
@@ -124,6 +124,11 @@ public class SA_Unit : MonoBehaviour
         
     }
 
+    public int GetLeftStatPoint()
+    {
+        return _statPoint;
+    }
+
 
     // 1. load basic stat 
     // 2. Add substat based on main stat 
@@ -132,23 +137,26 @@ public class SA_Unit : MonoBehaviour
     // Sets up the normal stat(lv 1) to the unit  
     public void InitStat()
     {
-        _mStats._Strength = _mStatContainer.GetStatInt("strength");
-        _mStats._Dexterity = _mStatContainer.GetStatInt("dexterity");
-        _mStats._Vitality = _mStatContainer.GetStatInt("vitality");
-        _mStats._Intelligence = _mStatContainer.GetStatInt("intelligence");
-        _mSubStat._Attack = SA_ResourceManager.ATTACK;
-        _mSubStat._MagicAttack = SA_ResourceManager.MAGICATTACK;
-        _mSubStat._HealthRegen = SA_ResourceManager.HPREGEN;
-        _mSubStat._Defense = SA_ResourceManager.DEFENSE;
-        _mSubStat._MagicDefense = SA_ResourceManager.MAGICDEFENSE;
-        _mSubStat._ManaRegen = SA_ResourceManager.MANAREGEN;
-        _mSubStat._AttackSpeed = SA_ResourceManager.ATTACKSPEED;
-        _mSubStat._MaxHP = SA_ResourceManager.HP;
-        _mSubStat._Mana = SA_ResourceManager.MANA;
-        _mSubStat._MoveSpeed= SA_ResourceManager.MOVESPEED;
-        _mSubStat._HP = _mSubStat._MaxHP;
-        _mSubStat._AttackRange = 1;
-        _mSubStat._FightRange = 200;
+        _unitAttack = SA_ResourceManager.ATTACK;
+        _unitMagicForce = SA_ResourceManager.MAGICFORCE;
+        _unitHPRegen = SA_ResourceManager.HPREGEN;
+        _unitDefense = SA_ResourceManager.DEFENSE;
+        
+        _unitManaRegen = SA_ResourceManager.MANAREGEN;
+        _unitAttackSpeed = SA_ResourceManager.ATTACKSPEED;
+        _unitAttackDelay = SA_ResourceManager.ATTACKDELAY;
+        _unitMaxHP = SA_ResourceManager.HP;
+        _unitMana = SA_ResourceManager.MANA;
+        _unitMoveSpeed = SA_ResourceManager.MOVESPEED;
+        _unitHP = _unitMaxHP;
+        
+        if (_attackType == AttackType.sword)
+            _unitAttackRange = SA_ResourceManager.ATTACKRANGESWORD;
+        else if(_attackType == AttackType.bow)
+            _unitAttackRange = SA_ResourceManager.ATTACKRANGE_BOW;
+        else if(_attackType == AttackType.magic)
+            _unitAttackRange = SA_ResourceManager.ATTACKRANGE_MAGIC;
+        _unitFightRange = 200;
         _level = 1;
         //_unitAttack = SA_ResourceManager.ATTACK;
         //_unitMagicAttack = SA_ResourceManager.MAGICATTACK;
@@ -163,97 +171,98 @@ public class SA_Unit : MonoBehaviour
     }
 
     // takes care of stat calculation
-    public void ApplyStats(int addStr, int addDex, int addInt, int addVit)
-    {
-        Debug.Log(addStr + " " + addDex + " " + addInt + " " + addVit);
+    //public void ApplyStats(int addStr, int addDex, int addInt, int addVit)
+    //{
+        //Debug.Log(addStr + " " + addDex + " " + addInt + " " + addVit);
         // TODO reset stat to default
-        if (addDex != 0) AddDexteritySubstats(addDex);
-        if (addStr != 0) AddStrengthSubstats(addStr);
-        if (addInt != 0) AddIntelligenceSubstats(addInt);
-        if (addVit != 0) AddVitalitySubstats(addVit);
+        //if (addDex != 0) AddDexteritySubstats(addDex);
+        //if (addStr != 0) AddStrengthSubstats(addStr);
+        //if (addInt != 0) AddIntelligenceSubstats(addInt);
+        //if (addVit != 0) AddVitalitySubstats(addVit);
 
-    }
+    //}
 
-    public void AddDex(int val)
-    {
-        _mStats._Dexterity += val;
-        ApplyStats(0, val, 0, 0);
-    }
+    //public void AddDex(int val)
+    //{
+    //    _mStats._Dexterity += val;
+    //    ApplyStats(0, val, 0, 0);
+    //}
 
-    public void AddStr(int val)
-    {
-        _mStats._Strength += val;
-        ApplyStats(val, 0, 0, 0);
-    }
-    public void AddInt(int val)
-    {
-        _mStats._Intelligence += val;
-        ApplyStats(0, 0, val, 0);
-    }
-    public void AddVit(int val)
-    {
-        _mStats._Vitality += val;
-        ApplyStats(0, 0, 0, val);
-    }
+    //public void AddStr(int val)
+    //{
+    //    _mStats._Strength += val;
+    //    ApplyStats(val, 0, 0, 0);
+    //}
+    //public void AddInt(int val)
+    //{
+    //    _mStats._Intelligence += val;
+    //    ApplyStats(0, 0, val, 0);
+    //}
+    //public void AddVit(int val)
+    //{
+    //    _mStats._Vitality += val;
+    //    ApplyStats(0, 0, 0, val);
+    //}
     // updates stat from mstatcontainer to the variables here
-    void UpdateStats()
-    {
-        //_ _mStats._Strength;
-        //_mStats._Dexterity;
-        //_mStats._Intelligence;
-        //_mStats._Intelligence;
-    }
-    public void LevelUpStats()
-    {
-        _mSubStat._MaxHP += 8;
-        _mSubStat._Attack += 3;
-        _mSubStat._Defense += 2;
-        _mSubStat._MagicDefense += 1;
-        _mSubStat._MagicAttack += 3;
-        _mSubStat._HealthRegen += 0.1f;
-        _mSubStat._HealthRegen = StatManager.Round(_mSubStat._HealthRegen, 1);
+    //void UpdateStats()
+    //{
+    //    //_ _mStats._Strength;
+    //    //_mStats._Dexterity;
+    //    //_mStats._Intelligence;
+    //    //_mStats._Intelligence;
+    //}
+    //public void LevelUpStats()
+    //{
+    //    _mSubStat._MaxHP += 8;
+    //    _mSubStat._Attack += 3;
+    //    _mSubStat._Defense += 2;
+    //    _mSubStat._MagicDefense += 1;
+    //    _mSubStat._MagicAttack += 3;
+    //    _mSubStat._HealthRegen += 0.1f;
+    //    _mSubStat._HealthRegen = StatManager.Round(_mSubStat._HealthRegen, 1);
 
-        //_UnitSet._UnitSubset._levelText.text = _level.ToString();
-    }
-    public void AddDexteritySubstats(int num)
-    {
-        for (int i = 0; i < num; i++)
-        {
-            _mSubStat._Attack += StatManager.DEX_ATTACKGROW;
-            _mSubStat._AttackSpeed -= StatManager.DEX_ATTACKSPEEDGROW;
-            _mSubStat._MoveSpeed += StatManager.DEX_MOVESPEEDGROW;
-        }
-    }
+    //    //_UnitSet._UnitSubset._levelText.text = _level.ToString();
+    //}
+    //public void AddDexteritySubstats(int num)
+    //{
+    //    for (int i = 0; i < num; i++)
+    //    {
+    //        _mSubStat._Attack += StatManager.DEX_ATTACKGROW;
+    //        _mSubStat._AttackSpeed -= StatManager.DEX_ATTACKSPEEDGROW;
+    //        _mSubStat._MoveSpeed += StatManager.DEX_MOVESPEEDGROW;
+    //    }
+    //}
 
-    public void AddStrengthSubstats(int num)
-    {
-        for (int i = 0; i < num; i++)
-        {
-            _mSubStat._Attack += StatManager.STR_ATTACKGROW;
-            _mSubStat._MaxHP += StatManager.STR_MAXHPGROW;
-        }
-    }
+    //public void AddStrengthSubstats(int num)
+    //{
+    //    for (int i = 0; i < num; i++)
+    //    {
+    //        _mSubStat._Attack += StatManager.STR_ATTACKGROW;
+    //        _mSubStat._MaxHP += StatManager.STR_MAXHPGROW;
+    //    }
+    //}
 
-    public void AddIntelligenceSubstats(int num)
-    {
-        for (int i = 0; i < num; i++)
-        {
-            _mSubStat._MagicAttack += StatManager.INT_MAGICATTACKGROW;
-            _mSubStat._Mana += StatManager.INT_MANAGROW;
-            _mSubStat._ManaRegen += StatManager.INT_MANAGENGROW;
-        }
-    }
+    //public void AddIntelligenceSubstats(int num)
+    //{
+    //    for (int i = 0; i < num; i++)
+    //    {
+    //        _mSubStat._MagicAttack += StatManager.INT_MAGICATTACKGROW;
+    //        _mSubStat._Mana += StatManager.INT_MANAGROW;
+    //        _mSubStat._ManaRegen += StatManager.INT_MANAGENGROW;
+    //    }
+    //}
 
-    public void AddVitalitySubstats(int num)
-    {
-        for (int i = 0; i < num; i++)
-        {
-            _mSubStat._MaxHP += StatManager.VIT_MAXHPGROW;
-            _mSubStat._HealthRegen += StatManager.VIT_HPGENGROW;
-            _mSubStat._Defense += StatManager.VIT_DEFENSEGROW;
-            _mSubStat._MagicDefense += StatManager.VIT_MAGICDEFENSEGROW;
-        }
-    }
+    //public void AddVitalitySubstats(int num)
+    //{
+    //    for (int i = 0; i < num; i++)
+    //    {
+    //        _mSubStat._MaxHP += StatManager.VIT_MAXHPGROW;
+    //        _mSubStat._HealthRegen += StatManager.VIT_HPGENGROW;
+    //        _mSubStat._Defense += StatManager.VIT_DEFENSEGROW;
+    //        _mSubStat._MagicDefense += StatManager.VIT_MAGICDEFENSEGROW;
+    //    }
+    //}
+
 
 
     void CheckState()
@@ -305,7 +314,7 @@ public class SA_Unit : MonoBehaviour
                 //Debug.Log("Attack");
                 //CheckAttack();
                 // When it arrive
-
+                _spumPrefab._anim.SetFloat("AttackSpeed", _unitAttackSpeed);
                 _spumPrefab.PlayAnimation(0);
                 break;
 
@@ -377,7 +386,7 @@ public class SA_Unit : MonoBehaviour
             _dirVec = _tempDist.normalized;
             SetDirection();
             SetState(UnitState.run);
-            transform.position += (Vector3)_dirVec * _mSubStat._MoveSpeed * Time.deltaTime;
+            transform.position += (Vector3)_dirVec * _unitMoveSpeed * Time.deltaTime;
         }
 
         
@@ -393,7 +402,7 @@ public class SA_Unit : MonoBehaviour
         //Debug.Log(gameObject.name + ": " +tDis);
         //Vector2 tVec = (Vector2)(_target.transform.localPosition - transform.position);
 
-        if (tDis <= _mSubStat._AttackRange * _mSubStat._AttackRange) // if enemy is within range
+        if (tDis <= _unitAttackRange * _unitAttackRange) // if enemy is within range
         {
             
             SetState(UnitState.attack);
@@ -438,7 +447,7 @@ public class SA_Unit : MonoBehaviour
         if (!CheckDistance()) return;
         //Debug.Log("Attack1");
         _attackTimer += Time.deltaTime;
-        if (_attackTimer > _mSubStat._AttackSpeed)
+        if (_attackTimer > _unitAttackDelay)
         {
             DoAttack();
             _attackTimer = 0;
@@ -474,20 +483,20 @@ public class SA_Unit : MonoBehaviour
     public void SetAttack()
     {
         if (_target == null) return;
-        float dmg = _mSubStat._Attack;
-        _target.SetDamage(this, dmg);
+        float dmg = _unitAttack;
+        _target.SetDamage(this, dmg); // this gives dmg to target
     }
 
     public void SetDamage(SA_Unit owner, float dmg)
     {
-        _mSubStat._HP -= dmg;
+        _unitHP -= dmg;
         // hp bar
         if (_UnitSet == null) return;
         Debug.Log(owner.name + ": " + owner._attackType + '\n' + "target " + name + ": " + _attackType);
         _UnitSet.ShowDmgText(owner._attackType, dmg);
         _UnitSet.CalcHPState();
 
-        if (_mSubStat._HP <= 0)
+        if (_unitHP <= 0)
         {
             SetDeath();
         }
@@ -504,7 +513,7 @@ public class SA_Unit : MonoBehaviour
                 SoonsoonData.Instance.SAM._p2UnitList.Remove(this);
                 break;
         }
-        _mSubStat._HP = 0;
+        _unitHP = 0;
         SetState(UnitState.death);
     }
 
@@ -528,7 +537,7 @@ public class SA_Unit : MonoBehaviour
 
     public void AttackDone(SA_Unit target=null, float damage=0)
     {
-        float dmg = _mSubStat._Attack;
+        float dmg = _unitAttack;
 
         if (target == null)
         {
@@ -642,8 +651,8 @@ public class SA_Unit : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, _mSubStat._AttackRange);
+        Gizmos.DrawWireSphere(transform.position, _unitFightRange);
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, _mSubStat._FightRange);
+        Gizmos.DrawWireSphere(transform.position, _unitAttackRange);
     }
 }

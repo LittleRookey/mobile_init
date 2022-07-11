@@ -4,9 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - P1
-  - P2
-  - P3
+  - Enemy
+  - Object
   layers:
   - Default
   - TransparentFX

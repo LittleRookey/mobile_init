@@ -27,11 +27,6 @@ public class SA_Manager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public SA_Unit GetTarget(SA_Unit unit)
     {
@@ -40,15 +35,15 @@ public class SA_Manager : MonoBehaviour
         List<SA_Unit> tList = new List<SA_Unit>();
         switch(unit.tag)
         {
-            case "P1": tList = _p2UnitList; break;
-            case "P2": tList = _p1UnitList; break;
+            case "Player": tList = _p2UnitList; break;
+            case "Enemy": tList = _p1UnitList; break;
         }
 
         float tSDis = 999999;
         for (int i = 0; i < tList.Count; i++)
         {
             float tDis = ((Vector2)tList[i].transform.localPosition - (Vector2)unit.transform.localPosition).sqrMagnitude;
-            if (tDis <= unit._mSubStat._FightRange * unit._mSubStat._AttackRange)
+            if (tDis <= unit._unitFightRange * unit._unitAttackRange)
             {
                 if (tList[i].gameObject.activeInHierarchy)
                 {
@@ -82,17 +77,17 @@ public class SA_Manager : MonoBehaviour
                         
                         _p1UnitList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
                         //Debug.Log(_unitPool[i].GetChild(j).gameObject.name);
-                        _unitPool[i].GetChild(j).gameObject.tag = "P1";
+                        _unitPool[i].GetChild(j).gameObject.tag = "Player";
                         break;
                     case 1:
                         _p2UnitList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
                         //Debug.Log(_unitPool[i].GetChild(j).gameObject.name);
-                        _unitPool[i].GetChild(j).gameObject.tag = "P2";
+                        _unitPool[i].GetChild(j).gameObject.tag = "Enemy";
                         break;
 
                     case 2:
                         _p3UnitList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
-                        _unitPool[i].GetChild(j).gameObject.tag = "P3";
+                        _unitPool[i].GetChild(j).gameObject.tag = "Object";
                         break;
 
                 }

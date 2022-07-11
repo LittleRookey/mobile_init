@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class SA_UnitSet : MonoBehaviour
 {
-
+    public enum EnemyType
+    {
+        Small,
+        Normal,
+        Elite,
+        Boss
+    };
     
     public enum UnitType
     {
         none,
-        P1, 
-        P2,
-        P3
+        Player, 
+        Enemy,
+        Object
     };
 
     public UnitType _unitType = UnitType.none;
@@ -69,12 +75,12 @@ public class SA_UnitSet : MonoBehaviour
 
     public void CalcHPState()
     {
-        if (gameObject.CompareTag("P3")) return;
+        if (gameObject.CompareTag("Object")) return;
         if (_UnitSubset == null) return;
         //hplist[0]은 전체 hp
         // hplist[2]는 pivot 
         _UnitSubset._hpList[0].gameObject.SetActive(true);
-        float tValue = _unitST._mSubStat._HP * (1/_unitST._mSubStat._MaxHP);
+        float tValue = _unitST._unitHP * (1/_unitST._unitMaxHP);
         _UnitSubset._hpList[2].transform.localScale = new Vector3(tValue, 1, 1);
 
         _timerForHP = 0;
@@ -89,7 +95,7 @@ public class SA_UnitSet : MonoBehaviour
     void SetUnitType()
     {
         if (_unitType == UnitType.none) return;
-        if (_unitType != UnitType.P3)
+        if (_unitType != UnitType.Object)
         {
             bool check = false;
 
@@ -102,18 +108,19 @@ public class SA_UnitSet : MonoBehaviour
 
             switch(_unitType)
             {
-                case UnitType.P1:
-                    gameObject.tag = "P1";
+                case UnitType.Player:
+                    gameObject.tag = "Player";
                     _unitST._spumPrefab._anim.transform.localScale = new Vector3(1, 1, 1);
                     break;
 
-                case UnitType.P2:
-                    gameObject.tag = "P2";
-                    _unitST._spumPrefab._anim.transform.localScale = new Vector3(-1, 1, 1);
+                case UnitType.Enemy:
+                    gameObject.tag = "Enemy";
+                    
+                    _unitST._spumPrefab._anim.transform.localScale = new Vector3(1, 1, 1);
                     break;
 
-                case UnitType.P3:
-                    gameObject.tag = "P3";
+                case UnitType.Object:
+                    gameObject.tag = "Object";
                     break;
                 case UnitType.none:
                     break;
@@ -189,8 +196,6 @@ public class SA_UnitSet : MonoBehaviour
     void UnitInitSet()
     {
         _unitST.InitStat();
-        _unitST._mSubStat._FightRange = 200f;
-        _unitST._mSubStat._AttackRange = 1f;
 
         //_unitST._unitHP = 100f;
         //_unitST._unitMaxHP = _unitST._unitHP;
