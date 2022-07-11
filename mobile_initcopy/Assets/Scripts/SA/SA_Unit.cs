@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CleverCrow.Fluid.StatsSystem.StatsContainers;
-
+using CleverCrow.Fluid.StatsSystem;
+using UnityEngine.Events;
 
 public class SA_Unit : MonoBehaviour
 {
@@ -20,32 +21,38 @@ public class SA_Unit : MonoBehaviour
 
     [Header("Stats")]
     public int _level = 1;
+
     private int _exp;
     private int _maxExp;
     public StatsContainer _mStatContainer;
 
 
 
-    public MainStats _mStats;
-    public SubStats _mSubStat;
+    public bool isPlayer;
+
     public float _unitMaxHP;
     public float _unitHP;
+    public int _unitDefense;
     public float _unitMana;
     public float _unitAttack;
-    public float _unitMagicAttack;
-    public float _unitAttackSpeed;
+
+    public float _unitMagicForce; // amplifies skills by charge
+    public float _unitAttackSpeed; 
+    public float _unitAttackDelay; // delay time between every attack
 
     public float _unitAttackRange;
     public float _unitFightRange;
 
-    private float _unitHPRegen;
-    private float _unitManaRegen;
+    public float _unitHPRegen;
+    public float _unitManaRegen;
 
     public float _unitMoveSpeed;
 
     private float _findTimer;
     private float _attackTimer;
     public static float FINDRANGE;
+
+    private int _statPoint = 0;
 
     Vector2 _dirVec;
     Vector2 _tempDist;
@@ -91,6 +98,7 @@ public class SA_Unit : MonoBehaviour
     private void Awake()
     {
         _animAction = _spumPrefab._anim.GetComponent<SA_AnimationAction>();
+        
     }
 
     void Start()
@@ -98,10 +106,15 @@ public class SA_Unit : MonoBehaviour
         _mStatContainer = SA_ResourceManager.Instance.GetCharacterStat();
         InitStat();
         _moveList = new List<Vector2>();
-        Talent sword = new SwordsMan(null, "Ä®À» Àß¾¹´Ï´Ù.", 10);
-        //talents.Add(sword);
-
-        ApplyStats();
+        //var callBacks = new UnityAction<StatRecord>((record) => Debug.Log(record));
+        //_mStatContainer.OnStatChangeSubscribe(StatManager.ATTACK_ID, callBacks);
+        if (isPlayer)
+        {
+            //StatManager.Instance.SubscribeEvents();
+        }
+        //_mStatContainer.
+        _mStatContainer.SetModifier(OperatorType.Add, "attack", "modifierID", 100);
+        //_mstatcontainer.onstatchangesubscribe(attack_id, callback);
     }
 
     // Update is called once per frame
@@ -111,74 +124,145 @@ public class SA_Unit : MonoBehaviour
         
     }
 
+    public int GetLeftStatPoint()
+    {
+        return _statPoint;
+    }
+
 
     // 1. load basic stat 
     // 2. Add substat based on main stat 
     // 3. Save
 
-    // Sets up the normal stat(lv 1) to the unit
+    // Sets up the normal stat(lv 1) to the unit  
     public void InitStat()
     {
-        _mStats._Strength = _mStatContainer.GetStatInt("strength");
-        _mStats._Dexterity = _mStatContainer.GetStatInt("dexterity");
-        _mStats._Intelligence = _mStatContainer.GetStatInt("vitality");
-        _mStats._Intelligence = _mStatContainer.GetStatInt("intelligence");
         _unitAttack = SA_ResourceManager.ATTACK;
-        _unitMagicAttack = SA_ResourceManager.MAGICATTACK;
+        _unitMagicForce = SA_ResourceManager.MAGICFORCE;
         _unitHPRegen = SA_ResourceManager.HPREGEN;
+        _unitDefense = SA_ResourceManager.DEFENSE;
+        
         _unitManaRegen = SA_ResourceManager.MANAREGEN;
         _unitAttackSpeed = SA_ResourceManager.ATTACKSPEED;
+        _unitAttackDelay = SA_ResourceManager.ATTACKDELAY;
         _unitMaxHP = SA_ResourceManager.HP;
         _unitMana = SA_ResourceManager.MANA;
         _unitMoveSpeed = SA_ResourceManager.MOVESPEED;
         _unitHP = _unitMaxHP;
+        
+        if (_attackType == AttackType.sword)
+            _unitAttackRange = SA_ResourceManager.ATTACKRANGESWORD;
+        else if(_attackType == AttackType.bow)
+            _unitAttackRange = SA_ResourceManager.ATTACKRANGE_BOW;
+        else if(_attackType == AttackType.magic)
+            _unitAttackRange = SA_ResourceManager.ATTACKRANGE_MAGIC;
+        _unitFightRange = 200;
+        _level = 1;
+        //_unitAttack = SA_ResourceManager.ATTACK;
+        //_unitMagicAttack = SA_ResourceManager.MAGICATTACK;
+        //_unitHPRegen = SA_ResourceManager.HPREGEN;
+        //_unitDefense = SA_ResourceManager.DEFENSE;
+        //_unitManaRegen = SA_ResourceManager.MANAREGEN;
+        //_unitAttackSpeed = SA_ResourceManager.ATTACKSPEED;
+        //_unitMaxHP = SA_ResourceManager.HP;
+        //_unitMana = SA_ResourceManager.MANA;
+        //_unitMoveSpeed = SA_ResourceManager.MOVESPEED;
+        //_unitHP = _unitMaxHP;
     }
 
-    void ApplyStats()
-    {
+    // takes care of stat calculation
+    //public void ApplyStats(int addStr, int addDex, int addInt, int addVit)
+    //{
+        //Debug.Log(addStr + " " + addDex + " " + addInt + " " + addVit);
         // TODO reset stat to default
-        AddDexterity(_mStats._Dexterity);
-        AddStrength(_mStats._Strength);
-        AddIntelligence(_mStats._Intelligence);
-        AddVitality(_mStats._Vitality);
-    }
+        //if (addDex != 0) AddDexteritySubstats(addDex);
+        //if (addStr != 0) AddStrengthSubstats(addStr);
+        //if (addInt != 0) AddIntelligenceSubstats(addInt);
+        //if (addVit != 0) AddVitalitySubstats(addVit);
 
-    public void AddDexterity(int num)
-    {
-        for (int i = 0; i < num; i++)
-        {
-            _unitAttack += 1f;
-            _unitAttackSpeed -= 0.01f;
-        }
-    }
+    //}
 
-    public void AddStrength(int num)
-    {
-        for (int i = 0; i < num; i++)
-        {
-            _unitAttack += 3.0f;
-            _unitMaxHP += 10.0f;
-        }
-    }
+    //public void AddDex(int val)
+    //{
+    //    _mStats._Dexterity += val;
+    //    ApplyStats(0, val, 0, 0);
+    //}
 
-    public void AddIntelligence(int num)
-    {
-        for (int i = 0; i < num; i++)
-        {
-            _unitMagicAttack += 4.0f;
-            _unitMana += 5.0f;
-            _unitManaRegen += 0.1f;
-        }
-    }
+    //public void AddStr(int val)
+    //{
+    //    _mStats._Strength += val;
+    //    ApplyStats(val, 0, 0, 0);
+    //}
+    //public void AddInt(int val)
+    //{
+    //    _mStats._Intelligence += val;
+    //    ApplyStats(0, 0, val, 0);
+    //}
+    //public void AddVit(int val)
+    //{
+    //    _mStats._Vitality += val;
+    //    ApplyStats(0, 0, 0, val);
+    //}
+    // updates stat from mstatcontainer to the variables here
+    //void UpdateStats()
+    //{
+    //    //_ _mStats._Strength;
+    //    //_mStats._Dexterity;
+    //    //_mStats._Intelligence;
+    //    //_mStats._Intelligence;
+    //}
+    //public void LevelUpStats()
+    //{
+    //    _mSubStat._MaxHP += 8;
+    //    _mSubStat._Attack += 3;
+    //    _mSubStat._Defense += 2;
+    //    _mSubStat._MagicDefense += 1;
+    //    _mSubStat._MagicAttack += 3;
+    //    _mSubStat._HealthRegen += 0.1f;
+    //    _mSubStat._HealthRegen = StatManager.Round(_mSubStat._HealthRegen, 1);
 
-    public void AddVitality(int num)
-    {
-        for (int i = 0; i < num; i++)
-        {
-            _unitMaxHP += 25.0f;
-            _unitHPRegen += 0.5f;
-        }
-    }
+    //    //_UnitSet._UnitSubset._levelText.text = _level.ToString();
+    //}
+    //public void AddDexteritySubstats(int num)
+    //{
+    //    for (int i = 0; i < num; i++)
+    //    {
+    //        _mSubStat._Attack += StatManager.DEX_ATTACKGROW;
+    //        _mSubStat._AttackSpeed -= StatManager.DEX_ATTACKSPEEDGROW;
+    //        _mSubStat._MoveSpeed += StatManager.DEX_MOVESPEEDGROW;
+    //    }
+    //}
+
+    //public void AddStrengthSubstats(int num)
+    //{
+    //    for (int i = 0; i < num; i++)
+    //    {
+    //        _mSubStat._Attack += StatManager.STR_ATTACKGROW;
+    //        _mSubStat._MaxHP += StatManager.STR_MAXHPGROW;
+    //    }
+    //}
+
+    //public void AddIntelligenceSubstats(int num)
+    //{
+    //    for (int i = 0; i < num; i++)
+    //    {
+    //        _mSubStat._MagicAttack += StatManager.INT_MAGICATTACKGROW;
+    //        _mSubStat._Mana += StatManager.INT_MANAGROW;
+    //        _mSubStat._ManaRegen += StatManager.INT_MANAGENGROW;
+    //    }
+    //}
+
+    //public void AddVitalitySubstats(int num)
+    //{
+    //    for (int i = 0; i < num; i++)
+    //    {
+    //        _mSubStat._MaxHP += StatManager.VIT_MAXHPGROW;
+    //        _mSubStat._HealthRegen += StatManager.VIT_HPGENGROW;
+    //        _mSubStat._Defense += StatManager.VIT_DEFENSEGROW;
+    //        _mSubStat._MagicDefense += StatManager.VIT_MAGICDEFENSEGROW;
+    //    }
+    //}
+
 
 
     void CheckState()
@@ -230,7 +314,7 @@ public class SA_Unit : MonoBehaviour
                 //Debug.Log("Attack");
                 //CheckAttack();
                 // When it arrive
-
+                _spumPrefab._anim.SetFloat("AttackSpeed", _unitAttackSpeed);
                 _spumPrefab.PlayAnimation(0);
                 break;
 
@@ -363,7 +447,7 @@ public class SA_Unit : MonoBehaviour
         if (!CheckDistance()) return;
         //Debug.Log("Attack1");
         _attackTimer += Time.deltaTime;
-        if (_attackTimer > _unitAttackSpeed)
+        if (_attackTimer > _unitAttackDelay)
         {
             DoAttack();
             _attackTimer = 0;
@@ -400,7 +484,7 @@ public class SA_Unit : MonoBehaviour
     {
         if (_target == null) return;
         float dmg = _unitAttack;
-        _target.SetDamage(this, dmg);
+        _target.SetDamage(this, dmg); // this gives dmg to target
     }
 
     public void SetDamage(SA_Unit owner, float dmg)
@@ -567,8 +651,8 @@ public class SA_Unit : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, _unitAttackRange);
-        Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, _unitFightRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, _unitAttackRange);
     }
 }

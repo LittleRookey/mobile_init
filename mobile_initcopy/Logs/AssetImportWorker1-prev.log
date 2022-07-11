@@ -1,0 +1,563 @@
+Using pre-set license
+Built from '2021.3/staging' branch; Version is '2021.3.1f1 (3b70a0754835) revision 3895456'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19043) 64bit Core' Language: 'ko' Physical Memory: 32636 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+D:\2021.3.1f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker1
+-projectPath
+D:/Clone/mobile_init/mobile_initcopy
+-logFile
+Logs/AssetImportWorker1.log
+-srvPort
+59986
+Successfully changed project path to: D:/Clone/mobile_init/mobile_initcopy
+D:/Clone/mobile_init/mobile_initcopy
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Refreshing native plugins compatible for Editor in 103.57 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2021.3.1f1 (3b70a0754835)
+[Subsystems] Discovering subsystems at path D:/2021.3.1f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Clone/mobile_init/mobile_initcopy/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3070 Laptop GPU (ID=0x24dd)
+    Vendor:   NVIDIA
+    VRAM:     8044 MB
+    Driver:   30.0.15.1215
+Initialize mono
+Mono path[0] = 'D:/2021.3.1f1/Editor/Data/Managed'
+Mono path[1] = 'D:/2021.3.1f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/2021.3.1f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56848
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/2021.3.1f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: D:/2021.3.1f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: D:/2021.3.1f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002370 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 100.39 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.576 seconds
+Domain Reload Profiling:
+	ReloadAssembly (576ms)
+		BeginReloadAssembly (85ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (410ms)
+			LoadAssemblies (85ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (85ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (20ms)
+			SetupLoadedEditorAssemblies (265ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (44ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (101ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (81ms)
+				ProcessInitializeOnLoadMethodAttributes (38ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.007697 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory doesn't match image D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 100.73 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.316 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1317ms)
+		BeginReloadAssembly (221ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (125ms)
+		EndReloadAssembly (1004ms)
+			LoadAssemblies (113ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (210ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (61ms)
+			SetupLoadedEditorAssemblies (608ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (11ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (101ms)
+				BeforeProcessingInitializeOnLoad (80ms)
+				ProcessInitializeOnLoadAttributes (219ms)
+				ProcessInitializeOnLoadMethodAttributes (195ms)
+				AfterProcessingInitializeOnLoad (2ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 1.12 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4883 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 47 unused Assets / (226.5 KB). Loaded Objects now: 5370.
+Memory consumption went from 199.1 MB to 198.9 MB.
+Total: 6.059100 ms (FindLiveObjects: 0.330500 ms CreateObjectMapping: 0.278200 ms MarkObjects: 5.277100 ms  DeleteObjects: 0.172500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.007618 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory doesn't match image D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.13 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.209 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1209ms)
+		BeginReloadAssembly (187ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (8ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (68ms)
+		EndReloadAssembly (937ms)
+			LoadAssemblies (141ms)
+			RebuildTransferFunctionScriptingTraits (1ms)
+			SetupTypeCache (230ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (47ms)
+			SetupLoadedEditorAssemblies (512ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (19ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (65ms)
+				ProcessInitializeOnLoadAttributes (181ms)
+				ProcessInitializeOnLoadMethodAttributes (242ms)
+				AfterProcessingInitializeOnLoad (3ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (9ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 2.71 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4855 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 34 unused Assets / (193.7 KB). Loaded Objects now: 5374.
+Memory consumption went from 196.9 MB to 196.7 MB.
+Total: 6.317900 ms (FindLiveObjects: 0.290600 ms CreateObjectMapping: 0.117100 ms MarkObjects: 5.748200 ms  DeleteObjects: 0.160700 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.008098 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory doesn't match image D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.22 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.154 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1154ms)
+		BeginReloadAssembly (149ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (6ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (46ms)
+		EndReloadAssembly (925ms)
+			LoadAssemblies (122ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (232ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (44ms)
+			SetupLoadedEditorAssemblies (506ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (21ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (65ms)
+				ProcessInitializeOnLoadAttributes (178ms)
+				ProcessInitializeOnLoadMethodAttributes (237ms)
+				AfterProcessingInitializeOnLoad (3ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (8ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 2.66 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4855 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 34 unused Assets / (194.7 KB). Loaded Objects now: 5378.
+Memory consumption went from 196.9 MB to 196.8 MB.
+Total: 6.553500 ms (FindLiveObjects: 0.310500 ms CreateObjectMapping: 0.113800 ms MarkObjects: 5.966700 ms  DeleteObjects: 0.161300 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 2082012.514803 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_02.png
+  artifactKey: Guid(849bdfd4eff654cdeb646d9985752ff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_02.png using Guid(849bdfd4eff654cdeb646d9985752ff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '98f7266a459455f2f4bca6afa3079329') in 0.103985 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_08.png
+  artifactKey: Guid(f5f5d6ca0bc0b4b48a65323542bfb531) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_08.png using Guid(f5f5d6ca0bc0b4b48a65323542bfb531) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6a433d3374bcc7d04160ce7d67a20787') in 0.012966 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_04.png
+  artifactKey: Guid(aba31cc3b0091472e993ae87e4557b0f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_04.png using Guid(aba31cc3b0091472e993ae87e4557b0f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3243cc0eac3353a13b29d4288e3e571f') in 0.012118 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_06.png
+  artifactKey: Guid(660003aca27e647ed87c2dcdcb551ae2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_06.png using Guid(660003aca27e647ed87c2dcdcb551ae2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '111953813747f07e9af68b003cec1a80') in 0.012087 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_11.png
+  artifactKey: Guid(fa19fd46f7ff14733aa8c58df8c4c878) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_11.png using Guid(fa19fd46f7ff14733aa8c58df8c4c878) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb5e14ce7c13b493c20f708ba6db10d1') in 0.011655 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_19.png
+  artifactKey: Guid(787cfbaed3e7747feb924fb330f97bab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_19.png using Guid(787cfbaed3e7747feb924fb330f97bab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ab4abee9db8f84f916528e2c4bf85c5') in 0.011749 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_10.png
+  artifactKey: Guid(56867d453764e42b4bb477d5f6300f61) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_10.png using Guid(56867d453764e42b4bb477d5f6300f61) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1cc0904a4b2c950f7615690632ad3eb2') in 0.012741 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_18.png
+  artifactKey: Guid(cf360fee1aecd461b8648a9dc5347ace) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_18.png using Guid(cf360fee1aecd461b8648a9dc5347ace) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2e44a91811be5ff29d1b747b86e5f2df') in 0.011670 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_17.png
+  artifactKey: Guid(db6144c8c17424c6e824fca063f8e165) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/4_Helmet/Elf_Helmet_17.png using Guid(db6144c8c17424c6e824fca063f8e165) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '273be47f491cce661bbdba698402526a') in 0.012280 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.660033 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_02.png
+  artifactKey: Guid(cc4c0497b23bd459aa0185a1b970ae77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_02.png using Guid(cc4c0497b23bd459aa0185a1b970ae77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'efc11c207efd9b4ce1d6ad0fae245c88') in 0.017185 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_18.png
+  artifactKey: Guid(62d3437b1b63e4a72b02cdf33cd035f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_18.png using Guid(62d3437b1b63e4a72b02cdf33cd035f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '673b7ab74e66c1fb588c9e098a142717') in 0.028263 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_04.png
+  artifactKey: Guid(3916a5832ceb44e7cb3f2c2c7f4c7e07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_04.png using Guid(3916a5832ceb44e7cb3f2c2c7f4c7e07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1428e27e2ea2553e958a5a64482237e3') in 0.018724 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_05.png
+  artifactKey: Guid(8024e2c300f9b4d179d2c69522a886aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_05.png using Guid(8024e2c300f9b4d179d2c69522a886aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1ea70f73b99393da5a44dfc16a640fc7') in 0.012487 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_10.png
+  artifactKey: Guid(be284aa12e53e4dd38a48d39e4bdb3e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_10.png using Guid(be284aa12e53e4dd38a48d39e4bdb3e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bbae8c3eff0bda5b13deda94f59cd3ce') in 0.017678 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_14.png
+  artifactKey: Guid(5ef0c16778c3c4a268d5ab3e4dc2cff0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_14.png using Guid(5ef0c16778c3c4a268d5ab3e4dc2cff0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ade65baac915d808e7622ee354fc7ea8') in 0.015590 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_13.png
+  artifactKey: Guid(fcbcb4d0a807246919156bf03513565f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_13.png using Guid(fcbcb4d0a807246919156bf03513565f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7073059591d45d50534ee753f6ebf1f7') in 0.017112 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_11.png
+  artifactKey: Guid(ce0b73381df754304b6979e4d928c85e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_11.png using Guid(ce0b73381df754304b6979e4d928c85e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e151f93347bed66d2ed5233195574b36') in 0.015005 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_17.png
+  artifactKey: Guid(4dbff46189ec8487d9aa2b9719b6400a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_17.png using Guid(4dbff46189ec8487d9aa2b9719b6400a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd54ceb9b7971e077995d0b354a227ed1') in 0.016474 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_06.png
+  artifactKey: Guid(8aa00adb27a10449bb324d87b888068c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/5_Armor/Elf_Armor_06.png using Guid(8aa00adb27a10449bb324d87b888068c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '42c85a529a930f3a6c35b73aabf2ae3a') in 0.018313 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.273542 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Shield_02.png
+  artifactKey: Guid(466b1cc3852524f549e58e8916a4e7ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Shield_02.png using Guid(466b1cc3852524f549e58e8916a4e7ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2fe4e0899417ee08aef54517ebb1b585') in 0.015766 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_02.png
+  artifactKey: Guid(85f3f5c3571e14f43a4d3f2fc665d4ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_02.png using Guid(85f3f5c3571e14f43a4d3f2fc665d4ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90c9ea8e7f96b310a857116f0209352e') in 0.015229 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Shield_04.png
+  artifactKey: Guid(a086f54e00018463da476436eb69aa0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Shield_04.png using Guid(a086f54e00018463da476436eb69aa0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd72faf561a676fc94a4aac107ed7954b') in 0.020132 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_01.png
+  artifactKey: Guid(ce44d97750c8f4520a70cd56747d808d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_01.png using Guid(ce44d97750c8f4520a70cd56747d808d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed8a6084ebe87be7e148cbcd014ee78c') in 0.019309 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_07.png
+  artifactKey: Guid(94f5e532a27fb4ec496f998c31e084ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_07.png using Guid(94f5e532a27fb4ec496f998c31e084ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e46a9cdf7004043a8007a96fa1f92d61') in 0.020525 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_14.png
+  artifactKey: Guid(9b10ebf041e94457c876bc36832bd105) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_14.png using Guid(9b10ebf041e94457c876bc36832bd105) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a0f3916ffb6eb6d3b9fabcd195eaadf7') in 0.016576 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_11.png
+  artifactKey: Guid(826d5e3da13494f519cb553be58241e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_11.png using Guid(826d5e3da13494f519cb553be58241e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c9a09e1b511a5233801fcb87faaa041a') in 0.016549 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Shield_03.png
+  artifactKey: Guid(3a37284c9f4e745eaa30c6331f2b38a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Shield_03.png using Guid(3a37284c9f4e745eaa30c6331f2b38a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6c4d81248b7d1b4766aec944b3b5d732') in 0.018016 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_16.png
+  artifactKey: Guid(d494893c0ce7246049ae92e6001fc453) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_16.png using Guid(d494893c0ce7246049ae92e6001fc453) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6baa706a52893f2fcb2d8bccecb2f279') in 0.020202 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_06.png
+  artifactKey: Guid(1502a0633a7f74246a47778e01b9b1e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_06.png using Guid(1502a0633a7f74246a47778e01b9b1e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bc7e7b477a4461fd75904897b895c4ef') in 0.014683 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_08.png
+  artifactKey: Guid(81c68f222463f4ceea0de1e467eb1f26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_08.png using Guid(81c68f222463f4ceea0de1e467eb1f26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9ba3101ef54a9163ea33953f5245463f') in 0.013534 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_13.png
+  artifactKey: Guid(c2eb9757e20bf40ea855e70321a2f2d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/6_Weapons/Elf_Weapon_13.png using Guid(c2eb9757e20bf40ea855e70321a2f2d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5683c2170f0138bd1bb12fb3e9d78588') in 0.013242 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.261830 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/7_Back/Elf_Back_03.png
+  artifactKey: Guid(40e557553569546cda912ca3a1536f4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/7_Back/Elf_Back_03.png using Guid(40e557553569546cda912ca3a1536f4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1bc214c6ef57fcbf0271ec2d6e12d0fd') in 0.014415 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/7_Back/Elf_Back_09.png
+  artifactKey: Guid(0a2a2fabf9367418bb7fbab3d8c4d14d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/7_Back/Elf_Back_09.png using Guid(0a2a2fabf9367418bb7fbab3d8c4d14d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b20958e6ef5748f8adb6c95c675db63a') in 0.012421 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/7_Back/Elf_Back_07.png
+  artifactKey: Guid(5953196d6d57745f58b6d7df203e755d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/7_Back/Elf_Back_07.png using Guid(5953196d6d57745f58b6d7df203e755d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9bf811e4fdb90b09d890778bb853ebfb') in 0.022796 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/7_Back/Elf_Back_10.png
+  artifactKey: Guid(ed35765594b564629b236ecf2e532772) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/7_Back/Elf_Back_10.png using Guid(ed35765594b564629b236ecf2e532772) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ac19c3de689f51e049268230e1dd323b') in 0.023495 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/SPUM/SPUM_Sprites/Packages/Elf/7_Back/Elf_Back_08.png
+  artifactKey: Guid(590b8b22dab0d43698cda93143cbb9e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SPUM/SPUM_Sprites/Packages/Elf/7_Back/Elf_Back_08.png using Guid(590b8b22dab0d43698cda93143cbb9e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'abe679a78c58dab29d56ce3198e1bdbe') in 0.033406 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.009792 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory doesn't match image D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.21 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.310 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1311ms)
+		BeginReloadAssembly (192ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (6ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (56ms)
+		EndReloadAssembly (1025ms)
+			LoadAssemblies (166ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (265ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (49ms)
+			SetupLoadedEditorAssemblies (550ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (21ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (69ms)
+				ProcessInitializeOnLoadAttributes (199ms)
+				ProcessInitializeOnLoadMethodAttributes (257ms)
+				AfterProcessingInitializeOnLoad (3ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (10ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 5.29 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4855 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 34 unused Assets / (193.5 KB). Loaded Objects now: 5413.
+Memory consumption went from 201.1 MB to 200.9 MB.
+Total: 13.739100 ms (FindLiveObjects: 0.599300 ms CreateObjectMapping: 0.400200 ms MarkObjects: 12.490100 ms  DeleteObjects: 0.247900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

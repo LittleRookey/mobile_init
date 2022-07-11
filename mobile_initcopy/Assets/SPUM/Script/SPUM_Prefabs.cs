@@ -73,6 +73,7 @@ public class SPUM_Prefabs : MonoBehaviour
                 _anim.SetTrigger("Attack");
                 _anim.SetInteger("AttackState", 0);
                 _anim.SetInteger("WeaponState", 0);
+                
                 break;
             case 5: // Attack Bow
                 _anim.SetTrigger("Attack");

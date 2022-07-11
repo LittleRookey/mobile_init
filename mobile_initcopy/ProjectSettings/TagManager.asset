@@ -4,9 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - P1
-  - P2
-  - P3
+  - Enemy
+  - Object
   layers:
   - Default
   - TransparentFX
@@ -43,4 +42,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 4008994783
     locked: 0

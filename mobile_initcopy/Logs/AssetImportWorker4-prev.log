@@ -1,0 +1,308 @@
+Using pre-set license
+Built from '2021.3/staging' branch; Version is '2021.3.1f1 (3b70a0754835) revision 3895456'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19043) 64bit Core' Language: 'ko' Physical Memory: 32636 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+D:\2021.3.1f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker4
+-projectPath
+D:/Clone/mobile_init/mobile_initcopy
+-logFile
+Logs/AssetImportWorker4.log
+-srvPort
+59986
+Successfully changed project path to: D:/Clone/mobile_init/mobile_initcopy
+D:/Clone/mobile_init/mobile_initcopy
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Refreshing native plugins compatible for Editor in 129.04 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2021.3.1f1 (3b70a0754835)
+[Subsystems] Discovering subsystems at path D:/2021.3.1f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Clone/mobile_init/mobile_initcopy/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3070 Laptop GPU (ID=0x24dd)
+    Vendor:   NVIDIA
+    VRAM:     8044 MB
+    Driver:   30.0.15.1215
+Initialize mono
+Mono path[0] = 'D:/2021.3.1f1/Editor/Data/Managed'
+Mono path[1] = 'D:/2021.3.1f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/2021.3.1f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56740
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/2021.3.1f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: D:/2021.3.1f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: D:/2021.3.1f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002846 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 112.53 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.666 seconds
+Domain Reload Profiling:
+	ReloadAssembly (667ms)
+		BeginReloadAssembly (103ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (472ms)
+			LoadAssemblies (104ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (99ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (23ms)
+			SetupLoadedEditorAssemblies (304ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (50ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (113ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (92ms)
+				ProcessInitializeOnLoadMethodAttributes (48ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.009867 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory doesn't match image D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 112.47 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.413 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1414ms)
+		BeginReloadAssembly (246ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (6ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (131ms)
+		EndReloadAssembly (1073ms)
+			LoadAssemblies (137ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (228ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (57ms)
+			SetupLoadedEditorAssemblies (646ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (11ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (113ms)
+				BeforeProcessingInitializeOnLoad (81ms)
+				ProcessInitializeOnLoadAttributes (231ms)
+				ProcessInitializeOnLoadMethodAttributes (208ms)
+				AfterProcessingInitializeOnLoad (2ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 1.15 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4884 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 47 unused Assets / (226.7 KB). Loaded Objects now: 5371.
+Memory consumption went from 199.2 MB to 198.9 MB.
+Total: 5.317500 ms (FindLiveObjects: 0.314500 ms CreateObjectMapping: 0.291400 ms MarkObjects: 4.567700 ms  DeleteObjects: 0.143400 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 2100699.071053 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_22.asset
+  artifactKey: Guid(f28113101d9caf64ab29ce2f160ac34e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_22.asset using Guid(f28113101d9caf64ab29ce2f160ac34e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '496ecfdf46f802703950b2fc25de7097') in 0.063479 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_30.asset
+  artifactKey: Guid(60cc809e00ffcb9438ea3f924801c1a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_30.asset using Guid(60cc809e00ffcb9438ea3f924801c1a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '482490c9bd0c73b6f303860a453aa5dd') in 0.009053 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_35.asset
+  artifactKey: Guid(cc76b9fa39abbc845bd1161143bea00b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_35.asset using Guid(cc76b9fa39abbc845bd1161143bea00b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19651949107fd9bd07291480dec28392') in 0.009582 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.197891 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_38.asset
+  artifactKey: Guid(70857e311b1be8c409ccf3f762d92b41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_38.asset using Guid(70857e311b1be8c409ccf3f762d92b41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d9211339ac99e7822eb0a3cba2b95bc') in 0.009127 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_45.asset
+  artifactKey: Guid(2f943f14a4f81204db01275724a0fca0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_45.asset using Guid(2f943f14a4f81204db01275724a0fca0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '502be44ac4d403420616ec1cdc80d8d3') in 0.008513 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.298111 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_46.asset
+  artifactKey: Guid(e10815aa64f132b4bbbc6b9559bb9f27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_46.asset using Guid(e10815aa64f132b4bbbc6b9559bb9f27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eff83a0749c97811ab2167d5986f2432') in 0.009676 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_53.asset
+  artifactKey: Guid(1a7a9ff8c23c9d74eb0bc32602b99c19) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_53.asset using Guid(1a7a9ff8c23c9d74eb0bc32602b99c19) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7d49c585d174445d10afd3ffbd95848f') in 0.009223 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.006672 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_54.asset
+  artifactKey: Guid(da8dce892e6762745af4746f1a1e406a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_54.asset using Guid(da8dce892e6762745af4746f1a1e406a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec6d1cb0afa8ce5fb29ed7494f05c11e') in 0.009449 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_61.asset
+  artifactKey: Guid(5e04d48de6879a04db0339855be906de) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_61.asset using Guid(5e04d48de6879a04db0339855be906de) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c3ee6b45074912aa3348780050f4d4e') in 0.008722 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_63.asset
+  artifactKey: Guid(10005d0120b99744fa767b58daddaafc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_63.asset using Guid(10005d0120b99744fa767b58daddaafc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1de9948311338610ad4160d67079266f') in 0.010868 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_68.asset
+  artifactKey: Guid(d358c53e37d857341a45d0ab8c57e1b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_68.asset using Guid(d358c53e37d857341a45d0ab8c57e1b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '43feeb16609fff87558e9b8fd1454f13') in 0.008698 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.016198 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_70.asset
+  artifactKey: Guid(b58b013edb9159f42b76bb1cf050227b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_70.asset using Guid(b58b013edb9159f42b76bb1cf050227b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8b7d3c567c746cebb067ae1a3471c672') in 0.010777 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_74.asset
+  artifactKey: Guid(71015ae47994e7a459ed3be8979182f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_74.asset using Guid(71015ae47994e7a459ed3be8979182f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '720245f72871d8d0a5f7be91dba4fe8a') in 0.009150 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.464837 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_78.asset
+  artifactKey: Guid(63afdc0c0e6b4234381ed6c5dce71dd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_78.asset using Guid(63afdc0c0e6b4234381ed6c5dce71dd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '77d21bd35f2d5463f51e1efe95ecc4c7') in 0.012413 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_85.asset
+  artifactKey: Guid(c9b56dddab5a18446a77a29472f7f84b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_85.asset using Guid(c9b56dddab5a18446a77a29472f7f84b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5a1a29387fb06cd3db4f2369b2dc1f71') in 0.009577 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.009387 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_86.asset
+  artifactKey: Guid(3c04b089698c2084dbe9a3dc90e05d71) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_86.asset using Guid(3c04b089698c2084dbe9a3dc90e05d71) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9b34dbc778d06d107389d0488f9f9200') in 0.010939 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_93.asset
+  artifactKey: Guid(b5153b4e1ffdb634ab07c823bbf46d3b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_93.asset using Guid(b5153b4e1ffdb634ab07c823bbf46d3b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa4746c4ba68ea5e1b3a79be6c95495e') in 0.009624 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.318379 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_94.asset
+  artifactKey: Guid(c77ecddfc16542b438896c025f84d875) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_94.asset using Guid(c77ecddfc16542b438896c025f84d875) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fb88b41bac328a5205a3be9cd12b0c9a') in 0.012583 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_101.asset
+  artifactKey: Guid(48f06bc25f4dad643b8ee7fc557f816d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_101.asset using Guid(48f06bc25f4dad643b8ee7fc557f816d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd766fbfd7e040f3a119dad985bb10d45') in 0.009289 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000704 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_102.asset
+  artifactKey: Guid(7ad55cb9926ffe5408fc6698ab5752ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_102.asset using Guid(7ad55cb9926ffe5408fc6698ab5752ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1256b7c56494bb5d220906ad0329237e') in 0.009776 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_107.asset
+  artifactKey: Guid(89f715255bc45c3498e860a347d7be49) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_107.asset using Guid(89f715255bc45c3498e860a347d7be49) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a9b8f93fb2da398b02aebe1b219a88d') in 0.008741 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_112.asset
+  artifactKey: Guid(47bd8597fc9a00140ae9568d1c1e1a15) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_112.asset using Guid(47bd8597fc9a00140ae9568d1c1e1a15) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5625aac4d11bac37bbd1c093eead3a45') in 0.010701 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_109.asset
+  artifactKey: Guid(6c8bb36d0661ab34f854933a68c7778c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Tiles/GrasslandsTextures 1_109.asset using Guid(6c8bb36d0661ab34f854933a68c7778c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a62dcbbbae92d01a40ffd48ec93206e') in 0.010392 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

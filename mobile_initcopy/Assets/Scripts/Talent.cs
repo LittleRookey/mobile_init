@@ -1,52 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using CleverCrow.Fluid.StatsSystem;
 public enum TalentType
 {
-    
+    마을사람,
+    대장장이,
+    사서,
+    병사,
+    검사,
+    궁수,
+    마법사
 };
 
-public class Talent 
+[CreateAssetMenu(fileName = "Talent", menuName = "Litkey/Talent")]
+public class Talent : ScriptableObject
 {
-    protected SpriteRenderer _icon;
-    protected int _level;
-    protected int _exp;
+    public SpriteRenderer _icon;
+
+    public string id;
+    public string _name;
+    public int _level;
+    public int _exp;
     [TextArea(3, 5)]
-    protected string _description;
-    protected int _value; // 재능의 값을 나타냄
-    
-    public Talent(SpriteRenderer sp, string description, int value)
-    {
-        _icon = sp;
-        _level = 1;
-        _exp = 0;
-        _description = description;
-        _value = value;
-    }
+    public string _description;
+    public int _value; // 재능의 값을 나타냄
 
-    public Talent(SpriteRenderer sp, int level, int exp, string description, int value)
-    {
-        _icon = sp;
-        _level = level;
-        _exp = exp;
-        _description = description;
-        _value = value;
-    }
-
-    public void SetTalent(int level, int exp, string description, int value)
-    {
-        this._level = level;
-        this._exp = exp;
-        this._description = description;
-        this._value = value;
-    }
-
-    public void SetIcon(SpriteRenderer sp)
-    {
-        _icon = sp;
-    }
-
+    public TalentType _talentType;
     public void Init()
     {
         _level = 1;
@@ -54,26 +34,25 @@ public class Talent
         _description = "";
         _value = 0;
     }
+
     
 }
 
-[System.Serializable]
-public class SwordsMan : Talent
+public static class ScriptableObjectExtension
 {
-    [SerializeField]
-    private int _str;
-
-    public int _Strength
+    /// <summary>
+    /// Creates and returns a clone of any given scriptable object.
+    /// </summary>
+    public static T Clone<T>(this T scriptableObject) where T : ScriptableObject
     {
-        get
+        if (scriptableObject == null)
         {
-            return _str;
+            Debug.LogError($"ScriptableObject was null. Returning default {typeof(T)} object.");
+            return (T)ScriptableObject.CreateInstance(typeof(T));
         }
-    }
-    public SwordsMan(SpriteRenderer sp, string desc, int val, int addStrength=5) : base(sp, desc, val)
-    {
-        _str = addStrength;
 
+        T instance = Object.Instantiate(scriptableObject);
+        instance.name = scriptableObject.name; // remove (Clone) from name
+        return instance;
     }
-
 }

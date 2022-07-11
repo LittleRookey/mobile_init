@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _prefabInventory = default;
-    [SerializeField] private Button _buttonOpenClose = default;
+
     
     // Start is called before the first frame update
     void Start()
@@ -16,9 +15,5 @@ public class UIManager : MonoBehaviour
         //_buttonOpenClose.onClick.AddListener(() => inventory.OpenClose());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

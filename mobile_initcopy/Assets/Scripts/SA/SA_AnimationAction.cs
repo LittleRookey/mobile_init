@@ -6,7 +6,14 @@ public class SA_AnimationAction : MonoBehaviour
 {
     public  SA_Unit _player;
 
-
+    
+    private void OnEnable()
+    {
+        if (_player == null)
+        {
+            _player = transform.parent.GetComponent<SA_Unit>();
+        }
+    }
     public void AttackDone()
     {
         switch(_player._attackType)
