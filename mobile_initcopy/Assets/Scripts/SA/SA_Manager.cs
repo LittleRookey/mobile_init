@@ -9,11 +9,11 @@ public class SA_Manager : MonoBehaviour
 
     public List<Transform> _unitPool = new List<Transform>();
 
-    public List<SA_Unit> _p1UnitList = new List<SA_Unit>();
+    public List<SA_Unit> _playerList = new List<SA_Unit>();
 
-    public List<SA_Unit> _p2UnitList = new List<SA_Unit>();
+    public List<SA_Unit> _enemyList = new List<SA_Unit>();
 
-    public List<SA_Unit> _p3UnitList = new List<SA_Unit>();
+    public List<SA_Unit> _objectList = new List<SA_Unit>();
 
 
     private void Awake()
@@ -27,7 +27,14 @@ public class SA_Manager : MonoBehaviour
 
     }
 
+    public void AddEnemy(SA_Unit enemy)
+    {
+        enemy.tag = "Enemy";
+        _enemyList.Add(enemy);
 
+    }
+
+    //public void ContainsEnemy()
     public SA_Unit GetTarget(SA_Unit unit)
     {
         SA_Unit tUnit = null;
@@ -35,8 +42,8 @@ public class SA_Manager : MonoBehaviour
         List<SA_Unit> tList = new List<SA_Unit>();
         switch(unit.tag)
         {
-            case "Player": tList = _p2UnitList; break;
-            case "Enemy": tList = _p1UnitList; break;
+            case "Player": tList = _enemyList; break;
+            case "Enemy": tList = _playerList; break;
         }
 
         float tSDis = 999999;
@@ -63,9 +70,9 @@ public class SA_Manager : MonoBehaviour
     }
     void SetUnitList()
     {
-        _p1UnitList.Clear();
-        _p2UnitList.Clear();
-        _p3UnitList.Clear();
+        _playerList.Clear();
+        _enemyList.Clear();
+        _objectList.Clear();
 
         for (var i = 0; i < _unitPool.Count; i++)
         {
@@ -73,20 +80,20 @@ public class SA_Manager : MonoBehaviour
             {
                 switch(i)
                 {
-                    case 0:
+                    case 0: // for players
                         
-                        _p1UnitList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
+                        _playerList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
                         //Debug.Log(_unitPool[i].GetChild(j).gameObject.name);
                         _unitPool[i].GetChild(j).gameObject.tag = "Player";
                         break;
-                    case 1:
-                        _p2UnitList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
+                    case 1: // for enemies
+                        _enemyList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
                         //Debug.Log(_unitPool[i].GetChild(j).gameObject.name);
                         _unitPool[i].GetChild(j).gameObject.tag = "Enemy";
                         break;
 
                     case 2:
-                        _p3UnitList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
+                        _objectList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
                         _unitPool[i].GetChild(j).gameObject.tag = "Object";
                         break;
 

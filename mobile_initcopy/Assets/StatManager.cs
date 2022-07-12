@@ -52,21 +52,21 @@ public class StatManager : MonoBehaviour
     public StatDefinition _attack;
     public StatModifier statMod;
 
-    private int tempStatDex;
-    private int tempStatStr;
-    private int tempStatInt;
-    private int tempStatVit;
+    //private int tempStatDex;
+    //private int tempStatStr;
+    //private int tempStatInt;
+    //private int tempStatVit;
 
-    float tempmaxhp = 0;
-    float tempmana = 0;
-    float tempattack = 0;
-    float tempmagicattack = 0;
-    float tempdefense = 0;
-    float tempmagicdefense = 0;
-    float tempHPGen = 0;
-    float tempManaGen = 0;
-    float tempattackspeed = 0;
-    float tempmovespeed = 0;
+    //float tempmaxhp = 0;
+    //float tempmana = 0;
+    //float tempattack = 0;
+    //float tempmagicattack = 0;
+    //float tempdefense = 0;
+    //float tempmagicdefense = 0;
+    //float tempHPGen = 0;
+    //float tempManaGen = 0;
+    //float tempattackspeed = 0;
+    //float tempmovespeed = 0;
 
     [SerializeField] Color normalColor = Color.white;
     [SerializeField] Color addedColor = new Color(239f, 255f, 0f);
@@ -142,7 +142,7 @@ public class StatManager : MonoBehaviour
     private void Start()
     {
         //tempStatLeft = _player._statPoint; // TODO when player opens the stat window
-        tempStatDex = 0;
+        //tempStatDex = 0;
 
 
     }

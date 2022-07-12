@@ -7,29 +7,36 @@ using UnityEngine.Events;
 
 public class SA_Unit : MonoBehaviour
 {
-
+    [Header("References")]
     public SPUM_Prefabs _spumPrefab;
     public SA_AnimationAction _animAction;
     public SA_UnitSet _UnitSet;
 
-    public AttackType _attackType;
     List<Vector2> _moveList;
 
-    public UnitState _unitState = UnitState.idle;
+    
 
+
+    [Header("Necessary Settings")]
+    public AttackType _attackType;
+    public bool isPlayer;
+    public bool showGizmos;
+
+    [Header("Player Info")]
+    public int ID;
     public SA_Unit _target;
-
-    [Header("Stats")]
     public int _level = 1;
-
     private int _exp;
     private int _maxExp;
+    private int _statPoint = 0;
+    public UnitState _unitState = UnitState.idle;
     public StatsContainer _mStatContainer;
 
 
 
-    public bool isPlayer;
 
+
+    [Header("Stats")]
     public float _unitMaxHP;
     public float _unitHP;
     public int _unitDefense;
@@ -50,9 +57,8 @@ public class SA_Unit : MonoBehaviour
 
     private float _findTimer;
     private float _attackTimer;
-    public static float FINDRANGE;
 
-    private int _statPoint = 0;
+    
 
     Vector2 _dirVec;
     Vector2 _tempDist;
@@ -60,7 +66,7 @@ public class SA_Unit : MonoBehaviour
 
     public List<Talent> talents;
 
-    
+
     public enum UnitState
     {
         idle, 
@@ -262,6 +268,7 @@ public class SA_Unit : MonoBehaviour
     //        _mSubStat._MagicDefense += StatManager.VIT_MAGICDEFENSEGROW;
     //    }
     //}
+
 
 
 
@@ -489,6 +496,10 @@ public class SA_Unit : MonoBehaviour
 
     public void SetDamage(SA_Unit owner, float dmg)
     {
+        // when player is dead and got hit
+        if (_unitState == UnitState.death)
+            return;
+
         _unitHP -= dmg;
         // hp bar
         if (_UnitSet == null) return;
@@ -506,11 +517,11 @@ public class SA_Unit : MonoBehaviour
     {
         switch(gameObject.tag)
         {
-            case "P1":
-                SoonsoonData.Instance.SAM._p1UnitList.Remove(this);
+            case "Player":
+                SoonsoonData.Instance.SAM._playerList.Remove(this);
                 break;
-            case "P2":
-                SoonsoonData.Instance.SAM._p2UnitList.Remove(this);
+            case "Enemy":
+                SoonsoonData.Instance.SAM._enemyList.Remove(this);
                 break;
         }
         _unitHP = 0;
@@ -630,11 +641,11 @@ public class SA_Unit : MonoBehaviour
         string tTag = "";
         switch (gameObject.tag)
         {
-            case "P1":
-                tTag = "P2";
+            case "Player":
+                tTag = "Enemy";
                 break;
-            case "P2":
-                tTag = "P1";
+            case "Enemy":
+                tTag = "Player";
                 break;
         }
         if (collision.gameObject.CompareTag(tTag))
@@ -650,9 +661,12 @@ public class SA_Unit : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, _unitFightRange);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, _unitAttackRange);
+        if (showGizmos)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireSphere(transform.position, _unitFightRange);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, _unitAttackRange);
+        }
     }
 }

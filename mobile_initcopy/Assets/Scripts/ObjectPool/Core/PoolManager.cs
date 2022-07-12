@@ -45,6 +45,29 @@ public class PoolManager : Singleton<PoolManager>
 		return spawnObject(prefab, Vector3.zero, Quaternion.identity);
 	}
 
+	public GameObject spawnObject(GameObject prefab, Vector2 pos)
+	{
+		return spawnObject(prefab, pos, Quaternion.identity);
+	}
+
+	public GameObject spawnObject(GameObject prefab, Vector2 position, Quaternion rotation)
+	{
+		if (!prefabLookup.ContainsKey(prefab))
+		{
+			WarmPool(prefab, 1);
+		}
+
+		var pool = prefabLookup[prefab];
+
+		var clone = pool.GetItem();
+		clone.transform.SetPositionAndRotation(position, rotation);
+		clone.SetActive(true);
+
+		instanceLookup.Add(clone, pool);
+		dirty = true;
+		return clone;
+	}
+
 	public GameObject spawnObject(GameObject prefab, Vector3 position, Quaternion rotation)
 	{
 		if (!prefabLookup.ContainsKey(prefab))
@@ -106,11 +129,16 @@ public class PoolManager : Singleton<PoolManager>
 	{
 		return Instance.spawnObject(prefab);
 	}
+	public static GameObject SpawnObject(GameObject prefab, Vector2 position)
+	{
+		return Instance.spawnObject(prefab, position);
+	}
 
 	public static GameObject SpawnObject(GameObject prefab, Vector3 position, Quaternion rotation)
 	{
 		return Instance.spawnObject(prefab, position, rotation);
 	}
+
 
 	public static void ReleaseObject(GameObject clone)
 	{

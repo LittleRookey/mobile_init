@@ -23,11 +23,13 @@ public class SA_AnimationAction : MonoBehaviour
                 break;
 
             case SA_Unit.AttackType.bow:
-                _player.AttackMissile();
+                if (_player._target != null)
+                        _player.AttackMissile();
                 break;
 
             case SA_Unit.AttackType.magic:
-                _player.AttackMissile();
+                if (_player._target != null)
+                        _player.AttackMissile();
                 break;
         }
     }

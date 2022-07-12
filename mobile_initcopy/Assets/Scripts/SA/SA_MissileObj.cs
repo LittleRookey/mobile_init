@@ -76,6 +76,9 @@ public class SA_MissileObj : MonoBehaviour
 
     public void SetMissile(MissileType type, SA_Unit owner, SA_Unit target)
     {
+        if (target == null)
+            PoolManager.ReleaseObject(gameObject);
+
         transform.position = owner.transform.position + new Vector3(0, 0.25f, 0);
         _startPos = transform.position;
         _target = target;

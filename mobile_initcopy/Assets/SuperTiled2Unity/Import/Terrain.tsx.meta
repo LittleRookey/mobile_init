@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1b9f6a1284b81484190ed288515fe7f9
+guid: 49255c23c92cc594da02f189bb08ef1f
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -8,16 +8,18 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: cc34d0f3dc257a442819830b408c5322, type: 3}
-  missingFiles: []
-  errors: []
+  missingFiles:
+  - Assets/SuperTiled2Unity/Tilesets/Tileset-Terrain.png
+  errors:
+  - 'Missing texture asset: ../Tilesets/Tileset-Terrain.png'
   warnings: []
   missingSortingLayers: []
   missingLayers: []
   missingTags: []
   importerVersion: 11
-  pixelsPerUnit: 32
+  pixelsPerUnit: 100
   edgesPerEllipse: 32
-  numberOfObjectsImported: 5079
+  numberOfObjectsImported: 2
   useSpriteAtlas: 1
   atlasWidth: 2048
   atlasHeight: 2048
