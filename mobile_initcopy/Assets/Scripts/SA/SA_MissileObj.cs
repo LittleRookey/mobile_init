@@ -95,7 +95,7 @@ public class SA_MissileObj : MonoBehaviour
 
     public void MissileDone()
     {
-        Debug.Log("Missile Released");
+        //Debug.Log("Missile Released");
         PoolManager.ReleaseObject(this.gameObject);
         // TODO hit effect 
         //SoonsoonData.Instance.SAMM._poolListUse.Remove(this);
@@ -152,7 +152,7 @@ public class SA_MissileObj : MonoBehaviour
     {
         if (_range > 0)// fireball
         {
-            Debug.Log("fireball done 0");
+            //Debug.Log("fireball done 0");
             Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, 1f);
             if (hit.Length > 0)
             {
@@ -166,11 +166,11 @@ public class SA_MissileObj : MonoBehaviour
             }
         } else // arrow
         {
-            Debug.Log("Arrow done 0");
+            //Debug.Log("Arrow done 0");
             if (TargetCheck())
             {
                 //    (_target.transform.position - transform.position).sqrMagnitude;
-                Debug.Log("Arrow done 1");
+                //Debug.Log("Arrow done 1");
                 _owner.AttackDone();
                 //if (_missileType == MissileType.arrow)
                 //{
@@ -188,7 +188,7 @@ public class SA_MissileObj : MonoBehaviour
         if (_target.gameObject == null) return false;
         if (!_target.gameObject.activeInHierarchy) return false;
         // target still exists and is alive
-        Debug.Log("idle from checkTarget");
+        //Debug.Log("idle from checkTarget");
         _endPos = (Vector2)_target.transform.position;
 
         return true;

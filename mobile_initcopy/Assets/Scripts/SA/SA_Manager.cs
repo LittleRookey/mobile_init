@@ -27,6 +27,16 @@ public class SA_Manager : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        Actions.OnEnemySpawn += AddEnemy;
+    }
+
+    private void OnDisable()
+    {
+        Actions.OnEnemySpawn -= AddEnemy;
+    }
+
     public void AddEnemy(SA_Unit enemy)
     {
         enemy.tag = "Enemy";

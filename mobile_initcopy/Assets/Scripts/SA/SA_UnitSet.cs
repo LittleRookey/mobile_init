@@ -37,17 +37,71 @@ public class SA_UnitSet : MonoBehaviour
     public Vector3 _dmgPopupOffset;
 
     Vector3 _myPos;
+    private void Awake()
+    {
+        
+
+    }
     // Start is called before the first frame update
     void Start()
     {
+        if (_unitST == null) _unitST = GetComponent<SA_Unit>();
+        if (!_UnitSubset)
+        {
+            //bool chk = false;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).GetComponent<SA_UnitSubset>() != null)
+                {
+                    //chk = true;
+                    DestroyImmediate(transform.GetChild(i));
+                }
+                
+            }    
+            SetUnitToBattle(); // get ref of unitsubset
+        }
+
+
         if (_UnitSubset != null)
         {
             _UnitSubset._hpList[0].gameObject.SetActive(false);
         }
         if (SA_ResourceManager.Instance.turnOnHPBarAlways) _UnitSubset._hpList[0].gameObject.SetActive(true);
+
+        _UnitSubset._levelText.text = _unitST._level.ToString();
+
     }
 
-    // Update is called once per frame
+
+    private void OnEnable()
+    {
+        if (_unitST.isPlayer)
+        {
+            Actions.OnPlayerLevelUp += UpdateLevel;
+        } 
+        else if(!_unitST.isPlayer)
+        {
+
+        }
+        // TODO set the enemy stat, loot, reset enemy state
+        Actions.OnHPChange += AddHP;
+    }
+
+    private void OnDisable()
+    {
+        if (_unitST.isPlayer)
+        {
+            Actions.OnPlayerLevelUp -= UpdateLevel;
+        }
+        else if (!_unitST.isPlayer)
+        {
+
+        }
+        Actions.OnHPChange -= AddHP;
+    }
+
+
+
     void Update()
     {
         if(!Application.isPlaying)
@@ -60,17 +114,40 @@ public class SA_UnitSet : MonoBehaviour
         }
         else
         {
+            
             transform.localPosition = new Vector3(transform.position.x, transform.position.y, transform.position.y * 0.1f);
             if (_UnitSubset == null) return;
-            if (!SA_ResourceManager.Instance.turnOnHPBarAlways && _UnitSubset._hpList[0].gameObject.activeInHierarchy)
+            if (_UnitSubset.alwaysTurnOnHPBar && !SA_ResourceManager.Instance.turnOnHPBarAlways && _UnitSubset._hpList[0].gameObject.activeInHierarchy)
             {
                 _timerForHP += Time.deltaTime;
-                if (_timerForHP > 1f)
+                if (_timerForHP > SA_ResourceManager.ENEMYHPTIME)
                 {
                     _UnitSubset._hpList[0].gameObject.SetActive(false);  
                 }
             }
         }
+    }
+
+    void UpdateLevel()
+    {
+        _UnitSubset._levelText.text = _unitST._level.ToString();
+    }
+
+    public void AddHP(float val)
+    {
+        SA_Unit sa = _unitST;
+        if (sa._unitState == SA_Unit.UnitState.death) return;
+        if (!sa.gameObject.activeInHierarchy) return;
+        if (sa._unitHP <= 0) return;
+
+        if (sa._unitHP + val > sa._unitMaxHP)
+        {
+            sa._unitHP = sa._unitMaxHP;
+        } else
+        {
+            sa._unitHP += val;
+        }
+        UpdateHPBar();
     }
 
     public void CalcHPState()
@@ -81,15 +158,33 @@ public class SA_UnitSet : MonoBehaviour
         // hplist[2]ดย pivot 
         _UnitSubset._hpList[0].gameObject.SetActive(true);
         float tValue = _unitST._unitHP * (1/_unitST._unitMaxHP);
+        if (tValue < 0) tValue = 0f;
+        
         _UnitSubset._hpList[2].transform.localScale = new Vector3(tValue, 1, 1);
 
         _timerForHP = 0;
     }
 
+    public void UpdateHPBar()
+    {
+        if (_unitST == null) return; 
+        float tValue = _unitST._unitHP * (1 / _unitST._unitMaxHP);
+        _UnitSubset._hpList[2].transform.localScale = new Vector3(tValue, 1, 1);
+    }
     public void ShowDmgText(SA_Unit.AttackType type, float value)
     {
         SA_ResourceManager.Instance.GetDamageNumber(type).Spawn(transform.position + _dmgPopupOffset, value);
         //SA_ResourceManager.Instance._normalDamagePrefab.Spawn(transform.position + _dmgPopupOffset, value);
+    }
+
+    public void TurnOffHPBar(float sec)
+    {
+        Invoke("TTurnOffHPBar", sec);
+    }
+
+    private void TTurnOffHPBar()
+    {
+        _UnitSubset._hpList[0].gameObject.SetActive(false);
     }
 
     void SetUnitType()
@@ -100,10 +195,15 @@ public class SA_UnitSet : MonoBehaviour
             bool check = false;
 
             if (_unitST == null) check = true;
+            if (_UnitSubset == null) check = true;
             if (_unitST._spumPrefab == null) check = true;
             if (_rigidBody == null) check = true;
             if (_collider == null) check = true;
-
+            Debug.Log(_unitST == null);
+            Debug.Log(_UnitSubset == null);
+            Debug.Log(_unitST._spumPrefab == null);
+            Debug.Log(_rigidBody == null);
+            Debug.Log(_collider == null);
             if (check) UnitTypeProcess();
 
             switch(_unitType)
@@ -116,7 +216,7 @@ public class SA_UnitSet : MonoBehaviour
                 case UnitType.Enemy:
                     gameObject.tag = "Enemy";
                     
-                    _unitST._spumPrefab._anim.transform.localScale = new Vector3(1, 1, 1);
+                    //_unitST._spumPrefab._anim.transform.localScale = new Vector3(1, 1, 1);
                     break;
 
                 case UnitType.Object:
@@ -128,6 +228,22 @@ public class SA_UnitSet : MonoBehaviour
         }
     }
 
+    public void AddHPBar()
+    {
+        if (_UnitSubset == null)
+        {
+            _UnitSubset = Instantiate(SA_ResourceManager.Instance._hpBarWithLevel).GetComponent<SA_UnitSubset>();
+            _UnitSubset.gameObject.name = "SA_UnitSubset";
+            _UnitSubset.transform.SetParent(transform);
+            _UnitSubset.transform.localScale = Vector3.one;
+            _UnitSubset.transform.localPosition = SA_ResourceManager.Instance._hpBarPos;
+            _UnitSubset._levelText.text = _unitST._level.ToString();
+        } else
+        { // if hpbar already exists
+            
+
+        }
+    }
     public void UnitTypeProcess()
     {
         _unitST = GetComponent<SA_Unit>();
@@ -136,8 +252,8 @@ public class SA_UnitSet : MonoBehaviour
         _unitST._spumPrefab = GetComponent<SPUM_Prefabs>();
         _unitST._UnitSet = this;
 
-        _unitST._mStatContainer = SA_ResourceManager.Instance.GetCharacterStat();
-        UnitInitSet();
+        //_unitST._mStatContainer = SA_ResourceManager.Instance.GetCharacterStat();
+        //UnitInitSet();
         
 
         SA_AnimationAction tSA = _unitST._spumPrefab._anim.gameObject.GetComponent<SA_AnimationAction>();
@@ -184,14 +300,34 @@ public class SA_UnitSet : MonoBehaviour
             }
         }
         //Debug.Log(SA_ResourceManager.Instance._hpBar.name);
-        _UnitSubset = Instantiate(SA_ResourceManager.Instance._hpBarWithLevel).GetComponent<SA_UnitSubset>();
-        _UnitSubset.gameObject.name = "SA_UnitSubset";
-        _UnitSubset.transform.SetParent(transform);
-        _UnitSubset.transform.localScale = Vector3.one;
-        _UnitSubset.transform.localPosition = Vector3.zero;
-        _UnitSubset._levelText.text = "1";
+        
+        
+        //_UnitSubset = Instantiate(SA_ResourceManager.Instance._hpBarWithLevel).GetComponent<SA_UnitSubset>();
+        //_UnitSubset.gameObject.name = "SA_UnitSubset";
+        //_UnitSubset.transform.SetParent(transform);
+        //_UnitSubset.transform.localScale = Vector3.one;
+        //_UnitSubset.transform.localPosition = new Vector3(-.7f, .7f);
+        //_UnitSubset._levelText.text = "1";
+        
+
+        
+
+        _unitST.enabled = true;
+    }
+
+    public void SetUnitToBattle()
+    {
+        //if (_unitST._ms == null) return;
+
+        Debug.Log("InitMonster");
+        Vector3 mPos = new Vector3((int)transform.position.x, (int)transform.position.y, transform.position.y * 0.1f);
+        transform.localPosition = mPos;
+        
+        AddHPBar();
+        
 
     }
+
 
     void UnitInitSet()
     {

@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class SA_MissileManager : MonoBehaviour
 {
 
     //public Transform _misslePool;
-    public int _objectPoolNumber = 30;
+    public int _objectPoolNumber = 20;
     public SA_MissileObj _fireball, _arrow;
     
     //public List<SA_MissileObj> _poolList = new List<SA_MissileObj>();

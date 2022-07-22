@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58db294b88879904e8022e0c01c7c2ae, type: 3}
+  m_Name: Monster
+  m_EditorClassIdentifier: 
+  monsterStatPerLevel:
+    currentCryptoKey: 1772654819
+    hiddenValue: 1772654816
+    inited: 1
+    fakeValue: 3
+    fakeValueActive: 1
+  _monsterSize: 2
+  _monsterType: 0
+  _attackType: 0
+  basis:
+    currentCryptoKey: 1708765426
+    hiddenValue: 1708765420
+    inited: 1
+    fakeValue: 30
+    fakeValueActive: 1
+  extra:
+    currentCryptoKey: 1873717179
+    hiddenValue: 1873717215
+    inited: 1
+    fakeValue: 100
+    fakeValueActive: 1
+  acc_a:
+    currentCryptoKey: 1115535646
+    hiddenValue: 1115535616
+    inited: 1
+    fakeValue: 30
+    fakeValueActive: 1
+  acc_b:
+    currentCryptoKey: 1191595226
+    hiddenValue: 1191595204
+    inited: 1
+    fakeValue: 30
+    fakeValueActive: 1
+  mob_basis:
+    currentCryptoKey: 1063873755
+    hiddenValue: 1063873745
+    inited: 1
+    fakeValue: 10
+    fakeValueActive: 1
+  mob_extra:
+    currentCryptoKey: 2042172375
+    hiddenValue: 2042172381
+    inited: 1
+    fakeValue: 10
+    fakeValueActive: 1
+  level_attackgrowth: 1.06
+  level_maxhpgrowth: 1.09
+  dropExp: 0

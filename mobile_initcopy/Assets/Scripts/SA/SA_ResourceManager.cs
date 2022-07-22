@@ -4,6 +4,7 @@ using UnityEngine;
 using DamageNumbersPro;
 using CleverCrow.Fluid.StatsSystem.StatsContainers;
 
+
 public enum DamageType
 {
     normal,
@@ -54,27 +55,23 @@ public class SA_ResourceManager: MonoBehaviour
 
     public GameObject _hpBar;
     public GameObject _hpBarWithLevel;
+    public GameObject _hpBarPlayer;
 
     [Header("Stats")]
     public StatsContainer normalCharacterStats;
 
     public bool turnOnHPBarAlways;
+    public Vector2 _hpBarPos = new Vector2(0, 0);
+    
+
+    // timer for Character's HP Bar active time
+    public static readonly float ENEMYHPTIME = 3f;
+
+
+
 
     // Stats for base values
-    public static readonly int HP = 100;
-    public static readonly int MANA = 0;
-    public static readonly int ATTACK = 10;
-    public static readonly int MAGICFORCE = 0;
-    public static readonly int ATTACKSPEED = 1;
-    public static readonly float ATTACKDELAY = 0.5f;
-    public static readonly int MOVESPEED = 1;
-    public static readonly float HPREGEN = 0.1f;
-    public static readonly float MANAREGEN = 0f;
-    public static readonly int DEFENSE = 1;
-
-    public static readonly int ATTACKRANGE_BOW = 10;
-    public static readonly int ATTACKRANGESWORD= 1;
-    public static readonly int ATTACKRANGE_MAGIC = 10;
+  
     //public static readonly int MAGICDEFENSE = 0;
 
 

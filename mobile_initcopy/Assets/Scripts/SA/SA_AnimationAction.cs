@@ -16,7 +16,7 @@ public class SA_AnimationAction : MonoBehaviour
     }
     public void AttackDone()
     {
-        switch(_player._attackType)
+        switch(_player._ms._attackType)
         {
             case SA_Unit.AttackType.sword:
                 if (_player._target != null) _player.AttackDone(_player._target);
@@ -34,6 +34,21 @@ public class SA_AnimationAction : MonoBehaviour
         }
     }
 
+    public void SwordSlashV1()
+    {
+        EffectManager.OnPlayerAttackV1?.Invoke(_player);
+    }
+
+    public void AttackFinish()
+    {
+        _player.isAttacking = false;
+
+    }
+
+    public void CanMove()
+    {
+        _player.canMove = true;
+    }
     public void DeathDone()
     {
         _player.SetDeathDone();   

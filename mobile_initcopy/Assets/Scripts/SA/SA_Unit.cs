@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CleverCrow.Fluid.StatsSystem.StatsContainers;
-using CleverCrow.Fluid.StatsSystem;
 using UnityEngine.Events;
+using CodeStage.AntiCheat.ObscuredTypes;
+
 
 public class SA_Unit : MonoBehaviour
 {
@@ -12,64 +12,72 @@ public class SA_Unit : MonoBehaviour
     public SA_AnimationAction _animAction;
     public SA_UnitSet _UnitSet;
 
-    List<Vector2> _moveList;
 
+    //List<Vector2> _moveList;
     
 
 
+
     [Header("Necessary Settings")]
-    public AttackType _attackType;
+    public string _Name;
     public bool isPlayer;
     public bool showGizmos;
+    public MonsterSetting _ms;
+    public ObscuredInt _level = 1;
 
     [Header("Player Info")]
-    public int ID;
+    public ObscuredInt ID;
     public SA_Unit _target;
-    public int _level = 1;
-    private int _exp;
-    private int _maxExp;
-    private int _statPoint = 0;
+    public ObscuredInt _exp;
+    public ObscuredInt _maxExp;
+    public ObscuredInt _statPoint = 0;
     public UnitState _unitState = UnitState.idle;
-    public StatsContainer _mStatContainer;
-
+    public bool isDead;
 
 
 
 
     [Header("Stats")]
-    public float _unitMaxHP;
-    public float _unitHP;
-    public int _unitDefense;
-    public float _unitMana;
-    public float _unitAttack;
+    public ObscuredFloat _unitMaxHP;
+    public ObscuredFloat _unitHP;
+    public ObscuredInt _unitDefense;
+    public ObscuredFloat _unitMana;
+    public ObscuredInt _unitAttack;
 
-    public float _unitMagicForce; // amplifies skills by charge
-    public float _unitAttackSpeed; 
-    public float _unitAttackDelay; // delay time between every attack
+    public ObscuredFloat _unitMagicForce; // amplifies skills by charge
+    public ObscuredFloat _unitAttackSpeed; 
+    public ObscuredFloat _unitAttackDelay; // delay time between every attack
 
-    public float _unitAttackRange;
-    public float _unitFightRange;
+    public ObscuredFloat _unitAttackRange;
+    public ObscuredFloat _unitFightRange;
 
-    public float _unitHPRegen;
-    public float _unitManaRegen;
+    public ObscuredFloat _unitHPRegen;
+    public ObscuredFloat _unitManaRegen;
 
-    public float _unitMoveSpeed;
+    public ObscuredFloat _unitMoveSpeed;
 
-    private float _findTimer;
-    private float _attackTimer;
+    private ObscuredFloat _findTimer;
+    private ObscuredFloat _attackTimer;
+    private ObscuredFloat _hpRegenTimer;
 
-    
+    public UnityAction<SA_Unit> OnDeath;
+
+    public ObscuredInt dropExp;
 
     Vector2 _dirVec;
     Vector2 _tempDist;
 
+    public bool isAttacking;
+    public bool canMove;
 
     public List<Talent> talents;
 
 
+    Vector2 nPos;
     public enum UnitState
     {
         idle, 
+        patrol,
         run,
         attack,
         stun,
@@ -84,23 +92,23 @@ public class SA_Unit : MonoBehaviour
         magic
     };
 
-    private void OnValidate()
-    {
-#if UNITY_EDITOR
-        switch(_attackType)
-        {
-            case AttackType.sword:
-                _unitAttackRange = 1;
-                break;
-            case AttackType.bow:
-                _unitAttackRange = 10;
-                break;
-            case AttackType.magic:
-                _unitAttackRange = 10;
-                break;
-        }
-#endif
-    }
+//    private void OnValidate()
+//    {
+//#if UNITY_EDITOR
+//        switch(_ms._attackType)
+//        {
+//            case AttackType.sword:
+//                _unitAttackRange = 1;
+//                break;
+//            case AttackType.bow:
+//                _unitAttackRange = 10;
+//                break;
+//            case AttackType.magic:
+//                _unitAttackRange = 10;
+//                break;
+//        }
+//#endif
+//    }
     private void Awake()
     {
         _animAction = _spumPrefab._anim.GetComponent<SA_AnimationAction>();
@@ -109,27 +117,105 @@ public class SA_Unit : MonoBehaviour
 
     void Start()
     {
-        _mStatContainer = SA_ResourceManager.Instance.GetCharacterStat();
-        InitStat();
-        _moveList = new List<Vector2>();
-        //var callBacks = new UnityAction<StatRecord>((record) => Debug.Log(record));
-        //_mStatContainer.OnStatChangeSubscribe(StatManager.ATTACK_ID, callBacks);
-        if (isPlayer)
+        //if (!isPlayer)
+        //{
+        //    if (_ms == null) _ms = Resources.Load<MonsterSetting>("MonsterSettings/Monster");
+        //    _ms.Init(this);
+
+        //}
+        //else if (isPlayer)
+        //{
+        //    if (_ms == null) _ms = Resources.Load<MonsterSetting>("MonsterSettings/Player");
+        //    StatManager.Instance.InitPlayer(this);
+        //}
+
+    }
+
+    private void OnEnable()
+    {
+        SetState(UnitState.idle);
+        isDead = false;
+        OnDeath += TurnOffCharacter;
+        if (!isPlayer)
         {
-            //StatManager.Instance.SubscribeEvents();
+            Debug.Log("Not player");
+            if (_ms == null) _ms = Resources.Load<MonsterSetting>("MonsterSettings/Monster");
+            _ms.Init(this);
+            SetState(UnitState.idle);
+
         }
-        //_mStatContainer.
-        _mStatContainer.SetModifier(OperatorType.Add, "attack", "modifierID", 100);
-        //_mstatcontainer.onstatchangesubscribe(attack_id, callback);
+        else if (isPlayer)
+        {
+            Debug.Log("player");
+            if (_ms == null) _ms = Resources.Load<MonsterSetting>("MonsterSettings/Player");
+            Debug.Log(StatManager.Instance == null);
+            StatManager.Instance.InitPlayer(this);
+        }
+    }
+
+
+    private void OnDisable()
+    {
+        OnDeath -= TurnOffCharacter;
+        if (!isPlayer)
+        {
+
+            _ms.Init(this);
+
+        }
+        else if (isPlayer)
+        {
+            StatManager.Instance.InitPlayer(this);
+        }
+        //PoolManager.ReleaseObject(this.gameObject);   
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckState();
+        HPRegen();
+    }
+
+    private void HPRegen()
+    {
+        _hpRegenTimer += Time.deltaTime;
+        if (_hpRegenTimer >= 1.0f && !isDead && _unitHP < _unitMaxHP)
+        {
+            if (_unitHP + _unitHPRegen > _unitMaxHP)
+            {
+                _unitHP = _unitMaxHP;
+
+            } else
+            {
+                _unitHP += _unitHPRegen;
+            }
+            _hpRegenTimer = 0f;
+            Actions.OnHPChange?.Invoke(0f);
+        }
+    }
+    public void Setup(MonsterSetting monst)
+    {
         
     }
 
+    // Give reward to the given target
+    public void GiveReward(SA_Unit enem)
+    {
+        _exp += enem.dropExp;
+
+        
+    }
+
+    public void TurnOffCharacter(SA_Unit sa)
+    {
+        Invoke("TurnOff", 2f);
+    }
+
+    void TurnOff()
+    {
+        PoolManager.ReleaseObject(this.gameObject);
+    }
     public int GetLeftStatPoint()
     {
         return _statPoint;
@@ -139,139 +225,15 @@ public class SA_Unit : MonoBehaviour
     // 1. load basic stat 
     // 2. Add substat based on main stat 
     // 3. Save
-
+    // FOR MONSTER
     // Sets up the normal stat(lv 1) to the unit  
     public void InitStat()
     {
-        _unitAttack = SA_ResourceManager.ATTACK;
-        _unitMagicForce = SA_ResourceManager.MAGICFORCE;
-        _unitHPRegen = SA_ResourceManager.HPREGEN;
-        _unitDefense = SA_ResourceManager.DEFENSE;
-        
-        _unitManaRegen = SA_ResourceManager.MANAREGEN;
-        _unitAttackSpeed = SA_ResourceManager.ATTACKSPEED;
-        _unitAttackDelay = SA_ResourceManager.ATTACKDELAY;
-        _unitMaxHP = SA_ResourceManager.HP;
-        _unitMana = SA_ResourceManager.MANA;
-        _unitMoveSpeed = SA_ResourceManager.MOVESPEED;
-        _unitHP = _unitMaxHP;
-        
-        if (_attackType == AttackType.sword)
-            _unitAttackRange = SA_ResourceManager.ATTACKRANGESWORD;
-        else if(_attackType == AttackType.bow)
-            _unitAttackRange = SA_ResourceManager.ATTACKRANGE_BOW;
-        else if(_attackType == AttackType.magic)
-            _unitAttackRange = SA_ResourceManager.ATTACKRANGE_MAGIC;
-        _unitFightRange = 200;
-        _level = 1;
-        //_unitAttack = SA_ResourceManager.ATTACK;
-        //_unitMagicAttack = SA_ResourceManager.MAGICATTACK;
-        //_unitHPRegen = SA_ResourceManager.HPREGEN;
-        //_unitDefense = SA_ResourceManager.DEFENSE;
-        //_unitManaRegen = SA_ResourceManager.MANAREGEN;
-        //_unitAttackSpeed = SA_ResourceManager.ATTACKSPEED;
-        //_unitMaxHP = SA_ResourceManager.HP;
-        //_unitMana = SA_ResourceManager.MANA;
-        //_unitMoveSpeed = SA_ResourceManager.MOVESPEED;
-        //_unitHP = _unitMaxHP;
+        _ms.Init(this);
+      
     }
 
-    // takes care of stat calculation
-    //public void ApplyStats(int addStr, int addDex, int addInt, int addVit)
-    //{
-        //Debug.Log(addStr + " " + addDex + " " + addInt + " " + addVit);
-        // TODO reset stat to default
-        //if (addDex != 0) AddDexteritySubstats(addDex);
-        //if (addStr != 0) AddStrengthSubstats(addStr);
-        //if (addInt != 0) AddIntelligenceSubstats(addInt);
-        //if (addVit != 0) AddVitalitySubstats(addVit);
-
-    //}
-
-    //public void AddDex(int val)
-    //{
-    //    _mStats._Dexterity += val;
-    //    ApplyStats(0, val, 0, 0);
-    //}
-
-    //public void AddStr(int val)
-    //{
-    //    _mStats._Strength += val;
-    //    ApplyStats(val, 0, 0, 0);
-    //}
-    //public void AddInt(int val)
-    //{
-    //    _mStats._Intelligence += val;
-    //    ApplyStats(0, 0, val, 0);
-    //}
-    //public void AddVit(int val)
-    //{
-    //    _mStats._Vitality += val;
-    //    ApplyStats(0, 0, 0, val);
-    //}
-    // updates stat from mstatcontainer to the variables here
-    //void UpdateStats()
-    //{
-    //    //_ _mStats._Strength;
-    //    //_mStats._Dexterity;
-    //    //_mStats._Intelligence;
-    //    //_mStats._Intelligence;
-    //}
-    //public void LevelUpStats()
-    //{
-    //    _mSubStat._MaxHP += 8;
-    //    _mSubStat._Attack += 3;
-    //    _mSubStat._Defense += 2;
-    //    _mSubStat._MagicDefense += 1;
-    //    _mSubStat._MagicAttack += 3;
-    //    _mSubStat._HealthRegen += 0.1f;
-    //    _mSubStat._HealthRegen = StatManager.Round(_mSubStat._HealthRegen, 1);
-
-    //    //_UnitSet._UnitSubset._levelText.text = _level.ToString();
-    //}
-    //public void AddDexteritySubstats(int num)
-    //{
-    //    for (int i = 0; i < num; i++)
-    //    {
-    //        _mSubStat._Attack += StatManager.DEX_ATTACKGROW;
-    //        _mSubStat._AttackSpeed -= StatManager.DEX_ATTACKSPEEDGROW;
-    //        _mSubStat._MoveSpeed += StatManager.DEX_MOVESPEEDGROW;
-    //    }
-    //}
-
-    //public void AddStrengthSubstats(int num)
-    //{
-    //    for (int i = 0; i < num; i++)
-    //    {
-    //        _mSubStat._Attack += StatManager.STR_ATTACKGROW;
-    //        _mSubStat._MaxHP += StatManager.STR_MAXHPGROW;
-    //    }
-    //}
-
-    //public void AddIntelligenceSubstats(int num)
-    //{
-    //    for (int i = 0; i < num; i++)
-    //    {
-    //        _mSubStat._MagicAttack += StatManager.INT_MAGICATTACKGROW;
-    //        _mSubStat._Mana += StatManager.INT_MANAGROW;
-    //        _mSubStat._ManaRegen += StatManager.INT_MANAGENGROW;
-    //    }
-    //}
-
-    //public void AddVitalitySubstats(int num)
-    //{
-    //    for (int i = 0; i < num; i++)
-    //    {
-    //        _mSubStat._MaxHP += StatManager.VIT_MAXHPGROW;
-    //        _mSubStat._HealthRegen += StatManager.VIT_HPGENGROW;
-    //        _mSubStat._Defense += StatManager.VIT_DEFENSEGROW;
-    //        _mSubStat._MagicDefense += StatManager.VIT_MAGICDEFENSEGROW;
-    //    }
-    //}
-
-
-
-
+   
     void CheckState()
     {
         switch(_unitState)
@@ -286,10 +248,9 @@ public class SA_Unit : MonoBehaviour
                 break;
 
             case UnitState.attack:
-                FindTarget();
+                //FindTarget();
                 CheckAttack();
                 break;
-
             case UnitState.stun:
                 break;
 
@@ -334,6 +295,7 @@ public class SA_Unit : MonoBehaviour
                 break;
 
             case UnitState.death:
+                isDead = true;
                 _spumPrefab.PlayAnimation(2);
                 break;
         }
@@ -348,7 +310,7 @@ public class SA_Unit : MonoBehaviour
         {
             
             _target = SoonsoonData.Instance.SAM.GetTarget(this);
-            if (_target != null)
+            if (_target != null && !isAttacking)
             {
 
                 SetState(UnitState.run);
@@ -375,10 +337,45 @@ public class SA_Unit : MonoBehaviour
 
     }
 
+    //public void Patrol()
+    //{
+    //    if (isPatrolling)
+    //    {
+    //        if ((nPos - (Vector2)transform.position).sqrMagnitude < 0.1f)
+    //        {
+    //            canMove = false;
+    //            SetState(UnitState.idle);
+    //            Invoke("PatrolReset", 2f); 
+
+    //        } else
+    //        {
+    //            _spumPrefab.PlayAnimation(1);
+    //            if (canMove)
+    //                transform.position += (Vector3)_dirVec * _unitMoveSpeed * Time.deltaTime;
+    //        }
+    //    } 
+    //    else
+    //    {
+    //        isPatrolling = true;
+    //        nPos = Random.insideUnitCircle * 1.5f;
+    //        _dirVec = (nPos - (Vector2)transform.position).normalized;
+    //        SetDirection();
+    //    }
+        
+        
+        
+    //}
+
+    //void PatrolReset()
+    //{
+    //    isPatrolling = false;
+    //}
     void DoMove()
     {
         //Debug.Log(gameObject.name +"'s target: "+ CheckTarget());
         if (!CheckTarget()) return;
+
+
 
         // if target exists
         // and is within attack range
@@ -393,7 +390,8 @@ public class SA_Unit : MonoBehaviour
             _dirVec = _tempDist.normalized;
             SetDirection();
             SetState(UnitState.run);
-            transform.position += (Vector3)_dirVec * _unitMoveSpeed * Time.deltaTime;
+            if (canMove)
+                transform.position += (Vector3)_dirVec * _unitMoveSpeed * Time.deltaTime;
         }
 
         
@@ -431,24 +429,24 @@ public class SA_Unit : MonoBehaviour
     bool CheckTarget()
     {
         bool val = true;
-        if (_target == null) val = false;
+        if (_target == null) return false;
         if (_target._unitState == UnitState.death) val = false;
         if (_target.gameObject == null) val = false;
         if (!_target.gameObject.activeInHierarchy) val = false;
-        //Debug.Log(_target.gameObject.name + "");
+
         // target still exists and is alive
         if (!val)// if target doesnt exist
         {
             SetState(UnitState.idle);
         } 
-        //Debug.Log("idle from checkTarget");
-        //SetState(UnitState.idle);
+
         
         return val;
     }
 
     void CheckAttack()
     {
+        //Debug.Log(name + " CheckAttack");
         if (!CheckTarget()) return;
         //Debug.Log("2");
         if (!CheckDistance()) return;
@@ -460,18 +458,17 @@ public class SA_Unit : MonoBehaviour
             _attackTimer = 0;
         }
     }
-    //IEnumerator GiveDamage()
-    //{
-    //    yield return new WaitForSeconds(0.15f);
-    //    SetAttack();
-    //}
+
 
     void DoAttack()
     {
-        Debug.Log("AttackAnimationplayed");
+        isAttacking = true;
+        canMove = false;
+        //Debug.Log("AttackAnimationplayed");
         _dirVec = (Vector2)(_target.transform.position - transform.position).normalized;
         SetDirection();
-        switch(_attackType)
+
+        switch(_ms._attackType)
         {
             case AttackType.sword: 
                 _spumPrefab.PlayAnimation(4);
@@ -490,7 +487,7 @@ public class SA_Unit : MonoBehaviour
     public void SetAttack()
     {
         if (_target == null) return;
-        float dmg = _unitAttack;
+        float dmg = StatManager.Instance.GetFinalPlayerAttack(_level);
         _target.SetDamage(this, dmg); // this gives dmg to target
     }
 
@@ -500,12 +497,19 @@ public class SA_Unit : MonoBehaviour
         if (_unitState == UnitState.death)
             return;
 
-        _unitHP -= dmg;
+
+        float realdmg = dmg;
+        realdmg = Random.Range((int)(realdmg * 0.85f), (int)(realdmg * 1.15f));
+        
+        // TODO crithit 
+
+        _unitHP -= realdmg;
         // hp bar
         if (_UnitSet == null) return;
-        Debug.Log(owner.name + ": " + owner._attackType + '\n' + "target " + name + ": " + _attackType);
-        _UnitSet.ShowDmgText(owner._attackType, dmg);
+        //Debug.Log(owner.name + ": " + owner._attackType + '\n' + "target " + name + ": " + _attackType);
+        _UnitSet.ShowDmgText(owner._ms._attackType, realdmg);
         _UnitSet.CalcHPState();
+        isAttacking = false;
 
         if (_unitHP <= 0)
         {
@@ -515,17 +519,24 @@ public class SA_Unit : MonoBehaviour
 
     void SetDeath()
     {
+        _unitHP = 0;
+        _UnitSet.TurnOffHPBar(1f);
+        //TODO disable character
+        SetState(UnitState.death);
+        // loot
         switch(gameObject.tag)
         {
             case "Player":
-                SoonsoonData.Instance.SAM._playerList.Remove(this);
+                //SoonsoonData.Instance.SAM._playerList.Remove(this);
+
                 break;
             case "Enemy":
-                SoonsoonData.Instance.SAM._enemyList.Remove(this);
+                //SoonsoonData.Instance.SAM._enemyList.Remove(this);
+                OnDeath?.Invoke(this);
+                StatManager.OnEnemyDeath?.Invoke(this);
+                ItemDropManager.DropItems?.Invoke(this);
                 break;
         }
-        _unitHP = 0;
-        SetState(UnitState.death);
     }
 
     public void SetDeathDone()
@@ -535,7 +546,7 @@ public class SA_Unit : MonoBehaviour
 
     public void AttackMissile()
     {
-        switch(_attackType)
+        switch(_ms._attackType)
         {
             case AttackType.bow:
                 SoonsoonData.Instance.SAMM.FireMissile(SA_MissileObj.MissileType.arrow, this, _target);
@@ -565,75 +576,75 @@ public class SA_Unit : MonoBehaviour
     {
         if (_dirVec.x >= 0)
         {
-            _spumPrefab._anim.transform.localScale = new Vector3(-1, 1, 1);
+            _spumPrefab._anim.transform.localScale = new Vector3(-1 * Mathf.Abs(_spumPrefab._anim.transform.localScale.x), _spumPrefab._anim.transform.localScale.y, 1);
         } else
         {
-            _spumPrefab._anim.transform.localScale = new Vector3(1, 1, 1);
+            _spumPrefab._anim.transform.localScale = new Vector3(Mathf.Abs(_spumPrefab._anim.transform.localScale.x), _spumPrefab._anim.transform.localScale.y, 1);
         }
     }
 
-    void Findway()
-    {
-        _moveList.Clear();
-        Vector2 tPos = transform.position;
+    //void Findway()
+    //{
+    //    _moveList.Clear();
+    //    Vector2 tPos = transform.position;
 
-        float tmpValue = 0;
-        bool check = true;
+    //    float tmpValue = 0;
+    //    bool check = true;
 
-        for (int j = 0; j < 10; j++) 
-        {
-            int tmpInt = (Random.Range(0, 2) == 1) ? 1 : -1;
-            bool check2 = true;
+    //    for (int j = 0; j < 10; j++) 
+    //    {
+    //        int tmpInt = (Random.Range(0, 2) == 1) ? 1 : -1;
+    //        bool check2 = true;
 
-            for (int i = 0; i < 4; i++)
-            {
-                _tempDist = (Vector2)_target.transform.position - tPos;
-                Vector2 tDirVec = _tempDist.normalized;
-                if (check && check2)
-                {
-                    tmpValue = i * tmpInt * 90f;
-                    Vector3 ttDirVec = (Quaternion.AngleAxis(tmpValue, Vector3.forward) * tDirVec);
-                    RaycastHit2D hit = Physics2D.CircleCast(tPos + new Vector2(0, 0.5f), 0.125f, ttDirVec, 1f);
-                    //Gizmos.Draw(tPos + new Vector2(0, 0.5f), 0.125f, ttDirVec, 1f);
-                    if (hit.collider == null)
-                    {
-                        tDirVec = (Vector2)ttDirVec;
-                        tPos += (Vector2)ttDirVec;
-                        if (!_moveList.Contains(tPos))
-                        {
-                            _moveList.Add(tPos);
-                            check2 = false;
-                        }
-                    }
-                    else if (hit.collider.CompareTag(_target.tag))
-                    {
-                        _target = hit.collider.GetComponent<SA_Unit>();
-                        tDirVec = (Vector2)ttDirVec;
-                        tPos += (Vector2)ttDirVec;
-                        if (!_moveList.Contains(tPos))
-                        {
-                            _moveList.Add(tPos);
-                            check2 = false;
-                        }
-                    }
-                    else if (hit.collider.CompareTag(tag))
-                    {
-                        SA_Unit tUnit = hit.collider.GetComponent<SA_Unit>();
-                        if (tUnit._unitState != UnitState.attack)
-                        {
-                            tDirVec = (Vector2)ttDirVec;
-                            tPos += (Vector2)ttDirVec;
-                            if (!_moveList.Contains(tPos))
-                            {
-                                _moveList.Add(tPos);
-                                check2 = false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    //        for (int i = 0; i < 4; i++)
+    //        {
+    //            _tempDist = (Vector2)_target.transform.position - tPos;
+    //            Vector2 tDirVec = _tempDist.normalized;
+    //            if (check && check2)
+    //            {
+    //                tmpValue = i * tmpInt * 90f;
+    //                Vector3 ttDirVec = (Quaternion.AngleAxis(tmpValue, Vector3.forward) * tDirVec);
+    //                RaycastHit2D hit = Physics2D.CircleCast(tPos + new Vector2(0, 0.5f), 0.125f, ttDirVec, 1f);
+    //                //Gizmos.Draw(tPos + new Vector2(0, 0.5f), 0.125f, ttDirVec, 1f);
+    //                if (hit.collider == null)
+    //                {
+    //                    tDirVec = (Vector2)ttDirVec;
+    //                    tPos += (Vector2)ttDirVec;
+    //                    if (!_moveList.Contains(tPos))
+    //                    {
+    //                        _moveList.Add(tPos);
+    //                        check2 = false;
+    //                    }
+    //                }
+    //                else if (hit.collider.CompareTag(_target.tag))
+    //                {
+    //                    _target = hit.collider.GetComponent<SA_Unit>();
+    //                    tDirVec = (Vector2)ttDirVec;
+    //                    tPos += (Vector2)ttDirVec;
+    //                    if (!_moveList.Contains(tPos))
+    //                    {
+    //                        _moveList.Add(tPos);
+    //                        check2 = false;
+    //                    }
+    //                }
+    //                else if (hit.collider.CompareTag(tag))
+    //                {
+    //                    SA_Unit tUnit = hit.collider.GetComponent<SA_Unit>();
+    //                    if (tUnit._unitState != UnitState.attack)
+    //                    {
+    //                        tDirVec = (Vector2)ttDirVec;
+    //                        tPos += (Vector2)ttDirVec;
+    //                        if (!_moveList.Contains(tPos))
+    //                        {
+    //                            _moveList.Add(tPos);
+    //                            check2 = false;
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
     
 
     private void OnCollisionEnter2D(Collision2D collision)
