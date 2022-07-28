@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SA_AnimationAction : MonoBehaviour
 {
-    public  SA_Unit _player;
+    public  SA_UnitBase _player;
 
-    
+
     private void OnEnable()
     {
         if (_player == null)
@@ -16,10 +16,11 @@ public class SA_AnimationAction : MonoBehaviour
     }
     public void AttackDone()
     {
+        Debug.Log("Attack Done");
         switch(_player._ms._attackType)
         {
             case SA_Unit.AttackType.sword:
-                if (_player._target != null) _player.AttackDone(_player._target);
+                if (_player._target != null) _player.AttackDone();
                 break;
 
             case SA_Unit.AttackType.bow:
@@ -39,10 +40,14 @@ public class SA_AnimationAction : MonoBehaviour
         EffectManager.OnPlayerAttackV1?.Invoke(_player);
     }
 
+    public SpriteRenderer[] GetAllParts()
+    {
+        return GetComponentsInChildren<SpriteRenderer>();
+    }
+
     public void AttackFinish()
     {
         _player.isAttacking = false;
-
     }
 
     public void CanMove()

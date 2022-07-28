@@ -4,13 +4,8 @@ using UnityEngine;
 using CleverCrow.Fluid.StatsSystem;
 public enum TalentType
 {
-    마을사람,
-    대장장이,
-    사서,
-    병사,
-    검사,
-    궁수,
-    마법사
+    베기, 
+    찌르기
 };
 
 [CreateAssetMenu(fileName = "Talent", menuName = "Litkey/Talent")]

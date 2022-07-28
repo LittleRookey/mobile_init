@@ -28,14 +28,15 @@ public class Stat
 public class StatManager : MonoBehaviour
 {
     public static StatManager Instance;
-
-    public SA_Unit _player;
+    public SA_Player _player;
     [Header("MainStats")]
 
     public ObscuredInt statpoint_MaxHP;
     public ObscuredInt statpoint_Attack;
     public ObscuredInt statpoint_HPRegen;
     public ObscuredInt statpoint_MagicForce;
+    public ObscuredInt statpoint_AttackSpeed;
+    public ObscuredInt statpoint_MoveSpeed;
 
     private ObscuredFloat AttackMultiplier = 1;
     private ObscuredFloat MaxHPMultiplier = 1;
@@ -67,6 +68,8 @@ public class StatManager : MonoBehaviour
     public static readonly ObscuredFloat MAXHPGROW = 10.0f;
     public static readonly ObscuredFloat DEFENSEGROW = 1.0f;
     public static readonly ObscuredFloat HPREGENGROW = 0.2f;
+    public static readonly ObscuredFloat ATTACKSPEEDGROW = 0.01f;
+    public static readonly ObscuredFloat MOVESPEEDGROW = 0.01f;
 
     public static readonly ObscuredInt HP = 100;
     public static readonly ObscuredInt MANA = 0;
@@ -137,6 +140,7 @@ public class StatManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        if (_player == null) _player = FindObjectOfType<SA_Player>();
     }
 
     private void Start()
@@ -161,19 +165,23 @@ public class StatManager : MonoBehaviour
 
     public void GiveDropItems(SA_Unit enem)
     {
-        AddExp(enem.dropExp);
+        AddExp(enem);
 
         
     }
-
-    void AddExp(ObscuredInt val)
+    
+    void AddExp(SA_Unit sa)
     {
-        _player._exp += val;
+        _player._exp += sa.dropExp;
+        Debug.Log("EXP added");
+        UIManager.OnUpdateExpBar?.Invoke(_player);
         if (_player._exp >= _player._maxExp)
         {
             _player._exp -= _player._maxExp;
             //LevelUp();
             Actions.OnPlayerLevelUp?.Invoke();
+            //UIManager.OnUpdateExpBar?.Invoke(_player);
+            UIManager.OnUpdateExpBar?.Invoke(_player);
         }
     }
 
@@ -193,26 +201,36 @@ public class StatManager : MonoBehaviour
         { // TODO show popup message no statpoint
             return;
         }
-
-        switch (type)
+        
+        switch ((StatType)type)
         {
-            case 0:
+            case StatType.maxHP:
                 _player._statPoint -= 1;
                 statpoint_MaxHP += 1;
                 _player._unitMaxHP += MAXHPGROW;
                 break;
-            case 1:
+            case StatType.attack:
                 _player._statPoint -= 1;
                 statpoint_Attack += 1;
                 _player._unitAttack += ATTACKGROW;
                 break;
-            case 2:
+            case StatType.hpRegen:
                 _player._statPoint -= 1;
                 statpoint_HPRegen += 1;
                 _player._unitHPRegen += HPREGENGROW;
                 break;
-            case 3:
+            case StatType.magicForce: // magicforce
 
+                break;
+            case StatType.attackSpeed: // attackspeed
+                _player._statPoint -= 1;
+                statpoint_AttackSpeed += 1;
+                _player._unitAttackSpeed += ATTACKSPEEDGROW;
+                break;
+            case StatType.moveSpeed: // movespeed
+                _player._statPoint -= 1;
+                statpoint_MoveSpeed += 1;
+                _player._unitMoveSpeed += MOVESPEEDGROW;
                 break;
         }
         //StatSlot.OnStatUpdate?.Invoke(_player._statPoint);
@@ -230,6 +248,7 @@ public class StatManager : MonoBehaviour
     public ObscuredInt GetFinalPlayerAttack(int level)
     {
         // base attack by levelup + (stat attacks)
+        //Debug.Log(name + ": 1-4");
         float num = ATTACK * Mathf.Pow(level_attackgrowth, level - 1) + (statpoint_Attack * ATTACKGROW);
 
         // attack multipliers
@@ -252,13 +271,8 @@ public class StatManager : MonoBehaviour
     }
 
 
-    public void InitPlayer(SA_Unit sa)
+    public void InitPlayer(SA_Player sa)
     {
-        if (!sa.isPlayer)
-        {
-            Debug.LogError("Not player: " + sa.name);
-            return;
-        }
 
         int level = sa._level;
 
@@ -272,7 +286,7 @@ public class StatManager : MonoBehaviour
         // TODO calc Defense
         sa._unitDefense = DEFENSE;
         sa._unitAttackSpeed = ATTACKSPEED;
-        sa._unitAttackDelay = 0f;
+        sa._unitAttackDelay = 0.5f;
 
         // setup attacktype
         if (sa._ms._attackType == SA_Unit.AttackType.sword)
@@ -288,7 +302,7 @@ public class StatManager : MonoBehaviour
             sa._unitAttackRange = ATTACKRANGE_MAGIC;
         }
 
-        sa._unitFightRange = 10;
+        sa._unitFightRange = 30;
         sa._unitHPRegen = HPREGEN;
         sa._unitManaRegen = MANAREGEN;
         sa._unitMoveSpeed = MOVESPEED;

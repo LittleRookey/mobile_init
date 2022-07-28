@@ -18,8 +18,8 @@ public class SA_MissileObj : MonoBehaviour
     public Vector2 _startPos;
     public Vector2 _endPos;
     public MissileType _missileType;
-    public SA_Unit _owner;
-    public SA_Unit _target;
+    public SA_UnitBase _owner;
+    public SA_UnitBase _target;
     public string tTag;
 
     //public float _timer;
@@ -74,7 +74,7 @@ public class SA_MissileObj : MonoBehaviour
         }
     }
 
-    public void SetMissile(MissileType type, SA_Unit owner, SA_Unit target)
+    public void SetMissile(MissileType type, SA_UnitBase owner, SA_UnitBase target)
     {
         if (target == null)
             PoolManager.ReleaseObject(gameObject);

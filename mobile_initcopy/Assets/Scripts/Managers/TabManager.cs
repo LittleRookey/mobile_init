@@ -43,6 +43,7 @@ public class TabManager : MonoBehaviour
         else
         {
             _CharacterTab.SetActive(true);
+           
             StatTab.SelectTab();
             //_TalentTabDisabled.SetActive(true);
             //_TalentWindow
@@ -51,6 +52,12 @@ public class TabManager : MonoBehaviour
             statSlotManager.UpdateSlots();
             OnOpenCharacterTab?.Invoke(StatManager.Instance._player._statPoint);
         }
+    }
+
+    public void UpdateStatTab()
+    {
+        statSlotManager.UpdateSlots();
+        OnOpenCharacterTab?.Invoke(StatManager.Instance._player._statPoint);
     }
 
     public void OpenSubtabStat()
@@ -70,7 +77,7 @@ public class TabManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        OpenCharacterTab();
+        //OpenCharacterTab();
     }
 
 }

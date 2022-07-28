@@ -2,12 +2,15 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+
 public enum StatType
 {
-    maxHP,
-    magicForce,
-    attack,
-    hpRegen
+    maxHP= 0,
+    attack = 1,
+    hpRegen = 2,
+    magicForce = 3,
+    attackSpeed = 4,
+    moveSpeed = 5
 };
 
 public enum SlotType
@@ -65,7 +68,7 @@ public class StatSlot : Slot
         else
         {
             disabled.gameObject.SetActive(false);
-            SA_Unit tplayer = StatManager.Instance._player;
+            SA_Player tplayer = StatManager.Instance._player;
             // if stat is not locked,
             switch (_statType)
             {
@@ -96,11 +99,23 @@ public class StatSlot : Slot
                     _statExplanationText.text = statup;
                     _statLeftText.text = 1.ToString();
                     break;
+                case StatType.attackSpeed:
+                    _slotName.text = "공격 속도 +" + StatManager.Instance.statpoint_AttackSpeed;
+                    _statTotalStatText.text = tplayer._unitAttackSpeed.ToString("F2");
+                    _statExplanationText.text = statup;
+                    _statLeftText.text = 1.ToString();
+                    break;
+                case StatType.moveSpeed:
+                    _slotName.text = "이동 속도 +" + StatManager.Instance.statpoint_MoveSpeed;
+                    _statTotalStatText.text = tplayer._unitMoveSpeed.ToString("F2");
+                    _statExplanationText.text = statup;
+                    _statLeftText.text = 1.ToString();
+                    break;
             }
         }
     }
 
-    public void UpdateStat(SA_Unit player, Sprite icon)
+    public void UpdateStat(SA_Player player, Sprite icon)
     {
         if (isHidden)
         {
@@ -109,7 +124,7 @@ public class StatSlot : Slot
         } else
         {
             disabled.gameObject.SetActive(false);
-            SA_Unit tplayer = StatManager.Instance._player;
+            SA_Player tplayer = StatManager.Instance._player;
             _icon.sprite = icon;
             // if stat is not locked,
             switch(_statType)
@@ -137,6 +152,18 @@ public class StatSlot : Slot
                 case StatType.magicForce:
                     _slotName.text = "마력 +" + StatManager.Instance.statpoint_MagicForce;
                     _statTotalStatText.text = tplayer._unitMagicForce.ToString("F1");
+                    _statExplanationText.text = statup;
+                    _statLeftText.text = 1.ToString();
+                    break;
+                case StatType.attackSpeed:
+                    _slotName.text = "공격 속도 +" + StatManager.Instance.statpoint_AttackSpeed;
+                    _statTotalStatText.text = tplayer._unitAttackSpeed.ToString("F2");
+                    _statExplanationText.text = statup;
+                    _statLeftText.text = 1.ToString();
+                    break;
+                case StatType.moveSpeed:
+                    _slotName.text = "이동 속도 +" + StatManager.Instance.statpoint_MoveSpeed;
+                    _statTotalStatText.text = tplayer._unitMoveSpeed.ToString("F2");
                     _statExplanationText.text = statup;
                     _statLeftText.text = 1.ToString();
                     break;

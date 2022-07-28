@@ -48,8 +48,8 @@ public class MonsterSetting : ScriptableObject
     public static readonly float HPREGENGROW = 0.2f;
 
     #endregion
-
     [Header("Static monster setting")] // may change based on the difficulty
+
     [SerializeField] private ObscuredInt basis = 30;
     [SerializeField] private ObscuredInt extra = 50;
     [SerializeField] private ObscuredInt acc_a = 30;
@@ -58,9 +58,11 @@ public class MonsterSetting : ScriptableObject
     [SerializeField] private ObscuredInt mob_basis = 10;
     [SerializeField] private ObscuredInt mob_extra = 10;
 
-    [SerializeField] private float level_attackgrowth = 1.06f;
-    [SerializeField] public float level_maxhpgrowth = 1.09f;
-
+    [Header("Growth Rate")]
+    [SerializeField] private ObscuredFloat level_attackgrowth = 1.06f;
+    [SerializeField] public ObscuredFloat level_maxhpgrowth = 1.09f;
+    [SerializeField] private ObscuredInt gold_base = 5;
+    [SerializeField] private ObscuredInt gold_extra = 6;
     public float dropExp;
 
     private ObscuredInt tempStatAttack;
@@ -106,7 +108,13 @@ public class MonsterSetting : ScriptableObject
         return (ObscuredInt)(CalcMaxExp(level) / CalcMobCount(level));
     }
 
-    private ObscuredInt CalcMonsterAttack(int level)
+    private ObscuredInt CalcDropGold(int level)
+    {
+        int fin = gold_base + gold_extra * (level - 1);
+        return Random.Range((int)(fin * .85f), (int)(fin * 1.15f));
+    }
+
+    public ObscuredInt CalcMonsterAttack(int level)
     {
         int tempStatAttack = (level - 1) * monsterStatPerLevel;
         float num = ATTACK * Mathf.Pow(level_attackgrowth, level - 1) + (tempStatAttack * ATTACKGROW);
@@ -168,8 +176,8 @@ public class MonsterSetting : ScriptableObject
             } else
             {
                 int temp = leftStatPoints-1;
-                tempStatMaxHP += leftStatPoints / 2;
-                tempStatAttack += leftStatPoints / 2;
+                tempStatMaxHP += temp / 2;
+                tempStatAttack += temp / 2;
                 tempStatAttack += 1;
                 leftStatPoints -= (tempStatAttack + tempStatAttack + 1);
             }
@@ -177,6 +185,8 @@ public class MonsterSetting : ScriptableObject
 
 
         sa.dropExp = CalcDropExp(level);
+        sa.dropGold = CalcDropGold(level);
+
         sa._unitMaxHP = CalcMonsterMAXHP(level);
         sa._unitHP = sa._unitMaxHP;
         sa._unitMagicForce = MAGICFORCE;
@@ -201,7 +211,7 @@ public class MonsterSetting : ScriptableObject
         if (_monsterSize == MonsterSize.small)
         {
             sa._spumPrefab._anim.transform.localScale = new Vector3(0.6f, 0.6f, 1f);
-            sa._unitAttackDelay = 0f;
+            sa._unitAttackDelay = 0.5f;
         } else if(_monsterSize == MonsterSize.middle)
         {
             sa._spumPrefab._anim.transform.localScale = new Vector3(1f, 1f, 1f);

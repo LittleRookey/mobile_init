@@ -1,0 +1,477 @@
+Using pre-set license
+Built from '2021.3/staging' branch; Version is '2021.3.1f1 (3b70a0754835) revision 3895456'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19043) 64bit Core' Language: 'ko' Physical Memory: 32636 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+D:\2021.3.1f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker2
+-projectPath
+D:/Clone/mobile_init/mobile_initcopy
+-logFile
+Logs/AssetImportWorker2.log
+-srvPort
+56916
+Successfully changed project path to: D:/Clone/mobile_init/mobile_initcopy
+D:/Clone/mobile_init/mobile_initcopy
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Refreshing native plugins compatible for Editor in 157.42 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2021.3.1f1 (3b70a0754835)
+[Subsystems] Discovering subsystems at path D:/2021.3.1f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Clone/mobile_init/mobile_initcopy/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3070 Laptop GPU (ID=0x24dd)
+    Vendor:   NVIDIA
+    VRAM:     8044 MB
+    Driver:   30.0.15.1233
+Initialize mono
+Mono path[0] = 'D:/2021.3.1f1/Editor/Data/Managed'
+Mono path[1] = 'D:/2021.3.1f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/2021.3.1f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56784
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/2021.3.1f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: D:/2021.3.1f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: D:/2021.3.1f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002567 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 143.25 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.629 seconds
+Domain Reload Profiling:
+	ReloadAssembly (630ms)
+		BeginReloadAssembly (81ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (465ms)
+			LoadAssemblies (81ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (83ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (21ms)
+			SetupLoadedEditorAssemblies (319ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (47ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (143ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (87ms)
+				ProcessInitializeOnLoadMethodAttributes (40ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.015092 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Symbol file LoadedFromMemory doesn't match image D:\Clone\mobile_init\mobile_initcopy\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 147.83 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Package Manager log level set to [2]
+Mono: successfully reloaded assembly
+- Completed reload, in  1.639 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1640ms)
+		BeginReloadAssembly (236ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (7ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (133ms)
+		EndReloadAssembly (1316ms)
+			LoadAssemblies (138ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (242ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (77ms)
+			SetupLoadedEditorAssemblies (841ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (17ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (148ms)
+				BeforeProcessingInitializeOnLoad (102ms)
+				ProcessInitializeOnLoadAttributes (276ms)
+				ProcessInitializeOnLoadMethodAttributes (296ms)
+				AfterProcessingInitializeOnLoad (2ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 1.70 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6447 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 77 unused Assets / (227.9 KB). Loaded Objects now: 6922.
+Memory consumption went from 280.8 MB to 280.6 MB.
+Total: 9.964500 ms (FindLiveObjects: 0.463600 ms CreateObjectMapping: 0.542700 ms MarkObjects: 8.767400 ms  DeleteObjects: 0.189500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 250174.560918 seconds.
+  path: Assets/ARPG Effects/Prefabs/Environment/Weather
+  artifactKey: Guid(a628d232fef7d624bbfe71ed19275f72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Environment/Weather using Guid(a628d232fef7d624bbfe71ed19275f72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '11b372fbf127bc3615557c8421d3399c') in 0.012073 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.035452 seconds.
+  path: Assets/ARPG Effects/Prefabs/Environment/Weather/BlowingLeaves.prefab
+  artifactKey: Guid(336db3fee2a9fe04a985ad3b93418262) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Environment/Weather/BlowingLeaves.prefab using Guid(336db3fee2a9fe04a985ad3b93418262) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9c547d1b8cc1de2bde51d3dc12740602') in 1.776353 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.125783 seconds.
+  path: Assets/ARPG Effects/Materials/Misc/rain.mat
+  artifactKey: Guid(7a52ed6262ac2fa4892edca760056f4f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Materials/Misc/rain.mat using Guid(7a52ed6262ac2fa4892edca760056f4f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '223a7e6751818e5d679e3f799fed4f08') in 0.214684 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 17.478026 seconds.
+  path: Assets/ARPG Effects/Prefabs/Interactive/Portals
+  artifactKey: Guid(798bea948c4ad5f478d370b62097ab62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Interactive/Portals using Guid(798bea948c4ad5f478d370b62097ab62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '76a68588a60875a8e3d661775b9c6232') in 0.001630 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.407115 seconds.
+  path: Assets/ARPG Effects/Prefabs/Interactive/Portals/Purple
+  artifactKey: Guid(8bd18921d537fbb4090f8493a6707738) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Interactive/Portals/Purple using Guid(8bd18921d537fbb4090f8493a6707738) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '626979755e58ec888f029f154a4cac9b') in 0.001726 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.024672 seconds.
+  path: Assets/ARPG Effects/Prefabs/Interactive/Portals/Purple/PortalPurpleClose.prefab
+  artifactKey: Guid(10f140d776af7b64491601c099764123) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Interactive/Portals/Purple/PortalPurpleClose.prefab using Guid(10f140d776af7b64491601c099764123) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9c67a0e99c74424fe10175fbf1345342') in 0.301455 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.840621 seconds.
+  path: Assets/ARPG Effects/Materials/Portals/portal_purple.mat
+  artifactKey: Guid(5e6fd25b65646c2458ad1b0f957ad3ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Materials/Portals/portal_purple.mat using Guid(5e6fd25b65646c2458ad1b0f957ad3ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '535e162624e91731e98b25be0fc0669d') in 0.079368 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 54.817766 seconds.
+  path: Assets/ARPG Effects/Prefabs/Interactive/Zones
+  artifactKey: Guid(b4640c887b4bdaa4980de5a93d33bf05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Interactive/Zones using Guid(b4640c887b4bdaa4980de5a93d33bf05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ff8acee263f1b356e43945d5f213fb9') in 0.001667 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.061461 seconds.
+  path: Assets/ARPG Effects/Prefabs/Interactive/Zones/Zone 1
+  artifactKey: Guid(9743c023409102340a6fbf15dfbc286b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Interactive/Zones/Zone 1 using Guid(9743c023409102340a6fbf15dfbc286b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d9edc35311a58520f0b2637e1c1b8d1') in 0.001702 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.030753 seconds.
+  path: Assets/ARPG Effects/Prefabs/Interactive/Zones/Zone 1/QuestZoneBlue.prefab
+  artifactKey: Guid(3ea3fa94385a98949939b9b5c11d76f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Interactive/Zones/Zone 1/QuestZoneBlue.prefab using Guid(3ea3fa94385a98949939b9b5c11d76f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0c0521a4d4772f038f1ef9be5eb5a41d') in 0.072926 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/ARPG Effects/Prefabs/Interactive/Zones/Zone 1/QuestZoneRed.prefab
+  artifactKey: Guid(c6032280fb9eba04392874025050a4d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Interactive/Zones/Zone 1/QuestZoneRed.prefab using Guid(c6032280fb9eba04392874025050a4d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '53dc1c5f629d86d0264d12501ed789d8') in 0.066960 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.295463 seconds.
+  path: Assets/ARPG Effects/Materials/Quest Markers/questmarker_blue.mat
+  artifactKey: Guid(df6818808c9929b4586d59df893750e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Materials/Quest Markers/questmarker_blue.mat using Guid(df6818808c9929b4586d59df893750e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c120c17543f2d56cb05946bd163b970') in 0.012939 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 25.664324 seconds.
+  path: Assets/ARPG Effects/Materials/Quest Markers/questmarker_red.mat
+  artifactKey: Guid(fad7e41b51bb4fe4a8f48003838f6bc3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Materials/Quest Markers/questmarker_red.mat using Guid(fad7e41b51bb4fe4a8f48003838f6bc3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd40c5b201abeb0b3c71750de49d36c44') in 0.010243 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.480279 seconds.
+  path: Assets/ARPG Effects/Prefabs/Interactive/Shrines
+  artifactKey: Guid(ddd68385fa0cffc4a8cdd818a661022c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Interactive/Shrines using Guid(ddd68385fa0cffc4a8cdd818a661022c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4813bfd735ae000b7d4bd75ab5995e15') in 0.001654 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.033767 seconds.
+  path: Assets/ARPG Effects/Prefabs/Interactive/Shrines/GoldShrine.prefab
+  artifactKey: Guid(9e7010e7d9eceb64ab409cedf675d33c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Interactive/Shrines/GoldShrine.prefab using Guid(9e7010e7d9eceb64ab409cedf675d33c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bdbbfe9a94f5116262c130cdc5b25904') in 0.033407 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 34.393702 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot
+  artifactKey: Guid(63bee6e415061e9419217c97deec4ef9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot using Guid(63bee6e415061e9419217c97deec4ef9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5f497a23890c00c167deaf706e38a6f6') in 0.001751 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.087492 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Chests
+  artifactKey: Guid(2daebc131d688024bbb796d987da8970) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Chests using Guid(2daebc131d688024bbb796d987da8970) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4417c6cd55a8c3020f40adc2b763ec59') in 0.001904 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.049493 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Chests/ChestLv1Glow.prefab
+  artifactKey: Guid(bc51a0999ed6bca4bb752db2eb30149d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Chests/ChestLv1Glow.prefab using Guid(bc51a0999ed6bca4bb752db2eb30149d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b6578676e83c56f73659bae8ae5317ac') in 0.038276 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Chests/ChestLv3Glow.prefab
+  artifactKey: Guid(6636c1495911f9b4780166963bc196cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Chests/ChestLv3Glow.prefab using Guid(6636c1495911f9b4780166963bc196cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e42a3b289ee3bf3414cca72a9e29f255') in 0.021654 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Chests/ChestLv3Open.prefab
+  artifactKey: Guid(f05aea9544282064b9ee860b78f94379) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Chests/ChestLv3Open.prefab using Guid(f05aea9544282064b9ee860b78f94379) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '316df683d3a863d845c9f24db7fbdba6') in 0.031551 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.468609 seconds.
+  path: Assets/ARPG Effects/Materials/Loot/treasure_ray_mod.mat
+  artifactKey: Guid(9312f762616de80489ed9f3311564458) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Materials/Loot/treasure_ray_mod.mat using Guid(9312f762616de80489ed9f3311564458) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa04249cd0f8bae390f4d7921edf1ed7') in 0.011047 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 37.907355 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Gems
+  artifactKey: Guid(3fc08321ac1a1524da5fdeea46c02515) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Gems using Guid(3fc08321ac1a1524da5fdeea46c02515) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5882654c65b8093f9e47b97562b9f083') in 0.001901 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.046862 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Gems/ItemGemBlue.prefab
+  artifactKey: Guid(c4f07516fde33f546bb2fc0a60d80378) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Gems/ItemGemBlue.prefab using Guid(c4f07516fde33f546bb2fc0a60d80378) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aabc8640ec64cf5e946d6cfbcbb3f757') in 0.025934 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Gems/ItemGemWhite.prefab
+  artifactKey: Guid(ef9177188fcc3d842b214cea4d402163) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Gems/ItemGemWhite.prefab using Guid(ef9177188fcc3d842b214cea4d402163) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a86b6fc3212aaecb4e9b46ae10b0976') in 0.027319 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.434170 seconds.
+  path: Assets/ARPG Effects/Materials/Loot/glow_ground.mat
+  artifactKey: Guid(c878deb0fd9279d409d73ef92bfd57a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Materials/Loot/glow_ground.mat using Guid(c878deb0fd9279d409d73ef92bfd57a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '282cb3e0f1733a1d10e9d8aa433a25ee') in 0.011277 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 17.864302 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Gold
+  artifactKey: Guid(a510a32f9dcb52544ad1be7bb4dc67c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Gold using Guid(a510a32f9dcb52544ad1be7bb4dc67c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a59a07dbdad6f2608a5cbdcdc9481557') in 0.001277 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.025512 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Gold/GoldBig.prefab
+  artifactKey: Guid(8bbe49e1ae80808419ad057ff627013f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Gold/GoldBig.prefab using Guid(8bbe49e1ae80808419ad057ff627013f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f758e3ddcb9536d523d734945fcc2e3c') in 0.015296 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.215521 seconds.
+  path: Assets/ARPG Effects/Materials/Loot/treasure_ray.mat
+  artifactKey: Guid(79af97945a2c0a0418e1daafa92552f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Materials/Loot/treasure_ray.mat using Guid(79af97945a2c0a0418e1daafa92552f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d84eaeefbe640eafc8c0fab6bfcaf01') in 0.012097 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 24.695842 seconds.
+  path: Assets/ARPG Effects/Materials/Misc/sparkle_atlas.mat
+  artifactKey: Guid(bb53538a58209614794a88113c6a4a4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Materials/Misc/sparkle_atlas.mat using Guid(bb53538a58209614794a88113c6a4a4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '63ed6ffa3b11468205c0004b902ab343') in 0.015329 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 68.993158 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Orbs
+  artifactKey: Guid(1b8dde0dbf7cb5a45857aea0c0ec8d07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Orbs using Guid(1b8dde0dbf7cb5a45857aea0c0ec8d07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '83001eabd7a6b14127ac92d8e90f7ead') in 0.002131 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.019747 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Orbs/BlueOrb.prefab
+  artifactKey: Guid(8b8897e951549b949893f731f2f12e29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Orbs/BlueOrb.prefab using Guid(8b8897e951549b949893f731f2f12e29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b14646e100e4f1a5e16e58744043c2c') in 1.623753 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000073 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Orbs/GreenOrb.prefab
+  artifactKey: Guid(11b509b072b6a124fa79e77199bc1cfb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Orbs/GreenOrb.prefab using Guid(11b509b072b6a124fa79e77199bc1cfb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2f66cb4f143c706bfd1b8be1e65e7de') in 0.024099 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000052 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Orbs/WhiteOrb.prefab
+  artifactKey: Guid(100d85319f3af73458980fbe0578f1ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Orbs/WhiteOrb.prefab using Guid(100d85319f3af73458980fbe0578f1ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '40d51899dbaeaa7a5aff30f111df3eb6') in 0.022597 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Orbs/GoldOrb.prefab
+  artifactKey: Guid(566249b39add7fd4e82bf2b3272c7453) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Orbs/GoldOrb.prefab using Guid(566249b39add7fd4e82bf2b3272c7453) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f3be6e25f071ef6e51c3379645706083') in 0.023961 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000048 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Orbs/PurpleOrb.prefab
+  artifactKey: Guid(1202fe8ecd4edcc4babfb8f7a0b5b149) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Orbs/PurpleOrb.prefab using Guid(1202fe8ecd4edcc4babfb8f7a0b5b149) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c5560b8321bef96d3466f5b0a07af40c') in 0.021442 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Orbs/HealthOrb.prefab
+  artifactKey: Guid(282924e8ea21b584faa7ee9fdefaf65a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Orbs/HealthOrb.prefab using Guid(282924e8ea21b584faa7ee9fdefaf65a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '178b3f7d1d41d23306aa2422dce8d0fb') in 1.643391 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 35.538557 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Orb Consume/DarkOrbConsume.prefab
+  artifactKey: Guid(d25d25ca6583f0747bb6fbd95b181c39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Orb Consume/DarkOrbConsume.prefab using Guid(d25d25ca6583f0747bb6fbd95b181c39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a22b458a48604e76c3c46790dcbc1fc') in 0.022145 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Orb Consume/PurpleOrbConsume.prefab
+  artifactKey: Guid(d111e51ce3bba7d488d4d1aaec84c520) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Orb Consume/PurpleOrbConsume.prefab using Guid(d111e51ce3bba7d488d4d1aaec84c520) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '84a94194301ef535c94b1299744b3e48') in 0.035400 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000042 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Orb Consume/WaterOrbConsume.prefab
+  artifactKey: Guid(7a902ceca98cb3f4685ef6781192cf11) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Orb Consume/WaterOrbConsume.prefab using Guid(7a902ceca98cb3f4685ef6781192cf11) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ccc799023aa83ab61564761431f75373') in 0.025269 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 22.054238 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Items/Epic Item/ItemEpicModular.prefab
+  artifactKey: Guid(ccc7a45cd4207984db88f91da69c61be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Items/Epic Item/ItemEpicModular.prefab using Guid(ccc7a45cd4207984db88f91da69c61be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a42dd6d596f162cb4236cde928498e73') in 0.023285 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Items/Epic Item/ItemEpicRed.prefab
+  artifactKey: Guid(39cc5ef9c499be04b937818e22956672) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Items/Epic Item/ItemEpicRed.prefab using Guid(39cc5ef9c499be04b937818e22956672) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9d0a9403523ef4818d635858453a296a') in 0.016565 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 45.621282 seconds.
+  path: Assets/ARPG Effects/Materials/Loot/beam_essence_dark.mat
+  artifactKey: Guid(f327ec18aef78204f910550ffbc71565) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Materials/Loot/beam_essence_dark.mat using Guid(f327ec18aef78204f910550ffbc71565) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fcfc1ceef4ac69f3b7b7da48f792efae') in 0.049345 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/ARPG Effects/Materials/Loot/runeword02.mat
+  artifactKey: Guid(60623d1567e71854ab959253cccc817d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Materials/Loot/runeword02.mat using Guid(60623d1567e71854ab959253cccc817d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b50f5ceda7774f3103b4020ade091cab') in 0.020966 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/ARPG Effects/Materials/Loot/runeword03.mat
+  artifactKey: Guid(815176d121108164b97ce8cc31e0f4ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Materials/Loot/runeword03.mat using Guid(815176d121108164b97ce8cc31e0f4ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5db594625e0870f535bdf8b0db91fb3c') in 0.013533 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/ARPG Effects/Materials/Loot/chestrays.mat
+  artifactKey: Guid(52626e8fb84c0434b976eb4aa9ac0fed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Materials/Loot/chestrays.mat using Guid(52626e8fb84c0434b976eb4aa9ac0fed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad9a6aec4e61bbe30e875403e36d00fd') in 0.013885 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 508.571400 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Items/Circle Item/CircleItemGold.prefab
+  artifactKey: Guid(273f47c052ee7f349986828646f217e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Items/Circle Item/CircleItemGold.prefab using Guid(273f47c052ee7f349986828646f217e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b76c6e3b0d594ee7de2d2a09a8fa4e2d') in 0.028375 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Items/Circle Item/CircleItemRed.prefab
+  artifactKey: Guid(85aaa47f48c645346864af624d3838aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Items/Circle Item/CircleItemRed.prefab using Guid(85aaa47f48c645346864af624d3838aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '79c7e667caefd2a8b65e2541df8a9cdc') in 0.022475 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Items/Circle Item/CircleItemGreen.prefab
+  artifactKey: Guid(3b237adbbdd190e4188defaa220a0ad9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Items/Circle Item/CircleItemGreen.prefab using Guid(3b237adbbdd190e4188defaa220a0ad9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1a18f6af0b4f3836f0404dde489e430e') in 0.018029 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 40.576738 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Items/Essence Item/ItemDarkEssence.prefab
+  artifactKey: Guid(b21ef183723f0fe489a440d3065094bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Items/Essence Item/ItemDarkEssence.prefab using Guid(b21ef183723f0fe489a440d3065094bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '31a0cf26fd1d46699bd55df2802a703c') in 0.022661 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Items/Essence Item/ItemRedEssence.prefab
+  artifactKey: Guid(e198a15c4bca0a340978ba921289bb35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Items/Essence Item/ItemRedEssence.prefab using Guid(e198a15c4bca0a340978ba921289bb35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ba7de77eba97f2ba4ca583d1c51d0c4c') in 0.024796 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/ARPG Effects/Prefabs/Loot/Items/Essence Item/ItemWhiteEssence.prefab
+  artifactKey: Guid(2c770133afeb8bd4b9801be706d0fad1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ARPG Effects/Prefabs/Loot/Items/Essence Item/ItemWhiteEssence.prefab using Guid(2c770133afeb8bd4b9801be706d0fad1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '716d713700dcc908124b269b12550fda') in 0.028506 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

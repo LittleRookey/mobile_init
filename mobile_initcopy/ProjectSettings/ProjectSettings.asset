@@ -661,7 +661,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    Android: TEXTMESH_PRO_PRESENT
+    Android: TEXTMESH_PRO_PRESENT;MOREMOUNTAINS_NICEVIBRATIONS_INSTALLED
     Standalone: TEXTMESH_PRO_PRESENT
   additionalCompilerArguments: {}
   platformArchitecture: {}

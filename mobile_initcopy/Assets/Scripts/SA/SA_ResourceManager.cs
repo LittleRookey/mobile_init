@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DamageNumbersPro;
-using CleverCrow.Fluid.StatsSystem.StatsContainers;
+using CodeStage.AntiCheat.ObscuredTypes;
+using TMPro;
 
 
 public enum DamageType
@@ -52,23 +53,30 @@ public class SA_ResourceManager: MonoBehaviour
     public DamageNumber _normalDamagePrefab;
 
     public DamageNumber _swordNormalDamage, _bowNormalDamage, _magicNormalDamage;
-
+    
     public GameObject _hpBar;
     public GameObject _hpBarWithLevel;
     public GameObject _hpBarPlayer;
 
-    [Header("Stats")]
-    public StatsContainer normalCharacterStats;
-
+    
+    [Header("HPBar settings")]
     public bool turnOnHPBarAlways;
     public Vector2 _hpBarPos = new Vector2(0, 0);
-    
 
+    [Header("ETC")]
+    public Material hitMatsDefault;
+    public int gold;
+    private int prevGold;
+
+    [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private TextMeshProUGUI goldAddOnText;
+    [SerializeField] private TextMeshProUGUI expText;
+    
     // timer for Character's HP Bar active time
     public static readonly float ENEMYHPTIME = 3f;
 
 
-
+    bool isAdding;
 
     // Stats for base values
   
@@ -78,19 +86,33 @@ public class SA_ResourceManager: MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        
     }
     private void Start()
     {
+        isAdding = false;
+        prevGold =  gold;
+        goldAddOnText.gameObject.SetActive(false);
         _normalDamagePrefab.PrewarmPool();
         _swordNormalDamage.PrewarmPool();
         _bowNormalDamage.PrewarmPool();
         _magicNormalDamage.PrewarmPool();
+        UpdateGold();
+        UpdateExpText(StatManager.Instance._player);
     }
 
-    public StatsContainer GetCharacterStat()
+    private void OnEnable()
     {
-        return normalCharacterStats.CreateRuntimeCopy();
+        UIManager.OnUpdateExpBar += UpdateExpText;
+        UIManager.OnUpdateGold += AddGold;
     }
+
+    private void OnDisable()
+    {
+        UIManager.OnUpdateExpBar -= UpdateExpText;
+        UIManager.OnUpdateGold -= AddGold;
+    }
+
     public DamageNumber GetDamageNumber(SA_Unit.AttackType weaponType, DamageType dmgType=DamageType.normal) 
     {
         if (weaponType == SA_Unit.AttackType.sword)
@@ -122,5 +144,47 @@ public class SA_ResourceManager: MonoBehaviour
         //return dmn;
     }
 
+    public void AddGold(int val)
+    {
+        prevGold = gold;
+        gold += val;
+        
+        StartCoroutine(IncreaseGold(val));
 
+    }
+
+    // call it before the gold add
+    private IEnumerator IncreaseGold(int addOn)
+    {
+        isAdding = true;
+        WaitForSeconds sec = new WaitForSeconds(0.5f / addOn);
+        goldAddOnText.gameObject.SetActive(true);
+        goldAddOnText.text = "+" + addOn.ToString("F0");
+        while (prevGold < gold)
+        {
+            prevGold++;
+            goldText.text = prevGold.ToString();
+            yield return sec;
+        }
+        Invoke("TurnOffAddOn", 0.5f);
+        isAdding = false;
+        
+    }
+
+    void TurnOffAddOn()
+    {
+        goldAddOnText.gameObject.SetActive(false);
+    }
+    public void UpdateGold()
+    {
+
+        goldText.text = gold.ToString();
+    }
+
+    public void UpdateExpText(SA_Player sa)
+    {
+        float tValue = (float)sa._exp / sa._maxExp;
+        tValue *= 100f;
+        expText.text = tValue.ToString("F2") + "%";
+    }
 }

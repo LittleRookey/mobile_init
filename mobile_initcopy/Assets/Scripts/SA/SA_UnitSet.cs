@@ -20,9 +20,11 @@ public class SA_UnitSet : MonoBehaviour
         Object
     };
 
+    public bool isPlayer;
+
     public UnitType _unitType = UnitType.none;
 
-    public SA_Unit _unitST;
+    public SA_UnitBase _unitST;
 
     public SA_UnitSubset _UnitSubset;
 
@@ -37,15 +39,20 @@ public class SA_UnitSet : MonoBehaviour
     public Vector3 _dmgPopupOffset;
 
     Vector3 _myPos;
-    private void Awake()
-    {
-        
 
-    }
     // Start is called before the first frame update
     void Start()
     {
-        if (_unitST == null) _unitST = GetComponent<SA_Unit>();
+        if (!isPlayer)
+            _unitST = GetComponent<SA_Unit>();
+        else
+            _unitST = GetComponent<SA_Player>();
+        SpriteRenderer[] mats = GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer mat in mats)
+        {
+            mat.material = SA_ResourceManager.Instance.hitMatsDefault;
+        }
+
         if (!_UnitSubset)
         {
             //bool chk = false;
@@ -70,6 +77,7 @@ public class SA_UnitSet : MonoBehaviour
 
         _UnitSubset._levelText.text = _unitST._level.ToString();
 
+        // Set Material to all sprite renderer of child 
     }
 
 
@@ -81,6 +89,8 @@ public class SA_UnitSet : MonoBehaviour
         } 
         else if(!_unitST.isPlayer)
         {
+            
+            //gameObject.layer = LayerMask.GetMask("Units");
 
         }
         // TODO set the enemy stat, loot, reset enemy state
@@ -135,10 +145,14 @@ public class SA_UnitSet : MonoBehaviour
 
     public void AddHP(float val)
     {
-        SA_Unit sa = _unitST;
-        if (sa._unitState == SA_Unit.UnitState.death) return;
+        SA_UnitBase sa = _unitST;
+        if (sa._unitState == SA_UnitBase.UnitState.death) return;
         if (!sa.gameObject.activeInHierarchy) return;
         if (sa._unitHP <= 0) return;
+        if (val < 0 && _unitST.isPlayer)
+        {
+
+        }
 
         if (sa._unitHP + val > sa._unitMaxHP)
         {
@@ -158,19 +172,25 @@ public class SA_UnitSet : MonoBehaviour
         // hplist[2]ดย pivot 
         _UnitSubset._hpList[0].gameObject.SetActive(true);
         float tValue = _unitST._unitHP * (1/_unitST._unitMaxHP);
+        //Debug.Log(_unitST._unitHP / _unitST._unitMaxHP + " " + _unitST.name);
         if (tValue < 0) tValue = 0f;
         
         _UnitSubset._hpList[2].transform.localScale = new Vector3(tValue, 1, 1);
 
         _timerForHP = 0;
+        if (_unitST.isPlayer)
+            UIManager.OnUpdateHPBar?.Invoke(_unitST);
     }
 
-    public void UpdateHPBar()
+    public void UpdateHPBar(bool loseHP=false)
     {
         if (_unitST == null) return; 
-        float tValue = _unitST._unitHP * (1 / _unitST._unitMaxHP);
+        float tValue = _unitST._unitHP / _unitST._unitMaxHP;
         _UnitSubset._hpList[2].transform.localScale = new Vector3(tValue, 1, 1);
+        //if (_unitST.isPlayer)
+        //    UIManager.OnUpdateHPBar?.Invoke(_unitST);
     }
+
     public void ShowDmgText(SA_Unit.AttackType type, float value)
     {
         SA_ResourceManager.Instance.GetDamageNumber(type).Spawn(transform.position + _dmgPopupOffset, value);
@@ -246,11 +266,25 @@ public class SA_UnitSet : MonoBehaviour
     }
     public void UnitTypeProcess()
     {
-        _unitST = GetComponent<SA_Unit>();
-        if (_unitST != null) DestroyImmediate(_unitST);
-        _unitST = gameObject.AddComponent<SA_Unit>();
-        _unitST._spumPrefab = GetComponent<SPUM_Prefabs>();
-        _unitST._UnitSet = this;
+        if (!isPlayer)
+        {
+            _unitST = GetComponent<SA_Unit>();
+            if (_unitST != null) DestroyImmediate(_unitST);
+            _unitST = GetComponent<SA_Unit>();
+            if (_unitST != null) DestroyImmediate(_unitST);
+            _unitST = gameObject.AddComponent<SA_Unit>();
+            _unitST._spumPrefab = GetComponent<SPUM_Prefabs>();
+            _unitST._UnitSet = this;
+        } else
+        {
+            
+            DestroyImmediate(GetComponent<SA_Player>());
+            DestroyImmediate(GetComponent<SA_Player>());
+            _unitST = gameObject.AddComponent<SA_Player>();
+            _unitST.isPlayer = true;
+            _unitST._spumPrefab = GetComponent<SPUM_Prefabs>();
+            _unitST._UnitSet = this;
+        }
 
         //_unitST._mStatContainer = SA_ResourceManager.Instance.GetCharacterStat();
         //UnitInitSet();
@@ -258,12 +292,18 @@ public class SA_UnitSet : MonoBehaviour
 
         SA_AnimationAction tSA = _unitST._spumPrefab._anim.gameObject.GetComponent<SA_AnimationAction>();
         if (tSA != null) DestroyImmediate(tSA);
+        tSA = _unitST._spumPrefab._anim.gameObject.GetComponent<SA_AnimationAction>();
+        if (tSA != null) DestroyImmediate(tSA);
+        
         tSA = _unitST._spumPrefab._anim.gameObject.AddComponent<SA_AnimationAction>();
         tSA._player = _unitST;
 
 
         _rigidBody = GetComponent<Rigidbody2D>();
         if (_rigidBody != null) DestroyImmediate(_rigidBody);
+        _rigidBody = GetComponent<Rigidbody2D>();
+        if (_rigidBody != null) DestroyImmediate(_rigidBody);
+
         _rigidBody = gameObject.AddComponent<Rigidbody2D>();
         _rigidBody.mass = 1;
         _rigidBody.drag = 1;
@@ -273,11 +313,23 @@ public class SA_UnitSet : MonoBehaviour
 
         _collider = GetComponent<CapsuleCollider2D>();
         if (_collider != null) DestroyImmediate(_collider);
+        _collider = GetComponent<CapsuleCollider2D>();
+        if (_collider != null) DestroyImmediate(_collider);
+
         _collider = gameObject.AddComponent<CapsuleCollider2D>();
         _collider.offset = new Vector2(0, 0.25f);
         _collider.size = new Vector2(0.5f, 0.5f);
 
         _dmgPopupOffset = new Vector3(0f, 1.3f, 0f);
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            string tName = transform.GetChild(i).name;
+            if (tName == "SA_UnitSubset")
+            {
+                DestroyImmediate(transform.GetChild(i));
+            }
+        }
 
         if (_UnitSubset != null) DestroyImmediate(_UnitSubset);
 
@@ -329,17 +381,17 @@ public class SA_UnitSet : MonoBehaviour
     }
 
 
-    void UnitInitSet()
-    {
-        _unitST.InitStat();
+    //void UnitInitSet()
+    //{
+    //    _unitST.InitStat();
 
-        //_unitST._unitHP = 100f;
-        //_unitST._unitMaxHP = _unitST._unitHP;
-        //_unitST._unitMoveSpeed = 1f;
-        //_unitST._unitAttack = 10f;
-        //_unitST._unitAttackSpeed = 1f;
-        //_unitST._unitHPRegen = 1 / _unitST._unitHP;
+    //    //_unitST._unitHP = 100f;
+    //    //_unitST._unitMaxHP = _unitST._unitHP;
+    //    //_unitST._unitMoveSpeed = 1f;
+    //    //_unitST._unitAttack = 10f;
+    //    //_unitST._unitAttackSpeed = 1f;
+    //    //_unitST._unitHPRegen = 1 / _unitST._unitHP;
 
         
-    }
+    //}
 }

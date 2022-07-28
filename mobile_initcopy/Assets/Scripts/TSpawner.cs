@@ -13,7 +13,7 @@ public class TSpawner : MonoBehaviour
 
     [SerializeField]
     public int _maxEnemySpawnNum;
-
+    
     public bool _showGizmos;
 
     public SA_Unit _enemy;
@@ -23,7 +23,7 @@ public class TSpawner : MonoBehaviour
     private int enemiesRemainingAlive;
     public float spawnTimer;
     private float currentTime;
-
+    private int totalSpawnNum = 0;
 
     /*
      * How Spawner works:
@@ -72,8 +72,11 @@ public class TSpawner : MonoBehaviour
             GameObject spawnedEnemy = PoolManager.SpawnObject(_enemy.gameObject, spawnPoint);
             spawnedEnemy.transform.SetParent(SoonsoonData.Instance.SAM._unitPool[1].transform, false);
             SA_Unit sa = spawnedEnemy.GetComponent<SA_Unit>();
+            sa.ID = totalSpawnNum;
+            totalSpawnNum += 1;
             Actions.OnEnemySpawn?.Invoke(sa);
             sa.OnDeath += OnEnemyDeath;
+            sa.spawnedPos = transform.position;
             
             //SoonsoonData.Instance.SAM.AddEnemy(spawnedEnemy.GetComponent<SA_Unit>());
 
@@ -85,7 +88,7 @@ public class TSpawner : MonoBehaviour
         }
     }
 
-    public void OnEnemyDeath(SA_Unit sa)
+    public void OnEnemyDeath(SA_UnitBase sa)
     {
         SoonsoonData.Instance.SAM._enemyList.Remove(sa);
         enemiesRemainingAlive -= 1;

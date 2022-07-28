@@ -26,52 +26,8 @@ public class SA_MissileManager : MonoBehaviour
         PoolManager.WarmPool(_fireball.gameObject, _objectPoolNumber);
         PoolManager.WarmPool(_arrow.gameObject, _objectPoolNumber);
     }
-    // Start is called before the first frame update
-    //void Start()
-    //{
-    //    GetMissleList();
-    //}
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    //SSThread();
-    //}
-
-    //void SSThread()
-    //{
-    //    if (_poolListUse.Count > 0)
-    //    {
-    //        for (int i = 0; i < _poolListUse.Count; i++)
-    //        {
-    //            if (!_poolListUse[i].gameObject.activeInHierarchy) return;
-    //            SA_MissileObj tsT = _poolListUse[i];
-    //            tsT._timer += Time.deltaTime;
-
-    //            if (tsT._timer > tsT._timerForLim)
-    //            {
-    //                tsT.MissileDone();
-    //            } else
-    //            {
-    //                tsT.DoMove();
-    //            }
-    //        }
-    //    }
-    //}
-
-    //public void GetMissleList()
-    //{
-    //    _poolList.Clear();
-    //    _poolListUse.Clear();
-
-    //    for (int i = 0; i < _misslePool.childCount; i++)
-    //    {
-    //        SA_MissileObj tObj = _misslePool.GetChild(i).GetComponent<SA_MissileObj>();
-    //        _poolList.Add(tObj);
-    //    }
-    //}
-
-    public void FireMissile(SA_MissileObj.MissileType type, SA_Unit owner, SA_Unit target)
+    public void FireMissile(SA_MissileObj.MissileType type, SA_UnitBase owner, SA_UnitBase target)
     {
 
         if (type == SA_MissileObj.MissileType.fireball)

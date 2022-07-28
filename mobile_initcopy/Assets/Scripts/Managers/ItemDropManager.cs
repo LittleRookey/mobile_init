@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class ItemDropManager : MonoBehaviour
 {
-    [SerializeField] private SA_Unit player;
 
     public int smallParticlesNum = 5;
     public float magnetSpeed = 3f;
@@ -42,23 +41,38 @@ public class ItemDropManager : MonoBehaviour
     public void DropCoin(SA_Unit sa)
     {
         StartCoroutine(SpawnCoin(sa));
-        
+        StartCoroutine(SpawnExp(sa));
     }
 
     IEnumerator SpawnCoin(SA_Unit sa)
     {
-        WaitForSeconds sec = new WaitForSeconds(.1f);
+        WaitForSeconds sec = new WaitForSeconds(Random.Range(0.01f, 0.1f));
         for (int i = 0; i < smallParticlesNum; i++)
         {
             GameObject coin = PoolManager.SpawnObject(coinDrop);
             //coin.transform.localPosition += (sa.transform.position + (Vector3)Random.insideUnitCircle * dropRadius);
             coin.transform.position = sa.transform.position;
+            coin.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+            yield return sec;
+        }
+    }
+
+    IEnumerator SpawnExp(SA_Unit sa)
+    {
+        WaitForSeconds sec = new WaitForSeconds(Random.Range(0.01f, 0.1f));
+        for (int i = 0; i < smallParticlesNum; i++)
+        {
+            GameObject coin = PoolManager.SpawnObject(expDrop);
+            //coin.transform.localPosition += (sa.transform.position + (Vector3)Random.insideUnitCircle * dropRadius);
+            coin.transform.position = sa.transform.position;
+            coin.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
             yield return sec;
         }
     }
 
     public void MoveToPlayer(BounceDue bd)
     {
+        SA_Player player = StatManager.Instance._player;
         bd.transform.position = Vector3.Lerp(bd.transform.position, player.transform.position, magnetSpeed * Time.deltaTime);
         if ((player.transform.position - bd.transform.position).sqrMagnitude <= 0.1f)
         {
@@ -75,5 +89,6 @@ public class ItemDropManager : MonoBehaviour
     private void OnDisable()
     {
         DropItems -= DropCoin;
+        Actions.OnCoinDrop -= MoveToPlayer;
     }
 }
