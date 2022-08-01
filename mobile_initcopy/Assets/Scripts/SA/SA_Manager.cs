@@ -21,9 +21,13 @@ public class SA_Manager : MonoBehaviour
 
     public UnityEvent<SA_Unit> OnFindTarget;
 
+    Collider2D[] units;
+    //List<Collider2D> colliderList;
+
     private void Awake()
     {
         SoonsoonData.Instance.SAM = this;
+
     }
     // Start is called before the first frame update
     void Start()
@@ -52,17 +56,27 @@ public class SA_Manager : MonoBehaviour
     // Find Target with circle scan and return closest
     public SA_UnitBase FindTargetOf(SA_UnitBase sa)
     {
+        //colliderList.Clear();
         string enemTag = "";
         switch(sa.tag)
         {
             case "Player": enemTag = "Enemy"; break;
             case "Enemy": enemTag = "Player"; break;
         }
-
-        RaycastHit2D[] units = Physics2D.CircleCastAll(sa.transform.position, scanRadius, Vector2.zero, 0f, LayerMask.GetMask("Units"));
+        units = Physics2D.OverlapCircleAll(sa.transform.position, scanRadius, LayerMask.GetMask("Units"));
+        //RaycastHit2D[] units = Physics2D.CircleCastAll(sa.transform.position, scanRadius, Vector2.zero, 0f, LayerMask.GetMask("Units"));
         if (units.Length <= 0) return null;
 
+        //for (int i = 0; i < units.Length; i++)
+        //{
+        //    colliderList.Add(units[i]);
+        //}
+
+        //SortObjectsOnDistance(colliderList);
+
+        //SA_UnitBase retUnit = colliderList[0].GetComponent<SA_UnitBase>();
         SA_UnitBase retUnit = null;
+
         float tSDis = 999999;
         for (int i = 0; i < units.Length; i++)
         {
@@ -81,10 +95,33 @@ public class SA_Manager : MonoBehaviour
                 }
 
             }
-            
+
         }
         return retUnit;
     }
+
+    public void SortObjectsOnDistance(List<Collider2D> objects)
+    {
+        //objects.Sort(delegate (Collider2D a, Collider2D b)
+        //{
+        //    return Vector2.Distance(transform.position, a.transform.position).CompareTo(Vector2.Distance(transform.position, b.transform.position));
+        //});
+        objects.Sort(SortByDistanceToMe);
+        //objects = objects.OrderBy((d) => (transform.position - d.transform.position).sqrMagnitude).ToArray();
+        //for (int i = 0; i < objects.Count; i++)
+        //{
+        //    //Debug.Log("Distance to " + objects[i].name + ": " + (objects[i].transform.position - transform.position).sqrMagnitude);
+
+        //}
+    }
+
+    int SortByDistanceToMe(Collider2D a, Collider2D b)
+    {
+        float squaredRangeA = (a.transform.position - transform.position).sqrMagnitude;
+        float squaredRangeB = (b.transform.position - transform.position).sqrMagnitude;
+        return squaredRangeA.CompareTo(squaredRangeB);
+    }
+
     //public void ContainsEnemy()
     //public SA_Unit GetTarget(SA_Unit unit)
     //{

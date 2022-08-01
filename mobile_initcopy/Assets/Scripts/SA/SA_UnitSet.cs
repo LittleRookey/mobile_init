@@ -21,6 +21,8 @@ public class SA_UnitSet : MonoBehaviour
     };
 
     public bool isPlayer;
+    public bool isElite;
+    public bool isBoss;
 
     public UnitType _unitType = UnitType.none;
 
@@ -34,12 +36,33 @@ public class SA_UnitSet : MonoBehaviour
 
     public Rigidbody2D _rigidBody;
 
-    public CapsuleCollider2D _collider;
+    public CircleCollider2D _collider;
 
     public Vector3 _dmgPopupOffset;
 
     Vector3 _myPos;
 
+    string enemString = "Enemy";
+    string playerString = "Player";
+
+    private void Awake()
+    {
+        if (!_UnitSubset)
+        {
+            //bool chk = false;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).GetComponent<SA_UnitSubset>() != null)
+                {
+                    //chk = true;
+                    DestroyImmediate(transform.GetChild(i));
+                }
+
+            }
+            SetUnitToBattle(); // get ref of unitsubset
+        }
+
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -53,20 +76,7 @@ public class SA_UnitSet : MonoBehaviour
             mat.material = SA_ResourceManager.Instance.hitMatsDefault;
         }
 
-        if (!_UnitSubset)
-        {
-            //bool chk = false;
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                if (transform.GetChild(i).GetComponent<SA_UnitSubset>() != null)
-                {
-                    //chk = true;
-                    DestroyImmediate(transform.GetChild(i));
-                }
-                
-            }    
-            SetUnitToBattle(); // get ref of unitsubset
-        }
+        
 
 
         if (_UnitSubset != null)
@@ -83,13 +93,21 @@ public class SA_UnitSet : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_unitST.isPlayer)
+        if (isPlayer)
         {
             Actions.OnPlayerLevelUp += UpdateLevel;
+            _unitType = UnitType.Player;
+            gameObject.tag = playerString;
         } 
-        else if(!_unitST.isPlayer)
+        else if(!isPlayer)
         {
-            
+            _unitType = UnitType.Enemy;
+            gameObject.tag = enemString;
+            _UnitSubset.SetNormal();
+            if (isElite)
+                _UnitSubset.SetElite();
+            if (isBoss)
+                _UnitSubset.SetBoss();
             //gameObject.layer = LayerMask.GetMask("Units");
 
         }
@@ -99,11 +117,11 @@ public class SA_UnitSet : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_unitST.isPlayer)
+        if (isPlayer)
         {
             Actions.OnPlayerLevelUp -= UpdateLevel;
         }
-        else if (!_unitST.isPlayer)
+        else if (!isPlayer)
         {
 
         }
@@ -140,6 +158,7 @@ public class SA_UnitSet : MonoBehaviour
 
     void UpdateLevel()
     {
+        Debug.Log("Level updated");
         _UnitSubset._levelText.text = _unitST._level.ToString();
     }
 
@@ -171,12 +190,13 @@ public class SA_UnitSet : MonoBehaviour
         //hplist[0]은 전체 hp
         // hplist[2]는 pivot 
         _UnitSubset._hpList[0].gameObject.SetActive(true);
+
         float tValue = _unitST._unitHP * (1/_unitST._unitMaxHP);
         //Debug.Log(_unitST._unitHP / _unitST._unitMaxHP + " " + _unitST.name);
         if (tValue < 0) tValue = 0f;
         
         _UnitSubset._hpList[2].transform.localScale = new Vector3(tValue, 1, 1);
-
+        UIManager.MoveBar(_UnitSubset._hpList[3], tValue);
         _timerForHP = 0;
         if (_unitST.isPlayer)
             UIManager.OnUpdateHPBar?.Invoke(_unitST);
@@ -268,11 +288,10 @@ public class SA_UnitSet : MonoBehaviour
     {
         if (!isPlayer)
         {
-            _unitST = GetComponent<SA_Unit>();
-            if (_unitST != null) DestroyImmediate(_unitST);
-            _unitST = GetComponent<SA_Unit>();
-            if (_unitST != null) DestroyImmediate(_unitST);
+            DestroyImmediate(GetComponent<SA_Unit>());   
+            DestroyImmediate(GetComponent<SA_Unit>());
             _unitST = gameObject.AddComponent<SA_Unit>();
+            _unitST.isPlayer = false;
             _unitST._spumPrefab = GetComponent<SPUM_Prefabs>();
             _unitST._UnitSet = this;
         } else
@@ -284,6 +303,7 @@ public class SA_UnitSet : MonoBehaviour
             _unitST.isPlayer = true;
             _unitST._spumPrefab = GetComponent<SPUM_Prefabs>();
             _unitST._UnitSet = this;
+            
         }
 
         //_unitST._mStatContainer = SA_ResourceManager.Instance.GetCharacterStat();
@@ -311,14 +331,14 @@ public class SA_UnitSet : MonoBehaviour
         _rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
         _rigidBody.gravityScale = 0f;
 
-        _collider = GetComponent<CapsuleCollider2D>();
+        _collider = GetComponent<CircleCollider2D>();
         if (_collider != null) DestroyImmediate(_collider);
-        _collider = GetComponent<CapsuleCollider2D>();
+        _collider = GetComponent<CircleCollider2D>();
         if (_collider != null) DestroyImmediate(_collider);
 
-        _collider = gameObject.AddComponent<CapsuleCollider2D>();
-        _collider.offset = new Vector2(0, 0.25f);
-        _collider.size = new Vector2(0.5f, 0.5f);
+        _collider = gameObject.AddComponent<CircleCollider2D>();
+        _collider.offset = new Vector2(0, 0.07f);
+        _collider.radius = 0.15f;
 
         _dmgPopupOffset = new Vector3(0f, 1.3f, 0f);
 

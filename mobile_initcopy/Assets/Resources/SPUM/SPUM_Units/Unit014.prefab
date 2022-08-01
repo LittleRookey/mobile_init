@@ -3253,7 +3253,6 @@ GameObject:
   - component: {fileID: -8359219305250859714}
   - component: {fileID: 4431653583412334454}
   - component: {fileID: -549507419582663410}
-  - component: {fileID: 1084796587417418538}
   m_Layer: 7
   m_Name: Unit014
   m_TagString: Untagged
@@ -3316,12 +3315,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9eb641c20b7ca41b7ca4d7d5193e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   _unitType: 0
   _unitST: {fileID: 4431653583412334454}
   _UnitSubset: {fileID: 0}
   _timerForHP: 0
   _rigidBody: {fileID: -549507419582663410}
-  _collider: {fileID: 1084796587417418538}
+  _collider: {fileID: 0}
   _dmgPopupOffset: {x: 0, y: 1.3, z: 0}
 --- !u!114 &4431653583412334454
 MonoBehaviour:
@@ -3352,21 +3352,21 @@ MonoBehaviour:
   knockbackDuration: 0.1
   knockbackPower: 0.1
   ID:
-    currentCryptoKey: 2081735952
-    hiddenValue: 2081735952
+    currentCryptoKey: 1139752243
+    hiddenValue: 1139752243
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
   _target: {fileID: 0}
   _exp:
-    currentCryptoKey: 2034414545
-    hiddenValue: 2034414545
+    currentCryptoKey: 1094461114
+    hiddenValue: 1094461114
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
   _maxExp:
-    currentCryptoKey: 2088484274
-    hiddenValue: 2088484274
+    currentCryptoKey: 1059606122
+    hiddenValue: 1059606122
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
@@ -3380,8 +3380,8 @@ MonoBehaviour:
   isDead: 0
   _unitMaxHP:
     migratedVersion: 
-    currentCryptoKey: 1836815006
-    hiddenValue: 1838316446
+    currentCryptoKey: 2010589806
+    hiddenValue: 1999296366
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -3392,8 +3392,8 @@ MonoBehaviour:
     fakeValueActive: 0
   _unitHP:
     migratedVersion: 
-    currentCryptoKey: 1418303832
-    hiddenValue: 1419348312
+    currentCryptoKey: 2132709927
+    hiddenValue: 2140282407
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -3403,15 +3403,15 @@ MonoBehaviour:
     fakeValue: 0
     fakeValueActive: 0
   _unitDefense:
-    currentCryptoKey: 1299609904
-    hiddenValue: 1299609904
+    currentCryptoKey: 1269564851
+    hiddenValue: 1269564851
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
   _unitMana:
     migratedVersion: 
-    currentCryptoKey: 1604136558
-    hiddenValue: 1596890478
+    currentCryptoKey: 1963388397
+    hiddenValue: 1978468077
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -3421,15 +3421,15 @@ MonoBehaviour:
     fakeValue: 0
     fakeValueActive: 0
   _unitAttack:
-    currentCryptoKey: 1310813884
-    hiddenValue: 1310813884
+    currentCryptoKey: 1474117763
+    hiddenValue: 1474117763
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
   _unitMagicForce:
     migratedVersion: 
-    currentCryptoKey: 1856128385
-    hiddenValue: 1850057345
+    currentCryptoKey: 1164430536
+    hiddenValue: 1171023816
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -3440,8 +3440,8 @@ MonoBehaviour:
     fakeValueActive: 0
   _unitAttackSpeed:
     migratedVersion: 
-    currentCryptoKey: 1481963552
-    hiddenValue: 1492669472
+    currentCryptoKey: 1066812888
+    hiddenValue: 1061525208
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -3452,8 +3452,8 @@ MonoBehaviour:
     fakeValueActive: 0
   _unitAttackDelay:
     migratedVersion: 
-    currentCryptoKey: 1312576918
-    hiddenValue: 1314208918
+    currentCryptoKey: 1361815967
+    hiddenValue: 1370041247
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -3464,8 +3464,8 @@ MonoBehaviour:
     fakeValueActive: 0
   _unitAttackRange:
     migratedVersion: 
-    currentCryptoKey: 1854094025
-    hiddenValue: 1849328585
+    currentCryptoKey: 2055034913
+    hiddenValue: 2052619553
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -3522,6 +3522,11 @@ MonoBehaviour:
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
+  isAttacking: 0
+  canMove: 0
+  hitTargetID: 0
+  spawnedPos: {x: 0, y: 0}
+  patrolTimer: 2
   dropExp:
     currentCryptoKey: 1215488012
     hiddenValue: 1215488012
@@ -3534,10 +3539,7 @@ MonoBehaviour:
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
-  isAttacking: 0
-  canMove: 0
   talents: []
-  spawnedPos: {x: 0, y: 0}
 --- !u!50 &-549507419582663410
 Rigidbody2D:
   serializedVersion: 4
@@ -3559,22 +3561,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &1084796587417418538
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7840382200669736700}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.25}
-  m_Size: {x: 0.5, y: 0.5}
-  m_Direction: 0
 --- !u!1 &7879867959556831001
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ public class SA_AnimationAction : MonoBehaviour
     }
     public void AttackDone()
     {
-        Debug.Log("Attack Done");
+        //Debug.Log("Attack Done");
         switch(_player._ms._attackType)
         {
             case SA_Unit.AttackType.sword:
@@ -53,6 +53,7 @@ public class SA_AnimationAction : MonoBehaviour
     public void CanMove()
     {
         _player.canMove = true;
+        _player.isAttacking = false;
     }
     public void DeathDone()
     {

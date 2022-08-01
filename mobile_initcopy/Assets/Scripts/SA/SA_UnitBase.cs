@@ -69,17 +69,21 @@ public class SA_UnitBase : MonoBehaviour
     protected ObscuredFloat _hpRegenTimer;
 
     protected Rigidbody2D rb;
-    protected CapsuleCollider2D capsuleColl;
+    protected CircleCollider2D circleColl;
 
     protected Vector2 _dirVec;
     protected Vector2 _tempDist;
 
     public bool isAttacking;
     public bool canMove;
-    public int hitTargetID;
-    protected Vector2 nPos;
-
     protected bool isPatrolling;
+    
+    public int hitTargetID;
+
+    protected Vector2 nPos;
+    public Vector2 spawnedPos;
+
+
     protected GameObject destTarg;
 
     protected WaitForSeconds hitDuration = new WaitForSeconds(.2f);
@@ -105,14 +109,15 @@ public class SA_UnitBase : MonoBehaviour
         magic
     };
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _animAction = _spumPrefab._anim.GetComponent<SA_AnimationAction>();
         rb = GetComponent<Rigidbody2D>();
-        capsuleColl = GetComponent<CapsuleCollider2D>();
+        circleColl = GetComponent<CircleCollider2D>();
+        
     }
 
-    void Update()
+    protected virtual void Update()
     {
         HPRegen();
         CheckState();
@@ -151,12 +156,14 @@ public class SA_UnitBase : MonoBehaviour
     }
 
     
-    protected void CheckState()
+    protected virtual void CheckState()
     {
+        
         switch (_unitState)
         {
             case UnitState.idle:
                 //isPatrolling = false;
+                _attackTimer += Time.deltaTime;
                 FindTarget();
                 if (_target == null)
                     isPatrolling = false;
@@ -165,20 +172,22 @@ public class SA_UnitBase : MonoBehaviour
                 {
                     MoveToPatrol();
                     patrolTime = 0f;
+                    patrolTimer = Random.Range(2f, 3f);
                 }
-
                 break;
 
             case UnitState.run:
+                _attackTimer += Time.deltaTime;
                 FindTarget();
                 if (_target == null)
                     DoMove(nPos);
                 else
-                    DoMove();
+                    DoMove(_target.transform.position);
                 break;
 
             case UnitState.attack:
                 //FindTarget();
+                _attackTimer += Time.deltaTime;
                 CheckAttack();
                 break;
             case UnitState.patrol:
@@ -249,7 +258,7 @@ public class SA_UnitBase : MonoBehaviour
         }
     }
 
-    protected void FindTarget()
+    protected virtual void FindTarget()
     {
 
         _findTimer += Time.deltaTime;
@@ -263,12 +272,13 @@ public class SA_UnitBase : MonoBehaviour
             _findTimer = 0;
             if (_target != null)
             {
+                //DoMove(_target.transform.position);
                 float distToTarg = (_target.transform.position - transform.position).sqrMagnitude;
                 if (distToTarg <= _unitFightRange)
                 {
                     if (distToTarg <= _unitAttackRange)
                     {
-                        Debug.Log("Close");
+                        Debug.Log(name + " 111111111111");
                         SetState(UnitState.attack);
                     }
                     else
@@ -277,7 +287,7 @@ public class SA_UnitBase : MonoBehaviour
 
                     }
                 }
-            }
+            } 
 
         }
 
@@ -291,7 +301,7 @@ public class SA_UnitBase : MonoBehaviour
         //Debug.Log("2");
         if (!CheckDistance()) return;
         //Debug.Log("Attack1");
-        _attackTimer += Time.deltaTime;
+        //_attackTimer += Time.deltaTime;
         if (_attackTimer > _unitAttackDelay && _target != null)
         {
             DoAttack();
@@ -318,6 +328,7 @@ public class SA_UnitBase : MonoBehaviour
         return val;
     }
 
+    // assume target exists
     // if enemy is within attack range: true
     // else: false
     protected bool CheckDistance()
@@ -331,7 +342,7 @@ public class SA_UnitBase : MonoBehaviour
         if (tDis <= _unitAttackRange * _unitAttackRange) // if enemy is within range
         {
 
-            SetState(UnitState.attack);
+            //SetState(UnitState.attack);
             return true;
         }
         else // if enemy is not within range
@@ -351,7 +362,6 @@ public class SA_UnitBase : MonoBehaviour
         isAttacking = true;
         canMove = false;
         hitTargetID = _target.ID;
-        Debug.Log("AttackAnimationplayed");
         _dirVec = (Vector2)(_target.transform.position - transform.position).normalized;
         SetDirection();
 
@@ -455,8 +465,56 @@ public class SA_UnitBase : MonoBehaviour
         }
     }
 
+    
 
-    protected virtual void Patrol() { }
+    protected virtual void Patrol() 
+    {
+        if (!isPatrolling)
+        {
+            do
+            {
+                nPos = Random.insideUnitCircle * 3f;
+            } while ((nPos - spawnedPos).sqrMagnitude > 3f);
+            isPatrolling = true;
+            _dirVec = (nPos - (Vector2)transform.position).normalized;
+            SetDirection();
+            SpriteRenderer circle = Resources.Load<SpriteRenderer>("Equipments/Circle");
+            destTarg = Instantiate(circle.gameObject);
+            destTarg.transform.position = nPos;
+
+
+        }
+
+
+        SetState(UnitState.run);
+        //Debug.Log(name + ": " + transform.position + " " + ((Vector3)nPos - transform.position).sqrMagnitude);
+        if (canMove)
+        {
+            FindTarget();
+            //Debug.Log(name + ": " + transform.position + " " + ((Vector3)nPos - transform.position).sqrMagnitude);
+            if (((Vector3)nPos - transform.position).sqrMagnitude <= 0.1f)
+            {
+                canMove = false;
+                isPatrolling = false;
+                // when the unit arrives at the next position
+                Destroy(destTarg);
+                SetState(UnitState.idle);
+
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, ((Vector3)nPos - transform.position).normalized, Color.blue, 1f);
+                //transform.DOMove(nPos, .5f);
+                transform.position += (Vector3)_dirVec * _unitMoveSpeed * Time.deltaTime;
+
+            }
+        }
+
+        if (_target != null)
+        {
+            //DoMove(nPos.transform.position);
+        }
+    }
 
     public IEnumerator KnockBack(float knockDur, float knockPow, Transform obj)
     {
@@ -495,7 +553,7 @@ public class SA_UnitBase : MonoBehaviour
         // and is within attack range
         if (CheckDistance())
         {
-
+            Debug.Log(name + " 222222222222");
             SetState(UnitState.attack);
         }
         else // if target is not within attack range
@@ -513,39 +571,50 @@ public class SA_UnitBase : MonoBehaviour
 
 
     }
-
+    bool isMovingToTarget = false;
     // moves to the given position 
     protected void DoMove(Vector3 dest)
     {
         //Debug.Log(gameObject.name +"'s target: "+ CheckTarget());
         // if target is not within attack range
         // run to target
+        isMovingToTarget = true;
         _tempDist = dest - transform.position;
 
         _dirVec = _tempDist.normalized;
         SetDirection();
+        //if (!isMovingToTarget)
         SetState(UnitState.run);
         if (canMove)
         {
             FindTarget();
+            if (_target != null)
+            {
+                if ((_target.transform.position - transform.position).sqrMagnitude <= _unitAttackRange - .1f)
+                {
+                    isMovingToTarget = false;
+                    canMove = false;
+                    isPatrolling = false;
+                    // when the unit arrives at the next position
+                    Destroy(destTarg);
+                    Debug.Log(name + " 3333333333333");
+                    SetState(UnitState.attack);
+
+                }
+                else
+                {
+                    Debug.DrawRay(transform.position, ((Vector3)nPos - transform.position).normalized, Color.blue, .1f);
+                    //transform.DOMove(nPos, .5f).SetEase(Ease.Linear);
+                    transform.position += (Vector3)_dirVec * _unitMoveSpeed * Time.deltaTime;
+
+                }
+
+            } else
+            {
+                SetState(UnitState.patrol);
+            }
             //Debug.Log(name + ": " + transform.position + " " + ((Vector3)nPos - transform.position).sqrMagnitude);
-            if (((Vector3)nPos - transform.position).sqrMagnitude <= 0.1f)
-            {
-                canMove = false;
-                isPatrolling = false;
-                // when the unit arrives at the next position
-                Destroy(destTarg);
-                SetState(UnitState.idle);
-
-            }
-            else
-            {
-                Debug.DrawRay(transform.position, ((Vector3)nPos - transform.position).normalized, Color.blue, .1f);
-                //transform.DOMove(nPos, .5f).SetEase(Ease.Linear);
-                transform.position += (Vector3)_dirVec * _unitMoveSpeed * Time.deltaTime;
-
-            }
-            Debug.Log("Moving");
+            //Debug.Log("Moving");
 
         }
     }

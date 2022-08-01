@@ -11,12 +11,20 @@ public class TSpawner : MonoBehaviour
     [SerializeField]
     private float _radius;
 
+
     [SerializeField]
     public int _maxEnemySpawnNum;
     
     public bool _showGizmos;
 
     public SA_Unit _enemy;
+
+    enum SpawnType
+    {
+        oneByOne,
+        groupByGroup
+    };
+    [SerializeField] private SpawnType spawnType = SpawnType.groupByGroup;
 
     private ObjectPool<SA_Unit> _pool;
 
@@ -62,21 +70,52 @@ public class TSpawner : MonoBehaviour
 
     private void Update()
     {
-        currentTime += Time.deltaTime;
-        if (currentTime >= spawnTimer && enemiesRemainingAlive < _maxEnemySpawnNum)
+        if (enemiesRemainingAlive == 0)
+            currentTime += Time.deltaTime;
 
+        if (currentTime >= spawnTimer)
         {
-            currentTime = 0;
-            enemiesRemainingAlive += 1;
-            Vector2 spawnPoint = (Vector2)transform.position + Random.insideUnitCircle * _radius;
-            GameObject spawnedEnemy = PoolManager.SpawnObject(_enemy.gameObject, spawnPoint);
-            spawnedEnemy.transform.SetParent(SoonsoonData.Instance.SAM._unitPool[1].transform, false);
-            SA_Unit sa = spawnedEnemy.GetComponent<SA_Unit>();
-            sa.ID = totalSpawnNum;
-            totalSpawnNum += 1;
-            Actions.OnEnemySpawn?.Invoke(sa);
-            sa.OnDeath += OnEnemyDeath;
-            sa.spawnedPos = transform.position;
+            switch(spawnType)
+            {
+                case SpawnType.oneByOne:
+                    if (enemiesRemainingAlive < _maxEnemySpawnNum)
+                    {
+                        currentTime = 0f;
+                        enemiesRemainingAlive += 1;
+                        Vector2 spawnPoint = (Vector2)transform.position + Random.insideUnitCircle * _radius;
+                        GameObject spawnedEnemy = PoolManager.SpawnObject(_enemy.gameObject, spawnPoint);
+                        spawnedEnemy.transform.SetParent(SoonsoonData.Instance.SAM._unitPool[1].transform, false);
+                        SA_Unit sa = spawnedEnemy.GetComponent<SA_Unit>();
+                        sa.ID = totalSpawnNum;
+                        sa._UnitSet._UnitSubset.SetNormal();
+                        totalSpawnNum += 1;
+                        Actions.OnEnemySpawn?.Invoke(sa);
+                        sa.OnDeath += OnEnemyDeath;
+                        sa.spawnedPos = transform.position;
+                    }
+                    break;
+                case SpawnType.groupByGroup:
+                    if (enemiesRemainingAlive < 1)
+                    {
+                        currentTime = 0f;
+                        for (int i = 0; i < _maxEnemySpawnNum; i++)
+                        {
+                            enemiesRemainingAlive += 1;
+                            Vector2 spawnPoint = (Vector2)transform.position + Random.insideUnitCircle * _radius;
+                            GameObject spawnedEnemy = PoolManager.SpawnObject(_enemy.gameObject, spawnPoint);
+                            spawnedEnemy.transform.SetParent(SoonsoonData.Instance.SAM._unitPool[1].transform, false);
+                            SA_Unit sa = spawnedEnemy.GetComponent<SA_Unit>();
+                            sa.ID = totalSpawnNum;
+                            totalSpawnNum += 1;
+                            Actions.OnEnemySpawn?.Invoke(sa);
+                            sa.OnDeath += OnEnemyDeath;
+                            sa.spawnedPos = transform.position;
+                        } 
+
+                    }
+                    break;
+            }
+           
             
             //SoonsoonData.Instance.SAM.AddEnemy(spawnedEnemy.GetComponent<SA_Unit>());
 
@@ -88,12 +127,34 @@ public class TSpawner : MonoBehaviour
         }
     }
 
+    void OneByOneSpawn()
+    {
+        currentTime = 0;
+        enemiesRemainingAlive += 1;
+        Vector2 spawnPoint = (Vector2)transform.position + Random.insideUnitCircle * _radius;
+        GameObject spawnedEnemy = PoolManager.SpawnObject(_enemy.gameObject, spawnPoint);
+        spawnedEnemy.transform.SetParent(SoonsoonData.Instance.SAM._unitPool[1].transform, false);
+        SA_Unit sa = spawnedEnemy.GetComponent<SA_Unit>();
+        sa.ID = totalSpawnNum;
+        totalSpawnNum += 1;
+        Actions.OnEnemySpawn?.Invoke(sa);
+        sa.OnDeath += OnEnemyDeath;
+        sa.spawnedPos = transform.position;
+    }
+
+    void GroupByGroupSpawn()
+    {
+        currentTime = 0;
+        
+    }
+
     public void OnEnemyDeath(SA_UnitBase sa)
     {
         SoonsoonData.Instance.SAM._enemyList.Remove(sa);
         enemiesRemainingAlive -= 1;
         sa.OnDeath -= OnEnemyDeath;
     }
+
 
     //public void TurnOffEnemy()
     //{

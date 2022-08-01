@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class SA_Player : SA_UnitBase
 {
+    public bool useJoyStick;
+    public bool isMoving;
+
+    [SerializeField] private MovementJoystick movementJoyStick;
+
+    private Vector2 moveVec;
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+        if (movementJoyStick == null)
+            movementJoyStick = FindObjectOfType<MovementJoystick>();
+    }
+
 
     private void OnEnable()
     {
@@ -14,7 +29,7 @@ public class SA_Player : SA_UnitBase
         
         enableKnockBack = false;
         isDead = false;
-        capsuleColl.enabled = true;
+        circleColl.enabled = true;
 
         OnDeath += TurnOffCharacter;
         if (_ms == null) _ms = Resources.Load<MonsterSetting>("MonsterSettings/Player");
@@ -45,6 +60,47 @@ public class SA_Player : SA_UnitBase
         StatManager.Instance.InitPlayer(this);
     }
 
+    protected override void CheckState()
+    {
+        switch (_unitState)
+        {
+            case UnitState.idle:
+                _attackTimer += Time.deltaTime;
+                FindTarget();
+                //SetState(UnitState.idle);
+
+                break;
+
+            case UnitState.run:
+                _attackTimer += Time.deltaTime;
+                if (!isMoving)
+                {
+                    FindTarget();
+                    if (_target != null)
+                        DoMove(_target.transform.position);
+                }
+                break;
+
+            case UnitState.attack:
+                //FindTarget();
+                _attackTimer += Time.deltaTime;
+                if (!isMoving)
+                    CheckAttack();
+                break;
+            case UnitState.patrol:
+                Patrol();
+                break;
+            case UnitState.stun:
+                break;
+
+            case UnitState.skill:
+                break;
+
+            case UnitState.death:
+                break;
+        }
+    }
+
     public override void AttackDone(SA_Unit target = null)
     {
 
@@ -64,13 +120,16 @@ public class SA_Player : SA_UnitBase
 
     }
 
+
+    
+
     protected override void SetDeath()
     {
         _unitHP = 0;
         _UnitSet.TurnOffHPBar(1f);
         //TODO disable character
         SetState(UnitState.death);
-        capsuleColl.enabled = false;
+        circleColl.enabled = false;
         // loot
         // TODO Auto revive window popup
 
@@ -106,7 +165,7 @@ public class SA_Player : SA_UnitBase
         {
             SetDeath();
         }
-        isAttacking = false;
+        //isAttacking = false;
     }
 
 
@@ -153,5 +212,45 @@ public class SA_Player : SA_UnitBase
                 SetState(UnitState.idle);
                 break;
         }
+    }
+
+    protected void SetDirection(float val)
+    {
+        if (val >= 0)
+        {
+            _spumPrefab._anim.transform.localScale = new Vector3(-1 * Mathf.Abs(_spumPrefab._anim.transform.localScale.x), _spumPrefab._anim.transform.localScale.y, 1);
+        }
+        else
+        {
+            _spumPrefab._anim.transform.localScale = new Vector3(Mathf.Abs(_spumPrefab._anim.transform.localScale.x), _spumPrefab._anim.transform.localScale.y, 1);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (useJoyStick && !isAttacking)
+        {
+            if (movementJoyStick.joystickVec.x != 0)
+            {
+                SetState(UnitState.run);
+                isMoving = true;
+                moveVec.Set(movementJoyStick.joystickVec.x * _unitMoveSpeed, movementJoyStick.joystickVec.y * _unitMoveSpeed);
+                rb.velocity = moveVec;
+                SetDirection(moveVec.x);
+            }  
+            else
+            {
+                isMoving = false;
+                rb.velocity = Vector2.zero;
+                if (_target == null)
+                    SetState(UnitState.idle);
+            }
+        }
+    }
+    protected override void Update()
+    {
+        HPRegen();
+        //if (!useJoyStick)
+        CheckState();
     }
 }

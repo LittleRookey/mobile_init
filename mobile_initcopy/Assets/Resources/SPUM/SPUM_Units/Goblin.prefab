@@ -8,12 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2445529893523137674}
+  - component: {fileID: 4204089472253126153}
   - component: {fileID: 2746087672653658971}
   - component: {fileID: 7517684225751305405}
-  - component: {fileID: 4067102652344386009}
-  - component: {fileID: 4093111854063315442}
-  - component: {fileID: 3829126822200889978}
+  - component: {fileID: 1937244395890548029}
+  - component: {fileID: 9023211728834818789}
+  - component: {fileID: 3418559553993182443}
   m_Layer: 7
   m_Name: Goblin
   m_TagString: Untagged
@@ -21,15 +21,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &2445529893523137674
-RectTransform:
+--- !u!4 &4204089472253126153
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99378207589836542}
   m_LocalRotation: {x: -0, y: 0.008726557, z: -0, w: 0.9999619}
-  m_LocalPosition: {x: 0, y: 0, z: 0.00015256465}
+  m_LocalPosition: {x: 0, y: -170, z: 0.00015256465}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -37,11 +37,6 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 1, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -170}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2746087672653658971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,14 +71,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9eb641c20b7ca41b7ca4d7d5193e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   _unitType: 0
-  _unitST: {fileID: 4067102652344386009}
+  _unitST: {fileID: 1937244395890548029}
   _UnitSubset: {fileID: 0}
   _timerForHP: 0
-  _rigidBody: {fileID: 4093111854063315442}
-  _collider: {fileID: 3829126822200889978}
+  _rigidBody: {fileID: 9023211728834818789}
+  _collider: {fileID: 3418559553993182443}
   _dmgPopupOffset: {x: 0, y: 1.3, z: 0}
---- !u!114 &4067102652344386009
+--- !u!114 &1937244395890548029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,8 +99,8 @@ MonoBehaviour:
   showGizmos: 0
   _ms: {fileID: 0}
   _level:
-    currentCryptoKey: 1667204391
-    hiddenValue: 1667204390
+    currentCryptoKey: 1361445828
+    hiddenValue: 1361445829
     inited: 1
     fakeValue: 1
     fakeValueActive: 1
@@ -112,27 +108,27 @@ MonoBehaviour:
   knockbackDuration: 0.1
   knockbackPower: 0.1
   ID:
-    currentCryptoKey: 1590380871
-    hiddenValue: 1590380871
+    currentCryptoKey: 2115530698
+    hiddenValue: 2115530698
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
   _target: {fileID: 0}
   _exp:
-    currentCryptoKey: 1802832756
-    hiddenValue: 1802832756
+    currentCryptoKey: 1935415705
+    hiddenValue: 1935415705
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
   _maxExp:
-    currentCryptoKey: 1681030518
-    hiddenValue: 1681030518
+    currentCryptoKey: 1265543387
+    hiddenValue: 1265543387
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
   _statPoint:
-    currentCryptoKey: 1953443557
-    hiddenValue: 1953443557
+    currentCryptoKey: 1830874387
+    hiddenValue: 1830874387
     inited: 1
     fakeValue: 0
     fakeValueActive: 1
@@ -140,8 +136,8 @@ MonoBehaviour:
   isDead: 0
   _unitMaxHP:
     migratedVersion: 
-    currentCryptoKey: 1228747579
-    hiddenValue: 1228094779
+    currentCryptoKey: 2128053199
+    hiddenValue: 2122569679
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -152,8 +148,8 @@ MonoBehaviour:
     fakeValueActive: 0
   _unitHP:
     migratedVersion: 
-    currentCryptoKey: 1955399862
-    hiddenValue: 1946717622
+    currentCryptoKey: 1333259296
+    hiddenValue: 1340897056
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -163,15 +159,15 @@ MonoBehaviour:
     fakeValue: 0
     fakeValueActive: 0
   _unitDefense:
-    currentCryptoKey: 1023955858
-    hiddenValue: 1023955858
+    currentCryptoKey: 1369091089
+    hiddenValue: 1369091089
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
   _unitMana:
     migratedVersion: 
-    currentCryptoKey: 1606502334
-    hiddenValue: 1598538174
+    currentCryptoKey: 1613799621
+    hiddenValue: 1621110981
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -181,15 +177,15 @@ MonoBehaviour:
     fakeValue: 0
     fakeValueActive: 0
   _unitAttack:
-    currentCryptoKey: 1338417342
-    hiddenValue: 1338417342
+    currentCryptoKey: 1567275016
+    hiddenValue: 1567275016
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
   _unitMagicForce:
     migratedVersion: 
-    currentCryptoKey: 1147223999
-    hiddenValue: 1145004479
+    currentCryptoKey: 1228670474
+    hiddenValue: 1225145354
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -200,8 +196,8 @@ MonoBehaviour:
     fakeValueActive: 0
   _unitAttackSpeed:
     migratedVersion: 
-    currentCryptoKey: 2034061275
-    hiddenValue: 2035236315
+    currentCryptoKey: 1956023353
+    hiddenValue: 1955370553
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -212,8 +208,8 @@ MonoBehaviour:
     fakeValueActive: 0
   _unitAttackDelay:
     migratedVersion: 
-    currentCryptoKey: 2049250705
-    hiddenValue: 2048206225
+    currentCryptoKey: 2011217959
+    hiddenValue: 2009128999
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -224,8 +220,8 @@ MonoBehaviour:
     fakeValueActive: 0
   _unitAttackRange:
     migratedVersion: 
-    currentCryptoKey: 1275114419
-    hiddenValue: 1286799539
+    currentCryptoKey: 1419147991
+    hiddenValue: 1417320151
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -236,8 +232,8 @@ MonoBehaviour:
     fakeValueActive: 0
   _unitFightRange:
     migratedVersion: 
-    currentCryptoKey: 1695880393
-    hiddenValue: 1695815113
+    currentCryptoKey: 1486673580
+    hiddenValue: 1490459820
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -248,8 +244,8 @@ MonoBehaviour:
     fakeValueActive: 0
   _unitHPRegen:
     migratedVersion: 
-    currentCryptoKey: 1805965157
-    hiddenValue: 1809294437
+    currentCryptoKey: 1191567296
+    hiddenValue: 1205798336
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -260,8 +256,8 @@ MonoBehaviour:
     fakeValueActive: 0
   _unitManaRegen:
     migratedVersion: 
-    currentCryptoKey: 2045459463
-    hiddenValue: 2034035463
+    currentCryptoKey: 1153003685
+    hiddenValue: 1148238245
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -272,8 +268,8 @@ MonoBehaviour:
     fakeValueActive: 0
   _unitMoveSpeed:
     migratedVersion: 
-    currentCryptoKey: 1836118091
-    hiddenValue: 1844473931
+    currentCryptoKey: 1910967234
+    hiddenValue: 1896605634
     hiddenValueOldByte4:
       b1: 0
       b2: 0
@@ -282,23 +278,25 @@ MonoBehaviour:
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
+  isAttacking: 0
+  canMove: 0
+  hitTargetID: 0
+  spawnedPos: {x: 0, y: 0}
+  patrolTimer: 2
   dropExp:
-    currentCryptoKey: 2011973902
-    hiddenValue: 2011973902
+    currentCryptoKey: 2056392344
+    hiddenValue: 2056392344
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
   dropGold:
-    currentCryptoKey: 1536892577
-    hiddenValue: 1536892577
+    currentCryptoKey: 2037474287
+    hiddenValue: 2037474287
     inited: 1
     fakeValue: 0
     fakeValueActive: 0
-  isAttacking: 0
-  canMove: 0
   talents: []
-  spawnedPos: {x: 0, y: 0}
---- !u!50 &4093111854063315442
+--- !u!50 &9023211728834818789
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -319,8 +317,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &3829126822200889978
-CapsuleCollider2D:
+--- !u!58 &3418559553993182443
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -332,9 +330,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.25}
-  m_Size: {x: 0.5, y: 0.5}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0.07}
+  serializedVersion: 2
+  m_Radius: 0.15
 --- !u!1 &107607743187550647
 GameObject:
   m_ObjectHideFlags: 0
@@ -3997,7 +3995,7 @@ GameObject:
   - component: {fileID: 5579721869797039855}
   - component: {fileID: 7789825275203201828}
   - component: {fileID: 8230346404874564796}
-  - component: {fileID: 8111062816966410929}
+  - component: {fileID: 7624830787409695158}
   m_Layer: 7
   m_Name: UnitRoot
   m_TagString: Untagged
@@ -4019,7 +4017,7 @@ Transform:
   m_Children:
   - {fileID: 8499597461271493389}
   - {fileID: 805494282477730054}
-  m_Father: {fileID: 2445529893523137674}
+  m_Father: {fileID: 4204089472253126153}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!210 &7789825275203201828
@@ -4053,7 +4051,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8111062816966410929
+--- !u!114 &7624830787409695158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4065,7 +4063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d34cbd00a2c494aa9c47c15528405c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 4067102652344386009}
+  _player: {fileID: 1937244395890548029}
 --- !u!1 &8962300730628884630
 GameObject:
   m_ObjectHideFlags: 0

@@ -2175,6 +2175,7 @@ GameObject:
   - component: {fileID: 7204196354796085701}
   - component: {fileID: 8547978131140862433}
   - component: {fileID: 444779284278944686}
+  - component: {fileID: 8091681549192707174}
   m_Layer: 7
   m_Name: UnitRoot
   m_TagString: Untagged
@@ -2230,6 +2231,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8091681549192707174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710625947209021081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d34cbd00a2c494aa9c47c15528405c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 3705655999480030094}
 --- !u!1 &5039993841633265685
 GameObject:
   m_ObjectHideFlags: 0
@@ -2752,6 +2766,9 @@ GameObject:
   - component: {fileID: 7679849998554176824}
   - component: {fileID: 4067525546357308869}
   - component: {fileID: 3967681148923576893}
+  - component: {fileID: 3705655999480030094}
+  - component: {fileID: 602195846673870229}
+  - component: {fileID: 5481615177917677801}
   m_Layer: 7
   m_Name: Skeleton
   m_TagString: Untagged
@@ -2814,13 +2831,268 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9eb641c20b7ca41b7ca4d7d5193e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   _unitType: 0
-  _unitST: {fileID: 0}
+  _unitST: {fileID: 3705655999480030094}
   _UnitSubset: {fileID: 0}
   _timerForHP: 0
-  _rigidBody: {fileID: 0}
-  _collider: {fileID: 0}
-  _dmgPopupOffset: {x: 0, y: 0, z: 0}
+  _rigidBody: {fileID: 602195846673870229}
+  _collider: {fileID: 5481615177917677801}
+  _dmgPopupOffset: {x: 0, y: 1.3, z: 0}
+--- !u!114 &3705655999480030094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7138735953624466921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4265f91958e827409b496d49fc7d063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spumPrefab: {fileID: 4067525546357308869}
+  _animAction: {fileID: 0}
+  _UnitSet: {fileID: 3967681148923576893}
+  _Name: 
+  isPlayer: 0
+  showGizmos: 0
+  _ms: {fileID: 0}
+  _level:
+    currentCryptoKey: 1031167723
+    hiddenValue: 1031167722
+    inited: 1
+    fakeValue: 1
+    fakeValueActive: 1
+  enableKnockBack: 0
+  knockbackDuration: 0.1
+  knockbackPower: 0.1
+  ID:
+    currentCryptoKey: 1430973961
+    hiddenValue: 1430973961
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _target: {fileID: 0}
+  _exp:
+    currentCryptoKey: 1212292638
+    hiddenValue: 1212292638
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _maxExp:
+    currentCryptoKey: 1645135915
+    hiddenValue: 1645135915
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _statPoint:
+    currentCryptoKey: 1379511079
+    hiddenValue: 1379511079
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
+  _unitState: 0
+  isDead: 0
+  _unitMaxHP:
+    migratedVersion: 
+    currentCryptoKey: 1824619521
+    hiddenValue: 1820115201
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _unitHP:
+    migratedVersion: 
+    currentCryptoKey: 1843544767
+    hiddenValue: 1833099967
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _unitDefense:
+    currentCryptoKey: 2068684428
+    hiddenValue: 2068684428
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _unitMana:
+    migratedVersion: 
+    currentCryptoKey: 1045689880
+    hiddenValue: 1056330520
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _unitAttack:
+    currentCryptoKey: 2089781484
+    hiddenValue: 2089781484
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _unitMagicForce:
+    migratedVersion: 
+    currentCryptoKey: 1344200806
+    hiddenValue: 1356865126
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _unitAttackSpeed:
+    migratedVersion: 
+    currentCryptoKey: 1923963401
+    hiddenValue: 1918545161
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _unitAttackDelay:
+    migratedVersion: 
+    currentCryptoKey: 1100393977
+    hiddenValue: 1101895417
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _unitAttackRange:
+    migratedVersion: 
+    currentCryptoKey: 1673418371
+    hiddenValue: 1666629251
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _unitFightRange:
+    migratedVersion: 
+    currentCryptoKey: 1180847722
+    hiddenValue: 1179542122
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _unitHPRegen:
+    migratedVersion: 
+    currentCryptoKey: 1463005581
+    hiddenValue: 1471230861
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _unitManaRegen:
+    migratedVersion: 
+    currentCryptoKey: 1968651403
+    hiddenValue: 1966888843
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  _unitMoveSpeed:
+    migratedVersion: 
+    currentCryptoKey: 2021008429
+    hiddenValue: 2015655469
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  isAttacking: 0
+  canMove: 0
+  hitTargetID: 0
+  spawnedPos: {x: 0, y: 0}
+  patrolTimer: 2
+  dropExp:
+    currentCryptoKey: 1939899112
+    hiddenValue: 1939899112
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  dropGold:
+    currentCryptoKey: 1709504532
+    hiddenValue: 1709504532
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 0
+  talents: []
+--- !u!50 &602195846673870229
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7138735953624466921}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 1
+  m_AngularDrag: 1
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!58 &5481615177917677801
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7138735953624466921}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.07}
+  serializedVersion: 2
+  m_Radius: 0.15
 --- !u!1 &7351865134257752406
 GameObject:
   m_ObjectHideFlags: 0

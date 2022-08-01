@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58db294b88879904e8022e0c01c7c2ae, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
+  basicGrowth:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   monsterStatPerLevel:
     currentCryptoKey: 1268654341
     hiddenValue: 1268654342
@@ -29,9 +35,9 @@ MonoBehaviour:
     fakeValueActive: 1
   extra:
     currentCryptoKey: 1346804835
-    hiddenValue: 1346804743
+    hiddenValue: 1346804817
     inited: 1
-    fakeValue: 100
+    fakeValue: 50
     fakeValueActive: 1
   acc_a:
     currentCryptoKey: 1401172892
@@ -45,11 +51,11 @@ MonoBehaviour:
     inited: 1
     fakeValue: 30
     fakeValueActive: 1
-  mob_basis:
-    currentCryptoKey: 1335807036
-    hiddenValue: 1335807030
+  mob_count_basis:
+    currentCryptoKey: 2107376857
+    hiddenValue: 2107376862
     inited: 1
-    fakeValue: 10
+    fakeValue: 7
     fakeValueActive: 1
   mob_extra:
     currentCryptoKey: 1640716501
@@ -93,4 +99,8 @@ MonoBehaviour:
     inited: 1
     fakeValue: 5
     fakeValueActive: 1
+  mob_count_growthRate: 0.3
   dropExp: 0
+  A: 15
+  p: 0.64
+  s: 0.42

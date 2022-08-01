@@ -135,7 +135,7 @@ public class StatManager : MonoBehaviour
 
     public static UnityAction<SA_Unit> OnEnemyDeath;
 
-    public static UnityAction OnPlayerLevelUp;
+
 
     private void Awake()
     {
@@ -286,7 +286,7 @@ public class StatManager : MonoBehaviour
         // TODO calc Defense
         sa._unitDefense = DEFENSE;
         sa._unitAttackSpeed = ATTACKSPEED;
-        sa._unitAttackDelay = 0.5f;
+        sa._unitAttackDelay = 1f;
 
         // setup attacktype
         if (sa._ms._attackType == SA_Unit.AttackType.sword)
@@ -325,7 +325,17 @@ public class StatManager : MonoBehaviour
             sa._unitHPRegen += HPREGENGROW;
         }
 
-         
+        for (int i = 0; i < statpoint_AttackSpeed; i++)
+        {
+            sa._unitAttackSpeed += ATTACKSPEEDGROW;
+        }
+
+        for (int i = 0; i < statpoint_MoveSpeed; i++)
+        {
+            sa._unitMoveSpeed += MOVESPEEDGROW;
+        }
+
+
         //for (int i = 0; i < statpoint_MagicForce; i++)
         //{
         //    sa._unitAttack += ;

@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
 using System.Collections;
+using DG.Tweening;
+
 
 public class UIManager : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class UIManager : MonoBehaviour
     
     [SerializeField] private GameObject expBar;
 
+    public ParticleSystem hploseEffect;
 
     public static UnityAction<SA_UnitBase> OnUpdateInfoBar;
 
@@ -23,7 +26,12 @@ public class UIManager : MonoBehaviour
 
     string perc = "%";
 
+    public bool hpChanging;
 
+    Color alphafull;
+    Color alphazero;
+
+    
     public void UpdateInfoBox(SA_UnitBase sa)
     {
 
@@ -46,11 +54,18 @@ public class UIManager : MonoBehaviour
         else if (tValue > 1f)
             tValue = 1f;
 
-        
-        hpBar.transform.localScale = new Vector3(tValue, 1f, 1f);
+        //hploseEffect.gameObject.SetActive(true);
+
+        MoveAlphaParticle(hploseEffect, alphafull, .01f);
+        //MoveBar(hpBar, tValue, 1f);
+        //StartCoroutine(MoveBarWithEffect(hpBar, tValue, 1f, hploseEffect));
+        MoveBar(hpBar, tValue, 1f);
+        MoveAlphaParticle(hploseEffect, alphazero, .9f);
+        //DOTween.To(() => hpBar.transform.localScale.x, x => hpBar.transform.localScale = new Vector3(x, 1f, 1f), tValue, 1f);
+        //hpBar.transform.localScale.
+        //hpBar.transform.localScale = new Vector3(tValue, 1f, 1f);
         hpText.text = (tValue* 100).ToString("F1") + perc;
     }
-
 
     void UpdateEXPBar(SA_UnitBase sa)
     {
@@ -66,28 +81,55 @@ public class UIManager : MonoBehaviour
         //Debug.Log(sa.gameObject.name);
         //Debug.Log(tValue);
 
-
-        expBar.transform.localScale = new Vector3(tValue, 1f, 1f);
+        MoveBar(expBar, tValue, 1f);
+        //expBar.transform.localScale = new Vector3(tValue, 1f, 1f);
         //StartCoroutine(MoveBar(expBar, expBar.transform.localScale, new Vector3(tValue, 1f, 1f), 1f));
     }
 
-    private IEnumerator MoveBar(GameObject ob, Vector3 start, Vector3 end, float dur)
+    void MoveAlphaParticle(ParticleSystem targObject, Color tValue, float dur=1f)
     {
-        float timer = 0;
-        while (ob.transform.localScale.x != end.x)
-        {
-            timer += Time.deltaTime;
-            ob.transform.localScale = Vector3.Lerp(start, end, 0.5f * Time.deltaTime);
-        }
-        yield return 1;
+        ParticleSystem.MainModule sett = targObject.main;
+        DOTween.To(() => targObject.main.startColor.color, x => sett.startColor = x, tValue, dur);
     }
+
+    public static void MoveBar(GameObject targObject, float tValue, float dur=1f)
+    {
+        
+        DOTween.To(() => targObject.transform.localScale.x, x => targObject.transform.localScale = new Vector3(x, 1f, 1f), tValue, dur);
+        
+    }
+
+    IEnumerator MoveBarWithEffect(GameObject targObject, float tValue, float dur = 1f, ParticleSystem effects = null)
+    {
+        
+        DOTween.To(() => targObject.transform.localScale.x, x => targObject.transform.localScale = new Vector3(x, 1f, 1f), tValue, dur);
+        if (effects != null)
+            effects.gameObject.SetActive(true);
+        yield return new WaitForSeconds(dur);
+        if (effects != null)
+            effects.gameObject.SetActive(false);
+
+    }
+
+    //private IEnumerator MoveBar(GameObject ob, Vector3 start, Vector3 end, float dur)
+    //{
+    //    float timer = 0;
+    //    while (ob.transform.localScale.x != end.x)
+    //    {
+    //        timer += Time.deltaTime;
+    //        ob.transform.localScale = Vector3.Lerp(start, end, 0.5f * Time.deltaTime);
+    //    }
+    //    yield return 1;
+    //}
 
     private void Start()
     {
-        
+        hploseEffect.gameObject.SetActive(true);
+        MoveAlphaParticle(hploseEffect, alphazero, .5f);
         mpText.text = 0.ToString();
-
-
+        ParticleSystem.MainModule sett = hploseEffect.main;
+        alphafull = sett.startColor.color;
+        alphazero = new Color(alphafull.r, alphafull.g, alphafull.b, 0f);
         //expBar.transform.localScale = tempVec;
         //UpdateInfoBox(StatManager.Instance._player);
         //UpdateHPBar(StatManager.Instance._player);
@@ -109,4 +151,8 @@ public class UIManager : MonoBehaviour
         OnUpdateExpBar -= UpdateEXPBar;
     }
 
+    private void Update()
+    {
+        
+    }
 }

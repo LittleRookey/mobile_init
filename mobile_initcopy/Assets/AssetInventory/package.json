@@ -1,0 +1,13 @@
+{
+  "name": "com.wetzold.asset-inventory",
+  "displayName": "Asset Inventory",
+  "version": "1.0.0",
+  "unity": "2020.3",
+  "dependencies": {
+    "com.unity.editorcoroutines": "1.0.0",
+    "com.unity.nuget.newtonsoft-json": "3.0.2",
+    "com.unity.sharp-zip-lib": "1.3.2-preview"
+  },
+  "description": "Your asset companion: a lightning-fast search for assets OUTSIDE your current project. Find content in assets you purchased or downloaded WITHOUT IMPORTING and bring them in with a single click.",
+  "type": "tool"
+}

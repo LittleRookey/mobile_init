@@ -148,9 +148,9 @@ public class SA_ResourceManager: MonoBehaviour
     {
         prevGold = gold;
         gold += val;
-        
-        StartCoroutine(IncreaseGold(val));
 
+        //StartCoroutine(IncreaseGold(val));
+        MT_IncreaseGold(val);
     }
 
     // call it before the gold add
@@ -171,6 +171,10 @@ public class SA_ResourceManager: MonoBehaviour
         
     }
 
+    public void MT_IncreaseGold(int val)
+    {
+        UnityMainThreadDispatcher.Instance().Enqueue(IncreaseGold(val));
+    }
     void TurnOffAddOn()
     {
         goldAddOnText.gameObject.SetActive(false);

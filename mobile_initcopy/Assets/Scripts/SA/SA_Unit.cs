@@ -7,7 +7,9 @@ using DG.Tweening;
 
 public class SA_Unit : SA_UnitBase
 {
-    
+    public bool isElite;
+    public bool isBoss;
+
     public ObscuredInt dropExp;
     public ObscuredInt dropGold;
 
@@ -15,7 +17,7 @@ public class SA_Unit : SA_UnitBase
     //Vector2 _tempDist;
     public List<Talent> talents;
 
-    public Vector2 spawnedPos;
+    
 
 
     
@@ -51,7 +53,7 @@ public class SA_Unit : SA_UnitBase
         SetState(UnitState.idle);
         isDead = false;
         OnDeath += TurnOffCharacter;
-        capsuleColl.enabled = true;
+        circleColl.enabled = true;
         
             
         if (_ms == null) _ms = Resources.Load<MonsterSetting>("MonsterSettings/Monster");
@@ -161,57 +163,57 @@ public class SA_Unit : SA_UnitBase
         }
     }
 
-    protected override void Patrol()
-    {
-        //if (isPatrolling) return;
-        Debug.Log("Patrolling");
-        if (!isPatrolling)
-        {
-            do
-            {
-                nPos = Random.insideUnitCircle * 3f;
-            } while ((nPos - spawnedPos).sqrMagnitude > 3f);
-            isPatrolling = true;
-            _dirVec = (nPos - (Vector2)transform.position).normalized;
-            SetDirection();
-            SpriteRenderer circle = Resources.Load<SpriteRenderer>("Equipments/Circle");
-            destTarg = Instantiate(circle.gameObject);
-            destTarg.transform.position = nPos;
+    //protected override void Patrol()
+    //{
+    //    //if (isPatrolling) return;
+    //    //Debug.Log("Patrolling");
+    //    if (!isPatrolling)
+    //    {
+    //        do
+    //        {
+    //            nPos = Random.insideUnitCircle * 3f;
+    //        } while ((nPos - spawnedPos).sqrMagnitude > 3f);
+    //        isPatrolling = true;
+    //        _dirVec = (nPos - (Vector2)transform.position).normalized;
+    //        SetDirection();
+    //        SpriteRenderer circle = Resources.Load<SpriteRenderer>("Equipments/Circle");
+    //        destTarg = Instantiate(circle.gameObject);
+    //        destTarg.transform.position = nPos;
 
 
-        }
+    //    }
 
 
-        SetState(UnitState.run);
-        //Debug.Log(name + ": " + transform.position + " " + ((Vector3)nPos - transform.position).sqrMagnitude);
-        if (canMove)
-        {
-            FindTarget();
-            //Debug.Log(name + ": " + transform.position + " " + ((Vector3)nPos - transform.position).sqrMagnitude);
-            if (((Vector3)nPos - transform.position).sqrMagnitude <= 0.1f)
-            {
-                canMove = false;
-                isPatrolling = false;
-                // when the unit arrives at the next position
-                Destroy(destTarg);
-                SetState(UnitState.idle);
+    //    SetState(UnitState.run);
+    //    //Debug.Log(name + ": " + transform.position + " " + ((Vector3)nPos - transform.position).sqrMagnitude);
+    //    if (canMove)
+    //    {
+    //        FindTarget();
+    //        //Debug.Log(name + ": " + transform.position + " " + ((Vector3)nPos - transform.position).sqrMagnitude);
+    //        if (((Vector3)nPos - transform.position).sqrMagnitude <= 0.1f)
+    //        {
+    //            canMove = false;
+    //            isPatrolling = false;
+    //            // when the unit arrives at the next position
+    //            Destroy(destTarg);
+    //            SetState(UnitState.idle);
 
-            }
-            else
-            {
-                //Debug.DrawRay(transform.position, ((Vector3)nPos- transform.position).normalized, Color.blue, 1f);
-                //transform.DOMove(nPos, .5f);
-                //transform.position += (Vector3)_dirVec * _unitMoveSpeed * Time.deltaTime;
+    //        }
+    //        else
+    //        {
+    //            //Debug.DrawRay(transform.position, ((Vector3)nPos- transform.position).normalized, Color.blue, 1f);
+    //            //transform.DOMove(nPos, .5f);
+    //            //transform.position += (Vector3)_dirVec * _unitMoveSpeed * Time.deltaTime;
 
-            }
-        }
+    //        }
+    //    }
 
-        if (_target != null)
-        {
-            //DoMove(nPos.transform.position);
-        }
+    //    if (_target != null)
+    //    {
+    //        //DoMove(nPos.transform.position);
+    //    }
 
-    }
+    //}
 
     public override void SetDamage(SA_UnitBase owner, float dmg)
     {
@@ -260,7 +262,7 @@ public class SA_Unit : SA_UnitBase
         _UnitSet.TurnOffHPBar(1f);
         //TODO disable character
         SetState(UnitState.death);
-        capsuleColl.enabled = false;
+        circleColl.enabled = false;
         // loot
         
 

@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58db294b88879904e8022e0c01c7c2ae, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  basicGrowth:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  monsterStatPerLevel:
+    currentCryptoKey: 1381868164
+    hiddenValue: 1381868167
+    inited: 1
+    fakeValue: 3
+    fakeValueActive: 1
+  _monsterSize: 0
+  _monsterType: 0
+  _attackType: 0
+  basis:
+    currentCryptoKey: 1470224604
+    hiddenValue: 1470224578
+    inited: 1
+    fakeValue: 30
+    fakeValueActive: 1
+  extra:
+    currentCryptoKey: 1798141898
+    hiddenValue: 1798141944
+    inited: 1
+    fakeValue: 50
+    fakeValueActive: 1
+  acc_a:
+    currentCryptoKey: 1373646403
+    hiddenValue: 1373646429
+    inited: 1
+    fakeValue: 30
+    fakeValueActive: 1
+  acc_b:
+    currentCryptoKey: 1753811401
+    hiddenValue: 1753811415
+    inited: 1
+    fakeValue: 30
+    fakeValueActive: 1
+  mob_count_basis:
+    currentCryptoKey: 1413688299
+    hiddenValue: 1413688289
+    inited: 1
+    fakeValue: 10
+    fakeValueActive: 1
+  mob_extra:
+    currentCryptoKey: 1341841549
+    hiddenValue: 1341841543
+    inited: 1
+    fakeValue: 10
+    fakeValueActive: 1
+  level_attackgrowth:
+    migratedVersion: 
+    currentCryptoKey: 2094008681
+    hiddenValue: 1135040381
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 1.06
+    fakeValueActive: 1
+  level_maxhpgrowth:
+    migratedVersion: 
+    currentCryptoKey: 1155426031
+    hiddenValue: 2078496240
+    hiddenValueOldByte4:
+      b1: 0
+      b2: 0
+      b3: 0
+      b4: 0
+    inited: 1
+    fakeValue: 1.09
+    fakeValueActive: 1
+  gold_base:
+    currentCryptoKey: 1408987460
+    hiddenValue: 1408987457
+    inited: 1
+    fakeValue: 5
+    fakeValueActive: 1
+  gold_extra:
+    currentCryptoKey: 1999466615
+    hiddenValue: 1999466609
+    inited: 1
+    fakeValue: 6
+    fakeValueActive: 1
+  mob_count_growthRate: 0.3
+  dropExp: 0
+  A: 15
+  p: 0.64
+  s: 0.42

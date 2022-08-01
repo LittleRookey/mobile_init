@@ -19,8 +19,10 @@ public enum MonsterType
 [CreateAssetMenu(fileName = "MonsterSetting", menuName = "Litkey/MonsterSetting")]
 public class MonsterSetting : ScriptableObject
 {
-    
+
     [Header("Settings")]
+    public AnimationCurve basicGrowth;
+
     public ObscuredInt monsterStatPerLevel = 3;
     public MonsterSize _monsterSize;
     public MonsterType _monsterType; // attacker, supporter, tanker,
@@ -47,6 +49,7 @@ public class MonsterSetting : ScriptableObject
     public static readonly float DEFENSEGROW = 1.0f;
     public static readonly float HPREGENGROW = 0.2f;
 
+
     #endregion
     [Header("Static monster setting")] // may change based on the difficulty
 
@@ -55,7 +58,7 @@ public class MonsterSetting : ScriptableObject
     [SerializeField] private ObscuredInt acc_a = 30;
     [SerializeField] private ObscuredInt acc_b = 30;
 
-    [SerializeField] private ObscuredInt mob_basis = 10;
+    [SerializeField] private ObscuredInt mob_count_basis = 7;
     [SerializeField] private ObscuredInt mob_extra = 10;
 
     [Header("Growth Rate")]
@@ -63,6 +66,9 @@ public class MonsterSetting : ScriptableObject
     [SerializeField] public ObscuredFloat level_maxhpgrowth = 1.09f;
     [SerializeField] private ObscuredInt gold_base = 5;
     [SerializeField] private ObscuredInt gold_extra = 6;
+    [Range(0, 2f)]
+    [SerializeField] 
+    private float mob_count_growthRate = 0.3f;
     public float dropExp;
 
     private ObscuredInt tempStatAttack;
@@ -71,19 +77,28 @@ public class MonsterSetting : ScriptableObject
 
     private ObscuredInt mobCount;
 
-    
+    private float CalcRate(int level)
+    {
+        return Mathf.Pow(level, 2) / (Mathf.Pow(A, 2) + Mathf.Pow(level, 2));
+    }
+
     private ObscuredInt CalcMobCount(int level)
     { 
-        float num = (mob_basis * Mathf.Pow((level - 1),(0.9f + acc_a / 250)) * level * (level + 1)) / 
+        float num = (mob_count_basis * Mathf.Pow((level - 1),(0.9f + acc_a / 250)) * level * (level + 1)) / 
                     (7 + Mathf.Pow(level, 5) / 50 / acc_b) + (level - 1) * mob_extra + 1;
         if (level == 1)
         {
-            num = (mob_basis * Mathf.Pow((level - 1), (0.9f + acc_a / 250)) * level * (level + 1)) /
+            num = (mob_count_basis * Mathf.Pow((level - 1), (0.9f + acc_a / 250)) * level * (level + 1)) /
                     (7 + Mathf.Pow(level, 5) / 50 / acc_b) + level * mob_extra + 1;
         }
         num = Round(num, 0);
         mobCount = (int)num;
         return (ObscuredInt)num;
+    }
+
+    private ObscuredInt CalcMobCountV2(int level)
+    {
+        return Mathf.RoundToInt(mob_count_basis + mob_count_basis * (mob_count_growthRate + CalcRate(level) * (level - 1)));
     }
 
     public ObscuredInt CalcMaxExp(int level)
@@ -105,13 +120,42 @@ public class MonsterSetting : ScriptableObject
     {
         //Debug.Log(CalcMaxExp(level));
         //Debug.Log(CalcMobCount(level));
-        return (ObscuredInt)(CalcMaxExp(level) / CalcMobCount(level));
+        return Mathf.RoundToInt(CalcMaxExp(level) / CalcMobCountV2(level));
+    }
+
+    [Header("V1 settings")]
+    [Range(1, 50)]
+    [SerializeField]
+    private int A = 15;
+
+
+    [Header("V2 settings")]
+    [Range(0f, 1f)]
+    [SerializeField]
+    float p = 0.64f; // position of turnover
+
+    [Range(0f, 1f)]
+    [SerializeField]
+    float s = 0.42f; // slope of the turnover curve 
+    private ObscuredFloat CalcExpV2(float progress)
+    {
+        float c = 2 / (1 - s) - 1; // around 2.448
+        float g;
+        if (progress  <= p)
+        {
+            g = Mathf.Pow(progress, c) / Mathf.Pow(p, c - 1);
+        } else
+        {
+            g = 1 - (Mathf.Pow(1-progress, c) / Mathf.Pow(1-p, c - 1));
+        }
+        return g;
     }
 
     private ObscuredInt CalcDropGold(int level)
     {
         int fin = gold_base + gold_extra * (level - 1);
-        return Random.Range((int)(fin * .85f), (int)(fin * 1.15f));
+        //Debug.Log((int)(fin * .85f) + " :::  " + (int)(fin * 1.15f));
+        return Random.Range(Round(fin * .85f), Round(fin * 1.15f));
     }
 
     public ObscuredInt CalcMonsterAttack(int level)
@@ -143,6 +187,12 @@ public class MonsterSetting : ScriptableObject
         return Mathf.Round(num * multnum) / multnum;
     }
 
+    // Round to nearest Int
+    private ObscuredInt Round(ObscuredFloat num)
+    {
+        
+        return Mathf.RoundToInt(num);
+    }
     // necessary preset before this method call, should be called once
     // 1: level, 2: monsterType, 3: attacktype, 4: 
     // initialize stat for monsters on spawn, not player
@@ -186,7 +236,7 @@ public class MonsterSetting : ScriptableObject
 
         sa.dropExp = CalcDropExp(level);
         sa.dropGold = CalcDropGold(level);
-
+        //Debug.Log(sa.dropGold);
         sa._unitMaxHP = CalcMonsterMAXHP(level);
         sa._unitHP = sa._unitMaxHP;
         sa._unitMagicForce = MAGICFORCE;
@@ -211,15 +261,15 @@ public class MonsterSetting : ScriptableObject
         if (_monsterSize == MonsterSize.small)
         {
             sa._spumPrefab._anim.transform.localScale = new Vector3(0.6f, 0.6f, 1f);
-            sa._unitAttackDelay = 0.5f;
+            sa._unitAttackDelay = 1f;
         } else if(_monsterSize == MonsterSize.middle)
         {
             sa._spumPrefab._anim.transform.localScale = new Vector3(1f, 1f, 1f);
-            sa._unitAttackDelay = 1f;
+            sa._unitAttackDelay = 1.5f;
         } else if(_monsterSize == MonsterSize.big)
         {
             sa._spumPrefab._anim.transform.localScale = new Vector3(1.4f, 1.4f, 1f);
-            sa._unitAttackDelay = 2f;
+            sa._unitAttackDelay = 3f;
         }
 
         sa._unitFightRange = 50;
