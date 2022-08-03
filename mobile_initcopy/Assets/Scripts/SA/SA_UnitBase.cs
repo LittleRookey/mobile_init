@@ -278,7 +278,7 @@ public class SA_UnitBase : MonoBehaviour
                 {
                     if (distToTarg <= _unitAttackRange)
                     {
-                        Debug.Log(name + " 111111111111");
+                        //Debug.Log(name + " 111111111111");
                         SetState(UnitState.attack);
                     }
                     else
@@ -478,9 +478,9 @@ public class SA_UnitBase : MonoBehaviour
             isPatrolling = true;
             _dirVec = (nPos - (Vector2)transform.position).normalized;
             SetDirection();
-            SpriteRenderer circle = Resources.Load<SpriteRenderer>("Equipments/Circle");
-            destTarg = Instantiate(circle.gameObject);
-            destTarg.transform.position = nPos;
+            //SpriteRenderer circle = Resources.Load<SpriteRenderer>("Equipments/Circle");
+            //destTarg = Instantiate(circle.gameObject);
+            //destTarg.transform.position = nPos;
 
 
         }
@@ -497,7 +497,7 @@ public class SA_UnitBase : MonoBehaviour
                 canMove = false;
                 isPatrolling = false;
                 // when the unit arrives at the next position
-                Destroy(destTarg);
+                //Destroy(destTarg);
                 SetState(UnitState.idle);
 
             }
@@ -596,8 +596,8 @@ public class SA_UnitBase : MonoBehaviour
                     canMove = false;
                     isPatrolling = false;
                     // when the unit arrives at the next position
-                    Destroy(destTarg);
-                    Debug.Log(name + " 3333333333333");
+                    //Destroy(destTarg);
+                    //Debug.Log(name + " 3333333333333");
                     SetState(UnitState.attack);
 
                 }

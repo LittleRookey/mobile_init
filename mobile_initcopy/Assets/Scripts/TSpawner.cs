@@ -86,7 +86,7 @@ public class TSpawner : MonoBehaviour
                         GameObject spawnedEnemy = PoolManager.SpawnObject(_enemy.gameObject, spawnPoint);
                         spawnedEnemy.transform.SetParent(SoonsoonData.Instance.SAM._unitPool[1].transform, false);
                         SA_Unit sa = spawnedEnemy.GetComponent<SA_Unit>();
-                        sa.ID = totalSpawnNum;
+                        //sa.ID = totalSpawnNum;
                         sa._UnitSet._UnitSubset.SetNormal();
                         totalSpawnNum += 1;
                         Actions.OnEnemySpawn?.Invoke(sa);

@@ -72,6 +72,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
+  isElite: 0
+  isBoss: 0
   _unitType: 0
   _unitST: {fileID: 1937244395890548029}
   _UnitSubset: {fileID: 0}
@@ -94,7 +96,7 @@ MonoBehaviour:
   _spumPrefab: {fileID: 2746087672653658971}
   _animAction: {fileID: 0}
   _UnitSet: {fileID: 7517684225751305405}
-  _Name: 
+  _Name: Goblin
   isPlayer: 0
   showGizmos: 0
   _ms: {fileID: 0}
@@ -283,6 +285,8 @@ MonoBehaviour:
   hitTargetID: 0
   spawnedPos: {x: 0, y: 0}
   patrolTimer: 2
+  isElite: 0
+  isBoss: 0
   dropExp:
     currentCryptoKey: 2056392344
     hiddenValue: 2056392344

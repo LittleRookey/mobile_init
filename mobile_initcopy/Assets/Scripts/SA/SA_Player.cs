@@ -54,7 +54,7 @@ public class SA_Player : SA_UnitBase
     private void Start()
     {
         if (_ms == null) _ms = Resources.Load<MonsterSetting>("MonsterSettings/Player");
-        Debug.Log(StatManager.Instance == null);
+        //Debug.Log(StatManager.Instance == null);
         knockbackPower = 0.1f;
         knockbackDuration = 0.1f;
         StatManager.Instance.InitPlayer(this);

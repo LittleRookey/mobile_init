@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "4edcef1bbf49519ed2b841e669adb82fdc6a3d9b"
     },
+    "com.guciodevs.simple-min-max-slider": {
+      "version": "https://github.com/GucioDevs/SimpleMinMaxSlider.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "46ff35d22982657d55f7861ddc01b115a2db1554"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.4",
       "depth": 1,

@@ -178,13 +178,13 @@ namespace Litkey.InventorySystem
 
             if (value)
             {
-                gameObject.SetActive(true);
+                //gameObject.SetActive(true);
                 _iconImage.color = Color.white;
                 _amountText.color = Color.white;
             }
             else
             {
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
                 _iconImage.color = InaccessibleIconColor;
                 _amountText.color = InaccessibleIconColor;
             }

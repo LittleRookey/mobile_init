@@ -78,7 +78,7 @@ public class StatManager : MonoBehaviour
     public static readonly ObscuredInt ATTACKSPEED = 1;
     public static readonly float ATTACKDELAY = 0.5f;
     public static readonly ObscuredInt MOVESPEED = 1;
-    public static readonly float HPREGEN = 1f;
+    public static readonly float HPREGEN = 0f;
     public static readonly float MANAREGEN = 0f;
     public static readonly ObscuredInt DEFENSE = 1;
     public static readonly ObscuredInt MAXEXP = 100;

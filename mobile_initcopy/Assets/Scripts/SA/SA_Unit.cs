@@ -17,7 +17,6 @@ public class SA_Unit : SA_UnitBase
     //Vector2 _tempDist;
     public List<Talent> talents;
 
-    
 
 
     

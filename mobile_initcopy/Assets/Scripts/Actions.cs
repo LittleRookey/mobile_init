@@ -41,6 +41,7 @@ public static class Actions
     // when enemy got hit by player
     public static UnityAction<SA_UnitBase> OnEnemyHit;
 
+    public static UnityAction OnEnemyDeath;
 
     public static void DrawRay(Vector3 startPos, Vector3 endPos)
     {

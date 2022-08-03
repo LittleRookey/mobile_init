@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ba0b736a76e03f4193267e8ccf03893, type: 3}
+  m_Name: Weapon_WoodenSword
+  m_EditorClassIdentifier: 
+  _id: 0
+  _name: "\uD3C9\uBC94\uD55C \uBAA9\uAC80"
+  _tooltip: "\uC5F0\uC2B5\uC6A9 \uBAA9\uAC80\uC774\uB2E4"
+  _iconSprite: {fileID: 336039236, guid: 049745f0a50cbbe4c9d3ef45174c8fc9, type: 3}
+  _dropItemPrefab: {fileID: 0}
+  _maxDurability: 100
+  _rarity: 0
+  _weight:
+    currentCryptoKey: 1203969131
+    hiddenValue: 1203969039
+    inited: 1
+    fakeValue: 100
+    fakeValueActive: 1
+  _damage: 5

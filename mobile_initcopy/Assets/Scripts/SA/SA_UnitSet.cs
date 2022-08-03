@@ -391,7 +391,7 @@ public class SA_UnitSet : MonoBehaviour
     {
         //if (_unitST._ms == null) return;
 
-        Debug.Log("InitMonster");
+        //Debug.Log("InitMonster");
         Vector3 mPos = new Vector3((int)transform.position.x, (int)transform.position.y, transform.position.y * 0.1f);
         transform.localPosition = mPos;
         

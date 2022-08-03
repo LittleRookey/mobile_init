@@ -15,10 +15,26 @@ public class BounceDue : MonoBehaviour
     float firstYPos;
 
     bool moveToPlayer;
+    bool isCalled;
 
+    SA_Player player;
+
+    CircleCollider2D circleCollider;
+
+    private void Awake()
+    {
+        circleCollider = GetComponent<CircleCollider2D>();
+    }
+
+    private void Start()
+    {
+        player = StatManager.Instance._player;
+    }
     void OnEnable()
     {
+        circleCollider.enabled = false;
         moveToPlayer = false;
+        isCalled = false;
         randomYDrop = Random.Range(-6f, 3f);
         firstYPos = transform.position.y;
         Set(Vector3.right * Random.Range(-1, 2) * Random.Range(1f, 3f), Random.Range(2f, 5f));
@@ -30,9 +46,11 @@ public class BounceDue : MonoBehaviour
         if (moveToPlayer)
         {
             Actions.OnCoinDrop?.Invoke(this);
-            
+            moveToPlayer = false;
+            isCalled = true;
             return;
         }
+        if (isCalled) return;
         UPosition();
         CheckGroundHit();
         
@@ -42,6 +60,7 @@ public class BounceDue : MonoBehaviour
     {
         
         moveToPlayer = true;
+        circleCollider.enabled = true;
     }
 
     public void Set(Vector2 groundVelocity, float verticalVelocity)
@@ -82,5 +101,15 @@ public class BounceDue : MonoBehaviour
     public void SlowDownVelocity(float division)
     {
         groundVelocity = groundVelocity / division;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PoolManager.ReleaseObject(gameObject);
+        }
+        //if((player.transform.position - bd.transform.position).sqrMagnitude <= 0.1f)
+        //    PoolManager.ReleaseObject(bd.gameObject);
     }
 }
