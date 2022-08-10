@@ -18,8 +18,20 @@ namespace Litkey.InventorySystem
         [Tooltip("아이템 아이콘 이미지")]
         [SerializeField] private Image _iconImage;
 
+        [Tooltip("아이템 사용 이미지")]
+        [SerializeField] private Image _itemUseBG;
+
+        [Tooltip("아이템 이름 텍스트")]
+        [SerializeField] private TextMeshProUGUI _itemNameText;
+
         [Tooltip("아이템 개수 텍스트")]
         [SerializeField] private TextMeshProUGUI _amountText;
+
+        [Tooltip("아이템 사용 텍스트")]
+        [SerializeField] private TextMeshProUGUI _itemUseText;
+
+        [Tooltip("무기 장착 이미지")]
+        [SerializeField] private Image equippedImage;
 
         [Tooltip("슬롯이 포커스될 때 나타나는 하이라이트 이미지")]
         [SerializeField] private Image _highlightImage;
@@ -31,6 +43,7 @@ namespace Litkey.InventorySystem
         [Tooltip("하이라이트 소요 시간")]
         [SerializeField] private float _highlightFadeDuration = 0.2f;
 
+        [SerializeField] private Image _itemNameBG;
         #endregion
         /***********************************************************************
         *                               Properties
@@ -47,6 +60,29 @@ namespace Litkey.InventorySystem
 
         public RectTransform SlotRect => _slotRect;
         public RectTransform IconRect => _iconRect;
+
+        public bool isEquipped
+        {
+            get => _isEquipped;
+            set
+            {
+                _isEquipped = value;
+                //if (_isEquipped)
+                //{
+                //    _itemUseText.text = "해제";
+                //}
+                //else
+                //{
+                //    _itemUseText.text = "장착";
+                //}
+                //SetEquipped(!_isEquipped);
+                //_itemUseBG.gameObject.SetActive(_isEquipped);
+                equippedImage.gameObject.SetActive(_isEquipped);
+            }
+        }
+
+        private bool _isEquipped = false;
+
 
         #endregion
         /***********************************************************************
@@ -83,8 +119,8 @@ namespace Litkey.InventorySystem
         #region .
         private void Awake()
         {
-            InitComponents();
-            InitValues();
+            //InitComponents();
+            //InitValues();
         }
 
         #endregion
@@ -109,23 +145,27 @@ namespace Litkey.InventorySystem
             // Images
             _slotImage = GetComponent<Image>();
         }
+
+        Vector3 initSlotPos = new Vector3(70f, 70f, 0f);
+        
         private void InitValues()
         {
             // 1. Item Icon, Highlight Rect
             _iconRect.pivot = new Vector2(0.5f, 0.5f); // 피벗은 중앙
             _iconRect.anchorMin = Vector2.zero;        // 앵커는 Top Left
-            _iconRect.anchorMax = Vector2.one;
+            _iconRect.anchorMax = Vector2.zero;
 
             // 패딩 조절
             _iconRect.offsetMin = Vector2.one * (_padding);
             _iconRect.offsetMax = Vector2.one * (-_padding);
 
+            IconRect.anchoredPosition = initSlotPos;
             // 아이콘과 하이라이트 크기가 동일하도록
             _highlightRect.pivot = _iconRect.pivot;
-            _highlightRect.anchorMin = _iconRect.anchorMin;
-            _highlightRect.anchorMax = _iconRect.anchorMax;
-            _highlightRect.offsetMin = _iconRect.offsetMin;
-            _highlightRect.offsetMax = _iconRect.offsetMax;
+            //_highlightRect.anchorMin = _iconRect.anchorMin;
+            //_highlightRect.anchorMax = _iconRect.anchorMax;
+            //_highlightRect.offsetMin = _iconRect.offsetMin;
+            //_highlightRect.offsetMax = _iconRect.offsetMax;
 
             // 2. Image
             _iconImage.raycastTarget = false;
@@ -134,6 +174,12 @@ namespace Litkey.InventorySystem
             // 3. Deactivate Icon
             HideIcon();
             _highlightGo.SetActive(false);
+        }
+
+        private void SetEquipped(bool val)
+        {
+            _itemUseBG.gameObject.SetActive(val);
+
         }
 
         private void ShowIcon() => _iconGo.SetActive(true);
@@ -147,6 +193,20 @@ namespace Litkey.InventorySystem
         *                               Public Methods
         ***********************************************************************/
         #region .
+
+        public void InitSlot()
+        {
+            InitComponents();
+            InitValues();
+            _iconImage.sprite = null;
+            _isEquipped = false;
+            _itemNameBG.gameObject.SetActive(false);
+            _itemUseBG.gameObject.SetActive(false);
+            equippedImage.gameObject.SetActive(false);
+            Highlight(false);
+            HideIcon();
+            HideText();
+        }
 
         public void SetSlotIndex(int index) => Index = index;
 
@@ -184,7 +244,7 @@ namespace Litkey.InventorySystem
             }
             else
             {
-                //gameObject.SetActive(false);
+                //gameObject.SetActive(false); 
                 _iconImage.color = InaccessibleIconColor;
                 _amountText.color = InaccessibleIconColor;
             }
@@ -260,11 +320,26 @@ namespace Litkey.InventorySystem
         public void Highlight(bool show)
         {
             if (!this.IsAccessible) return;
-
+            
+            
             if (show)
-                StartCoroutine(nameof(HighlightFadeInRoutine));
+            {
+                _highlightImage.color = new Color(
+                    _highlightImage.color.r,
+                    _highlightImage.color.g,
+                    _highlightImage.color.b,
+                    255f);
+            }
             else
-                StartCoroutine(nameof(HighlightFadeOutRoutine));
+            {
+                _highlightImage.color = new Color(
+                    _highlightImage.color.r,
+                    _highlightImage.color.g,
+                    _highlightImage.color.b,
+                    0f);
+            }
+                //StartCoroutine(nameof(HighlightFadeOutRoutine));
+            
         }
 
         /// <summary> 하이라이트 이미지를 아이콘 이미지의 상단/하단으로 표시 </summary>
@@ -276,6 +351,63 @@ namespace Litkey.InventorySystem
                 _highlightRect.SetAsFirstSibling();
         }
 
+        public void SetSizeOfIcon(float val)
+        {
+            _iconRect.sizeDelta = Vector2.one * val;
+            //Debug.Log(IconRect.sizeDelta);
+        }
+
+        public void SelectSlot()
+        {
+            Highlight(true);
+            _highlightImage.gameObject.SetActive(true);
+        }
+
+        public void SelectSlot(ItemData itemData)
+        {
+            if (!HasItem || !IsAccessible) return;
+
+            Highlight(true);
+            _highlightImage.gameObject.SetActive(true);
+            _itemNameText.text = itemData.Name;
+            bool useBG = false;
+            _itemNameBG.gameObject.SetActive(true);
+            if (itemData is WeaponItemData)
+            {
+
+                _itemUseText.text = "장착";
+                if (equippedImage.gameObject.activeInHierarchy)
+                    _itemUseText.text = "해제";
+                useBG = true;
+            }
+            else if (itemData is ArmorItemData)
+            {
+                _itemUseText.text = "장착";
+                if (equippedImage.gameObject.activeInHierarchy)
+                    _itemUseText.text = "해제";
+                useBG = true;
+            }
+            else if (itemData is PortionItemData)
+            {
+                _itemUseText.text = "사용";
+                useBG = true;
+            }
+            
+            _itemUseBG.gameObject.SetActive(useBG);
+
+        }
+
+
+
+        public void DeselectSlot()
+        {
+            //if (!HasItem || !IsAccessible) return;
+
+            _highlightGo.gameObject.SetActive(false);
+            _itemNameBG.gameObject.SetActive(false);
+            _itemUseBG.gameObject.SetActive(false);
+
+        }
         #endregion
         /***********************************************************************
         *                               Coroutines

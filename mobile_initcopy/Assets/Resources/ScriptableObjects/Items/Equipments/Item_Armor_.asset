@@ -12,13 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea7f00a85ad8b1498859ff5fba5d0a2, type: 3}
   m_Name: Item_Armor_
   m_EditorClassIdentifier: 
-  _id: 1
-  _name: "\uCC9C\uC637"
-  _tooltip: "\uAC00\uBCBC\uC6B4 \uCC9C\uC637\uC774\uB2E4. \uBC29\uC5B4 \uD6A8\uACFC\uB294
-    \uBBF8\uBBF8\uD574 \uBCF4\uC778\uB2E4. "
-  _iconSprite: {fileID: -7896407437694424259, guid: 50fc8ea05e8ba3c4abe0062bb85830c6, type: 3}
-  _dropItemPrefab: {fileID: 0}
-  _maxDurability: 100
   _rarity: 0
   _weight:
     currentCryptoKey: 1328043263
@@ -26,4 +19,25 @@ MonoBehaviour:
     inited: 1
     fakeValue: 100
     fakeValueActive: 1
-  _defense: 2
+  _id: 1
+  _name: "\uCC9C\uC637"
+  _tooltip: "\uAC00\uBCBC\uC6B4 \uCC9C\uC637\uC774\uB2E4. \uBC29\uC5B4 \uD6A8\uACFC\uB294
+    \uBBF8\uBBF8\uD574 \uBCF4\uC778\uB2E4. "
+  _iconSprite: {fileID: -7896407437694424259, guid: 50fc8ea05e8ba3c4abe0062bb85830c6, type: 3}
+  _dropItemPrefab: {fileID: 0}
+  _maxDurability: 100
+  stats:
+  - statType: 6
+    value:
+      migratedVersion: 
+      currentCryptoKey: 1733279986
+      hiddenValue: 666914802
+      hiddenValueOldByte4:
+        b1: 0
+        b2: 0
+        b3: 0
+        b4: 0
+      inited: 1
+      fakeValue: 2
+      fakeValueActive: 1
+    oper: 0

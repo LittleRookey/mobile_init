@@ -18,10 +18,10 @@ MonoBehaviour:
     dropRate: 100
     dropCount: {x: 1, y: 1}
   - item: {fileID: 11400000, guid: 3cc4aa08631be304187f822ee535b96d, type: 2}
-    dropRate: 1
+    dropRate: 100
     dropCount: {x: 1, y: 1}
   - item: {fileID: 11400000, guid: 586263de03752b848b132ef1b95ff2db, type: 2}
-    dropRate: 1
+    dropRate: 100
     dropCount: {x: 1, y: 1}
   - item: {fileID: 11400000, guid: 7768eb3ec382a7443bfa8b12c6f5cd8b, type: 2}
     dropRate: 25

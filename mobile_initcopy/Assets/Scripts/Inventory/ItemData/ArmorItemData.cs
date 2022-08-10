@@ -8,12 +8,10 @@ namespace Litkey.InventorySystem
     public class ArmorItemData : EquipmentItemData
     {
         /// <summary> ¹æ¾î·Â </summary>
-        public int Defense => _defense;
-
-        [SerializeField] private int _defense = 1;
         public override Item CreateItem()
         {
             return new ArmorItem(this);
         }
+
     }
 }

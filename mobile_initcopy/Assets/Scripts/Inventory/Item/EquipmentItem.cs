@@ -7,6 +7,8 @@ namespace Litkey.InventorySystem
     {
         public EquipmentItemData EquipmentData { get; private set; }
 
+        public MonoBehaviourID ItemID;
+
         /// <summary> 현재 내구도 </summary>
         public int Durability
         {
@@ -21,6 +23,7 @@ namespace Litkey.InventorySystem
             }
         }
         private int _durability;
+
 
         public EquipmentItem(EquipmentItemData data) : base(data)
         {

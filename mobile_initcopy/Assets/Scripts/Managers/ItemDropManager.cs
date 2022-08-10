@@ -168,7 +168,7 @@ public class ItemDropManager : MonoBehaviour
         {
             if (ProbabilityCheck.GetThisChanceResult_Percentage(_lootTable[i].dropRate))
             {
-                Debug.Log("###########################");
+                //Debug.Log("###########################");
                 droppedItems.Add(new ItemWithCount(_lootTable[i].item.CreateItem(), _lootTable[i].dropCount));
             }
         }
@@ -180,7 +180,6 @@ public class ItemDropManager : MonoBehaviour
     {
         if (items.Count <= 0) return;
         dropItemVisuals.Clear();
-        
         for (int i = 0; i < items.Count; i++)
         {
             DropItem di = PoolManager.SpawnObject(dropItemTemplate.gameObject).GetComponent<DropItem>();
@@ -189,7 +188,8 @@ public class ItemDropManager : MonoBehaviour
             di.SetDropItem(items[i].item.Data.IconSprite, 
                             items[i].item.Data.Name, 
                             Random.Range(items[i].count.x, items[i].count.y), 
-                            items[i].item.Data.rarity);
+                            items[i].item.Data.rarity, 
+                            items[i].item.Data);
             dropItemVisuals.Add(di);
         }
 

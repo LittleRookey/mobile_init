@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "com.coffee.ui-particle": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
-    "com.guciodevs.simple-min-max-slider": "https://github.com/GucioDevs/SimpleMinMaxSlider.git#upm",
     "com.unity.collab-proxy": "1.15.15",
     "com.unity.editorcoroutines": "1.0.0",
     "com.unity.feature.2d": "1.0.0",

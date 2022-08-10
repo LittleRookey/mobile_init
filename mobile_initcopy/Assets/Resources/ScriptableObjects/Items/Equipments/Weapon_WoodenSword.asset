@@ -12,12 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba0b736a76e03f4193267e8ccf03893, type: 3}
   m_Name: Weapon_WoodenSword
   m_EditorClassIdentifier: 
-  _id: 0
-  _name: "\uD3C9\uBC94\uD55C \uBAA9\uAC80"
-  _tooltip: "\uC5F0\uC2B5\uC6A9 \uBAA9\uAC80\uC774\uB2E4"
-  _iconSprite: {fileID: 336039236, guid: 049745f0a50cbbe4c9d3ef45174c8fc9, type: 3}
-  _dropItemPrefab: {fileID: 0}
-  _maxDurability: 100
   _rarity: 0
   _weight:
     currentCryptoKey: 1203969131
@@ -25,4 +19,24 @@ MonoBehaviour:
     inited: 1
     fakeValue: 100
     fakeValueActive: 1
-  _damage: 5
+  _id: 0
+  _name: "\uD3C9\uBC94\uD55C \uBAA9\uAC80"
+  _tooltip: "\uC5F0\uC2B5\uC6A9 \uBAA9\uAC80\uC774\uB2E4"
+  _iconSprite: {fileID: 336039236, guid: 049745f0a50cbbe4c9d3ef45174c8fc9, type: 3}
+  _dropItemPrefab: {fileID: 0}
+  _maxDurability: 100
+  stats:
+  - statType: 1
+    value:
+      migratedVersion: 
+      currentCryptoKey: 1485667652
+      hiddenValue: 410897732
+      hiddenValueOldByte4:
+        b1: 0
+        b2: 0
+        b3: 0
+        b4: 0
+      inited: 1
+      fakeValue: 3
+      fakeValueActive: 1
+    oper: 0

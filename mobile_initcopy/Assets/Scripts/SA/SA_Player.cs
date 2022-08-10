@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SA_Player : SA_UnitBase
 {
+    [Header("Player Section")]
+    public FloatReference testfloat;
     public bool useJoyStick;
     public bool isMoving;
 
@@ -22,7 +24,7 @@ public class SA_Player : SA_UnitBase
 
     private void OnEnable()
     {
-        Debug.Log("player");
+        //Debug.Log("player");
 
 
         SetState(UnitState.idle);
@@ -33,7 +35,6 @@ public class SA_Player : SA_UnitBase
 
         OnDeath += TurnOffCharacter;
         if (_ms == null) _ms = Resources.Load<MonsterSetting>("MonsterSettings/Player");
-        Debug.Log(StatManager.Instance == null);
         knockbackPower = 0.1f;
         knockbackDuration = 0.1f;
         StatManager.Instance.InitPlayer(this);

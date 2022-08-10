@@ -10,13 +10,10 @@ public enum StatType
     hpRegen = 2,
     magicForce = 3,
     attackSpeed = 4,
-    moveSpeed = 5
+    moveSpeed = 5,
+    defense = 6
 };
 
-public enum SlotType
-{
-
-}
 public class Slot : MonoBehaviour
 {
     public TextMeshProUGUI _slotName;
@@ -130,7 +127,7 @@ public class StatSlot : Slot
             switch(_statType)
             {
                 case StatType.maxHP: // TODO 
-                    Debug.Log("Update slot!");
+                    //Debug.Log("Update slot!");
                     _slotName.text = "최대 체력 +" + StatManager.Instance.statpoint_MaxHP;
                     _statTotalStatText.text = tplayer._unitMaxHP.ToString("F0") + openParenth + StatManager.MAXHPGROW + closeParenth;
                     _statExplanationText.text = statup;

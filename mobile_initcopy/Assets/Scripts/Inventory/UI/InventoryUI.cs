@@ -40,6 +40,16 @@ namespace Litkey.InventorySystem
         *                               Option Fields
         ***********************************************************************/
         #region .
+        public int TotalSlotCount 
+        {
+            get 
+            {
+                return _totalSlotCount;
+            }
+            
+            private set { _totalSlotCount = _horizontalSlotCount * _verticalSlotCount; }
+        }
+        private int _totalSlotCount;
         [Header("Options")]
         [Range(0, 10)]
         [SerializeField] private int _horizontalSlotCount = 8;  // 슬롯 가로 개수
@@ -48,7 +58,9 @@ namespace Litkey.InventorySystem
         [SerializeField] private float _slotMargin = 8f;          // 한 슬롯의 상하좌우 여백
         [SerializeField] private float _contentAreaPadding = 20f; // 인벤토리 영역의 내부 여백
         [Range(32, 256)]
-        [SerializeField] private float _slotSize = 64f;      // 각 슬롯의 크기
+        [SerializeField] private float _slotSize = 140f;      // 각 슬롯의 크기
+        [Range(32, 256)]
+        [SerializeField] private float _iconSize = 120f;      // 각 슬롯의 크기
 
         [Space]
         [SerializeField] private bool _showTooltip = true;
@@ -66,10 +78,11 @@ namespace Litkey.InventorySystem
         [SerializeField] private Button _sortButton;
 
         [Header("Filter Toggles")]
-        [SerializeField] private Toggle _toggleFilterAll;
-        [SerializeField] private Toggle _toggleFilterEquipments;
-        [SerializeField] private Toggle _toggleFilterPortions;
+        [SerializeField] private Button _toggleFilterAll;
+        [SerializeField] private Button _toggleFilterEquipments;
+        [SerializeField] private Button _toggleFilterPortions;
 
+        //[SerializeField] private 
         [Space(16)]
         [SerializeField] private bool _mouseReversed = false; // 마우스 클릭 반전 여부
 
@@ -98,10 +111,24 @@ namespace Litkey.InventorySystem
         private Vector3 _beginDragCursorPoint; // 드래그 시작 시 커서의 위치
         private int _beginDragSlotSiblingIndex;
 
+        Vector2 initSlotOffset = new Vector2(70f, -70f);
+
+        private Camera mainCam;
+
+        private int lastClickSlotIndex = -9999;
+
+        Vector3 contentInitPosition = new Vector3(-540f, 744.7f, 0f);
+
+        ToggleTab allTab;
+        ToggleTab equipTab;
+        ToggleTab etcTab;
+
         /// <summary> 인벤토리 UI 내 아이템 필터링 옵션 </summary>
-        private enum FilterOption
+        public enum FilterOption
         {
-            All, Equipment, Portion
+            All = 0, 
+            Equipment = 1, 
+            Portion = 2
         }
         private FilterOption _currentFilterOption = FilterOption.All;
 
@@ -112,21 +139,64 @@ namespace Litkey.InventorySystem
         #region .
         private void Awake()
         {
+            _currentFilterOption = FilterOption.All;
+            InitInventoryUI();
+            //Init();
+            //InitSlots();
+            //InitButtonEvents();
+            //InitToggleEvents();
+            //mainCam = Camera.main;
+        }
+
+        public void InitInventoryUI()
+        {
             Init();
             InitSlots();
             InitButtonEvents();
-            InitToggleEvents();
+            //InitToggleEvents();
+            mainCam = Camera.main;
+            allTab = _toggleFilterAll.GetComponent<ToggleTab>();
+            equipTab = _toggleFilterEquipments.GetComponent<ToggleTab>();
+            etcTab = _toggleFilterPortions.GetComponent<ToggleTab>();
+
+            allTab.TabButton.onClick.AddListener(() => UpdateFilters(0));
+            equipTab.TabButton.onClick.AddListener(() => UpdateFilters(1));
+            etcTab.TabButton.onClick.AddListener(() => UpdateFilters(2));
+
+             switch (_currentFilterOption)
+            {
+                case FilterOption.All:
+                    allTab.SelectTab();
+                    equipTab.DeselectTab();
+                    etcTab.DeselectTab();
+                    break;
+                case FilterOption.Equipment:
+                    equipTab.SelectTab();
+                    allTab.DeselectTab();
+                    etcTab.DeselectTab();
+                    break;
+                case FilterOption.Portion:
+                    etcTab.SelectTab();
+                    equipTab.DeselectTab();
+                    allTab.DeselectTab();
+                    break;
+            }
+            //DeselectAllSlot();
         }
 
+        private void OnDisable()
+        {
+            DeselectAllSlot();
+        }
         private void Update()
         {
             _ped.position = Input.mousePosition;
 
-            OnPointerEnterAndExit();
+            //OnPointerEnterAndExit();
             if (_showTooltip) ShowOrHideItemTooltip();
             OnPointerDown();
-            OnPointerDrag();
-            OnPointerUp();
+            //OnPointerDrag();
+            //OnPointerUp();
         }
 
         #endregion
@@ -136,6 +206,7 @@ namespace Litkey.InventorySystem
         #region .
         private void Init()
         {
+            _totalSlotCount = _verticalSlotCount * _horizontalSlotCount;
             TryGetComponent(out _gr);
             if (_gr == null)
                 _gr = gameObject.AddComponent<GraphicRaycaster>();
@@ -152,12 +223,18 @@ namespace Litkey.InventorySystem
             }
         }
 
+        private void OnOpenInventory()
+        {
+            _contentAreaRT.position = contentInitPosition;
+
+        }
+
         /// <summary> 지정된 개수만큼 슬롯 영역 내에 슬롯들 동적 생성 </summary>
         private void InitSlots()
         {
             // 슬롯 프리팹 설정
             _slotUiPrefab.TryGetComponent(out RectTransform slotRect);
-            slotRect.sizeDelta = new Vector2(_slotSize, _slotSize);
+            //slotRect.sizeDelta = new Vector2(_slotSize, _slotSize);
 
             _slotUiPrefab.TryGetComponent(out ItemSlotUI itemSlot);
             if (itemSlot == null)
@@ -165,10 +242,12 @@ namespace Litkey.InventorySystem
 
             _slotUiPrefab.SetActive(false);
 
+
             // --
-            Vector2 beginPos = new Vector2(_contentAreaPadding, -_contentAreaPadding);
+            Vector2 beginPos = new Vector2(_contentAreaPadding, -_contentAreaPadding + _contentAreaRT.rect.height);
             Vector2 curPos = beginPos;
 
+            _contentAreaRT.sizeDelta = new Vector2(_contentAreaRT.rect.width, _verticalSlotCount * _slotSize + _slotMargin * (_verticalSlotCount - 1));
             _slotUIList = new List<ItemSlotUI>(_verticalSlotCount * _horizontalSlotCount);
 
             // 슬롯들 동적 생성
@@ -179,13 +258,18 @@ namespace Litkey.InventorySystem
                     int slotIndex = (_horizontalSlotCount * j) + i;
 
                     var slotRT = CloneSlot();
-                    slotRT.pivot = new Vector2(0f, 1f); // Left Top
-                    slotRT.anchoredPosition = curPos;
+                    slotRT.pivot = new Vector2(0.5f, 0.5f);
+                    slotRT.anchorMin = Vector2.zero;
+                    slotRT.anchorMax = Vector2.zero; 
+                    slotRT.anchoredPosition = curPos + initSlotOffset;
                     slotRT.gameObject.SetActive(true);
                     slotRT.gameObject.name = $"Item Slot [{slotIndex}]";
 
                     var slotUI = slotRT.GetComponent<ItemSlotUI>();
+                    slotUI.InitSlot();
                     slotUI.SetSlotIndex(slotIndex);
+                    slotUI.SetSizeOfIcon(_iconSize);
+
                     _slotUIList.Add(slotUI);
 
                     // Next X
@@ -220,21 +304,69 @@ namespace Litkey.InventorySystem
 
         private void InitToggleEvents()
         {
-            _toggleFilterAll.onValueChanged.AddListener(flag => UpdateFilter(flag, FilterOption.All));
-            _toggleFilterEquipments.onValueChanged.AddListener(flag => UpdateFilter(flag, FilterOption.Equipment));
-            _toggleFilterPortions.onValueChanged.AddListener(flag => UpdateFilter(flag, FilterOption.Portion));
-
+            //allTab.AddListener(flag => UpdateFilter(flag, FilterOption.All));
+            //_toggleFilterAll.onValueChanged.AddListener(flag => UpdateFilter(flag, FilterOption.All));
+            //_toggleFilterEquipments.onValueChanged.AddListener(flag => UpdateFilter(flag, FilterOption.Equipment));
+            //_toggleFilterPortions.onValueChanged.AddListener(flag => UpdateFilter(flag, FilterOption.Portion));
+            
             // Local Method
-            void UpdateFilter(bool flag, FilterOption option)
-            {
-                if (flag)
-                {
-                    _currentFilterOption = option;
-                    UpdateAllSlotFilters();
-                }
-            }
+            
         }
 
+        public void UpdateFilters(int option)
+        {
+            
+            _currentFilterOption = (FilterOption)option;
+            switch (_currentFilterOption)
+            {
+                case FilterOption.All:
+                    allTab.SelectTab();
+                    equipTab.DeselectTab();
+                    etcTab.DeselectTab();
+                    break;
+                case FilterOption.Equipment:
+                    equipTab.SelectTab();
+                    allTab.DeselectTab();
+                    etcTab.DeselectTab();
+                    break;
+                case FilterOption.Portion:
+                    etcTab.SelectTab();
+                    equipTab.DeselectTab();
+                    allTab.DeselectTab();
+                    break;
+            }
+            DeselectAllSlot();
+            UpdateAllSlotFilters();
+
+        }
+        public static void SetToScreenPos(Vector3 pos, Canvas canv, RectTransform targetUI)
+        {
+            Camera mainCamera = Camera.main;
+            RectTransform canvRect = canv.GetComponent<RectTransform>();
+            Vector2 adjustedPosition = mainCamera.WorldToScreenPoint(pos);
+
+            adjustedPosition.x *= canvRect.rect.width / (float)mainCamera.pixelWidth;
+            adjustedPosition.y *= canvRect.rect.height / (float)mainCamera.pixelHeight;
+
+            targetUI.anchoredPosition = adjustedPosition - canvRect.sizeDelta / 2f;
+        }
+
+        public static Vector2 GetScreenPos(Vector3 pos, Canvas canv)
+        {
+            Camera mainCamera = Camera.main;
+            RectTransform canvRect = canv.GetComponent<RectTransform>();
+            Vector2 adjustedPosition = mainCamera.ScreenToWorldPoint(pos);
+
+            adjustedPosition.x *= canvRect.rect.width / (float)mainCamera.pixelWidth;
+            adjustedPosition.y *= canvRect.rect.height / (float)mainCamera.pixelHeight;
+            return adjustedPosition - canvRect.sizeDelta / 2f;
+            //targetUI.anchoredPosition = adjustedPosition - canvRect.sizeDelta / 2f;
+        }
+
+        public int GetMaxSlot()
+        {
+            return _verticalSlotCount * _horizontalSlotCount;
+        }
         #endregion
         /***********************************************************************
         *                               Mouse Event Methods
@@ -249,7 +381,8 @@ namespace Litkey.InventorySystem
             _rrList.Clear();
 
             _gr.Raycast(_ped, _rrList);
-
+            Debug.Log(_ped);
+            Debug.Log(_rrList[0].gameObject.name);
             if (_rrList.Count == 0)
                 return null;
 
@@ -316,47 +449,120 @@ namespace Litkey.InventorySystem
                 _itemTooltip.Hide();
         }
         /// <summary> 슬롯에 클릭하는 경우 </summary>
+        //private void OnPointerDown()
+        //{
+        //    // Left Click : Begin Drag
+        //    if (Input.GetMouseButtonDown(_leftClick))
+        //    {
+        //        _beginDragSlot = RaycastAndGetFirstComponent<ItemSlotUI>();
+
+        //        // 아이템을 갖고 있는 슬롯만 해당
+        //        if (_beginDragSlot != null && _beginDragSlot.HasItem && _beginDragSlot.IsAccessible)
+        //        {
+        //            EditorLog($"Drag Begin : Slot [{_beginDragSlot.Index}]");
+
+        //            // 위치 기억, 참조 등록
+        //            _beginDragIconTransform =  _beginDragSlot.IconRect.transform;
+        //            _beginDragIconPoint =  _beginDragIconTransform.position;
+        //            _beginDragCursorPoint = mainCam.ScreenToWorldPoint(Input.mousePosition);
+
+        //            // 맨 위에 보이기
+        //            _beginDragSlotSiblingIndex = _beginDragSlot.transform.GetSiblingIndex();
+        //            _beginDragSlot.transform.SetAsLastSibling();
+
+        //            // 해당 슬롯의 하이라이트 이미지를 아이콘보다 뒤에 위치시키기
+        //            _beginDragSlot.SetHighlightOnTop(false);
+        //        }
+        //        else
+        //        {
+        //            _beginDragSlot = null;
+        //        }
+        //    }
+
+        //    // Right Click : Use Item
+        //    else if (Input.GetMouseButtonDown(_rightClick))
+        //    {
+        //        ItemSlotUI slot = RaycastAndGetFirstComponent<ItemSlotUI>();
+
+        //        if (slot != null && slot.HasItem && slot.IsAccessible)
+        //        {
+        //            TryUseItem(slot.Index);
+        //        }
+        //    }
+        //}
+
+        // select the given UI
         private void OnPointerDown()
         {
             // Left Click : Begin Drag
             if (Input.GetMouseButtonDown(_leftClick))
             {
                 _beginDragSlot = RaycastAndGetFirstComponent<ItemSlotUI>();
+                //Debug.Log(_beginDragSlot.Index + " /// " + lastClickSlotIndex);
+
 
                 // 아이템을 갖고 있는 슬롯만 해당
                 if (_beginDragSlot != null && _beginDragSlot.HasItem && _beginDragSlot.IsAccessible)
                 {
+                    if (_beginDragSlot.Index == lastClickSlotIndex)
+                    {
+                        Debug.Log("Used Item");
+                        TryUseItem(_beginDragSlot.Index);
+                    } else
+                    {
+                        DeselectAllSlot(_beginDragSlot.Index);
+                    }
+                    if (lastClickSlotIndex < 0) 
+                        lastClickSlotIndex = _beginDragSlot.Index; // initialize first index
+                    else 
+                    {
+                        _slotUIList[lastClickSlotIndex].DeselectSlot();
+                        lastClickSlotIndex = _beginDragSlot.Index;
+                    }
+
                     EditorLog($"Drag Begin : Slot [{_beginDragSlot.Index}]");
 
+                    _beginDragSlot.SelectSlot(_inventory.GetItemData(_beginDragSlot.Index));
                     // 위치 기억, 참조 등록
                     _beginDragIconTransform = _beginDragSlot.IconRect.transform;
                     _beginDragIconPoint = _beginDragIconTransform.position;
-                    _beginDragCursorPoint = Input.mousePosition;
+                    _beginDragCursorPoint = mainCam.ScreenToWorldPoint(Input.mousePosition);
+
+                    
+                    
 
                     // 맨 위에 보이기
-                    _beginDragSlotSiblingIndex = _beginDragSlot.transform.GetSiblingIndex();
-                    _beginDragSlot.transform.SetAsLastSibling();
+                    //_beginDragSlotSiblingIndex = _beginDragSlot.transform.GetSiblingIndex();
+                    //_beginDragSlot.transform.SetAsLastSibling();
 
                     // 해당 슬롯의 하이라이트 이미지를 아이콘보다 뒤에 위치시키기
-                    _beginDragSlot.SetHighlightOnTop(false);
+                    //_beginDragSlot.SetHighlightOnTop(false);
                 }
-                else
+                else if (_beginDragSlot != null && _beginDragSlot.IsAccessible)
                 {
+                    if (lastClickSlotIndex >= 0)
+                        _slotUIList[lastClickSlotIndex].DeselectSlot();
+                    else
+                        _slotUIList[_beginDragSlot.Index].DeselectSlot();
+
+                    lastClickSlotIndex = _beginDragSlot.Index;
+                    _beginDragSlot.SelectSlot();
                     _beginDragSlot = null;
                 }
             }
 
             // Right Click : Use Item
-            else if (Input.GetMouseButtonDown(_rightClick))
-            {
-                ItemSlotUI slot = RaycastAndGetFirstComponent<ItemSlotUI>();
+            //else if (Input.GetMouseButtonDown(_rightClick))
+            //{
+            //    ItemSlotUI slot = RaycastAndGetFirstComponent<ItemSlotUI>();
 
-                if (slot != null && slot.HasItem && slot.IsAccessible)
-                {
-                    TryUseItem(slot.Index);
-                }
-            }
+            //    if (slot != null && slot.HasItem && slot.IsAccessible)
+            //    {
+            //        TryUseItem(slot.Index);
+            //    }
+            //}
         }
+
         /// <summary> 드래그하는 도중 </summary>
         private void OnPointerDrag()
         {
@@ -366,7 +572,7 @@ namespace Litkey.InventorySystem
             {
                 // 위치 이동
                 _beginDragIconTransform.position =
-                    _beginDragIconPoint + (Input.mousePosition - _beginDragCursorPoint);
+                    _beginDragIconPoint + (mainCam.ScreenToWorldPoint(Input.mousePosition) - _beginDragCursorPoint);
             }
         }
         /// <summary> 클릭을 뗄 경우 </summary>
@@ -626,6 +832,39 @@ namespace Litkey.InventorySystem
             }
         }
 
+        public void SetEquipped(int index)
+        {
+            _slotUIList[index].isEquipped = true;
+            // TODO apply changes to player
+        }
+
+        public void RemoveEquipped(int index)
+        {
+            _slotUIList[index].isEquipped = false;
+            //_inventory.
+            // TODO apply changes to player
+
+        }
+
+
+
+        public void DeselectAllSlot()
+        {
+            foreach(ItemSlotUI itemSlot in _slotUIList)
+            {
+                itemSlot.DeselectSlot();
+            }
+        }
+
+        public void DeselectAllSlot(int index)
+        {
+            foreach (ItemSlotUI itemSlot in _slotUIList)
+            {
+                if (itemSlot.Index != index)
+                    itemSlot.DeselectSlot();
+            }
+        }
+
         #endregion
         /***********************************************************************
         *                               Editor Only Debug
@@ -765,7 +1004,7 @@ namespace Litkey.InventorySystem
             }
             void DrawGrid()
             {
-                Vector2 beginPos = new Vector2(_contentAreaPadding, -_contentAreaPadding);
+                Vector2 beginPos = new Vector2(_contentAreaPadding, -_contentAreaPadding + _contentAreaRT.rect.height);
                 Vector2 curPos = beginPos;
 
                 // Draw Slots

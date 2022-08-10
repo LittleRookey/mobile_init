@@ -65,6 +65,7 @@ public class SA_ResourceManager: MonoBehaviour
 
     [Header("ETC")]
     public Material hitMatsDefault;
+    public Material enemyMatDefault;
     public int gold;
     private int prevGold;
 

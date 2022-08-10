@@ -8,9 +8,6 @@ namespace Litkey.InventorySystem
     public class WeaponItemData : EquipmentItemData
     {
         /// <summary> °ø°Ý·Â </summary>
-        public int Damage => _damage;
-
-        [SerializeField] private int _damage = 1;
 
         public override Item CreateItem()
         {

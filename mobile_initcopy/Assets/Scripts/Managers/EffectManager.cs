@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 public class EffectManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class EffectManager : MonoBehaviour
     [SerializeField] private ParticleSystem hploseEffect;
     [SerializeField] private ParticleSystem mploseEffect;
 
+    [SerializeField] private ParticleSystem asheEffect;
+
     [Header("VFX settings")]
     public Vector2 effectSpawnPos;
     public static UnityAction<SA_UnitBase> OnPlayerAttackV1;
@@ -18,11 +21,14 @@ public class EffectManager : MonoBehaviour
 
     public static UnityAction<GameObject> OnEffectDisabled;
 
+    public static UnityAction<GameObject> OnEnemyDeath;
+    Color alpha_zero = new Color(0, 0, 0, 0);
     // Start is called before the first frame update
     void Start()
     {
         PoolManager.WarmPool(swordSlash_normal, 4);
         PoolManager.WarmPool(swordhit_vfx, 3);
+        PoolManager.WarmPool(asheEffect.gameObject, 4);
     }
 
     void PlaySlashV1(SA_UnitBase targ)
@@ -45,6 +51,20 @@ public class EffectManager : MonoBehaviour
         
         GameObject go = PoolManager.SpawnObject(swordhit_vfx, (Vector2)targ.transform.position + Vector2.up * 0.5f);
         go.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360f));
+    }
+
+    void PlayAsheEffect(SA_UnitBase targ)
+    {
+        GameObject go = PoolManager.SpawnObject(asheEffect.gameObject, (Vector2)targ.transform.position);
+        MoveAlphaParticle(asheEffect, alpha_zero, 1f);
+
+        go.transform.localScale = new Vector3(targ._spumPrefab._anim.transform.localScale.x * -1, 1, 1);
+    }
+
+    void MoveAlphaParticle(ParticleSystem targObject, Color tValue, float dur = 1f)
+    {
+        ParticleSystem.MainModule sett = targObject.main;
+        DOTween.To(() => targObject.main.startColor.color, x => sett.startColor = x, tValue, dur);
     }
 
     public void ReleaseObject(GameObject go, float sec)

@@ -8,7 +8,7 @@ namespace Litkey.InventorySystem
         public bool Use()
         {
             // 임시 : 개수 하나 감소
-            Amount--;
+            Amount -= 1;
 
             return true;
         }

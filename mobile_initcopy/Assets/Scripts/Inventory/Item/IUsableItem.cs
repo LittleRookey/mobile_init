@@ -12,4 +12,12 @@ namespace Litkey.InventorySystem
         /// <summary> 아이템 사용하기(사용 성공 여부 리턴) </summary>
         bool Use();
     }
+
+    /// <summary>
+    ///  Equippable item
+    /// </summary>
+    public interface IEquippable
+    {
+        bool Equip();
+    }
 }

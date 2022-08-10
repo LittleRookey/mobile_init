@@ -20,25 +20,36 @@ public class BounceDue : MonoBehaviour
     SA_Player player;
 
     CircleCollider2D circleCollider;
+    DropItem dropItem;
+    string goldName = "±ÝÈ­";
+    public UnityAction<DropItem> OnPlayerHit;
 
     private void Awake()
     {
         circleCollider = GetComponent<CircleCollider2D>();
+        dropItem = GetComponent<DropItem>();
     }
 
     private void Start()
     {
         player = StatManager.Instance._player;
+        
     }
     void OnEnable()
     {
+        OnPlayerHit += WhenReachPlayer;
         circleCollider.enabled = false;
         moveToPlayer = false;
         isCalled = false;
-        randomYDrop = Random.Range(-6f, 3f);
+        randomYDrop = Random.Range(-3f, 3f);
         firstYPos = transform.position.y;
-        Set(Vector3.right * Random.Range(-1, 2) * Random.Range(1f, 3f), Random.Range(2f, 5f));
-        Invoke("MoveToPlayer", 2f);
+        Set(Vector3.right * Random.Range(-1, 1) * Random.Range(1f, 2f), Random.Range(4f, 5f));
+        Invoke("MoveToPlayer", 3f);
+    }
+
+    private void OnDisable()
+    {
+        OnPlayerHit -= WhenReachPlayer;
     }
 
     void Update()
@@ -56,6 +67,17 @@ public class BounceDue : MonoBehaviour
         
     }
 
+    void WhenReachPlayer(DropItem dp)
+    {
+        // handles gold
+        if (dp.itemName == goldName)
+        {
+            UIManager.OnUpdateGold?.Invoke(dp.itemCount);
+            return;
+        }
+
+        Litkey.InventorySystem.Inventory.AddToInventory?.Invoke(dropItem);
+    }
     public void MoveToPlayer()
     {
         
@@ -107,6 +129,8 @@ public class BounceDue : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            // Add to player inventory
+            OnPlayerHit?.Invoke(dropItem);
             PoolManager.ReleaseObject(gameObject);
         }
         //if((player.transform.position - bd.transform.position).sqrMagnitude <= 0.1f)

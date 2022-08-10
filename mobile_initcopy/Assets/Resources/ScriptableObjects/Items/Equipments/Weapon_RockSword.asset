@@ -26,4 +26,18 @@ MonoBehaviour:
   _iconSprite: {fileID: 221919225, guid: 049745f0a50cbbe4c9d3ef45174c8fc9, type: 3}
   _dropItemPrefab: {fileID: 0}
   _maxDurability: 100
-  _damage: 11
+  stats:
+  - statType: 1
+    value:
+      migratedVersion: 
+      currentCryptoKey: 1783669613
+      hiddenValue: 1436799085
+      hiddenValueOldByte4:
+        b1: 0
+        b2: 0
+        b3: 0
+        b4: 0
+      inited: 1
+      fakeValue: 1
+      fakeValueActive: 1
+    oper: 1

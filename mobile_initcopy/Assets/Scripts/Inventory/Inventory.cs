@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /*
     [Item의 상속구조]
@@ -81,6 +82,9 @@ namespace Litkey.InventorySystem
         [SerializeField]
         private Item[] _items;
 
+        [SerializeField] private int weaponSlot = -999;
+        [SerializeField] private int armorSlot = -999;
+
         /// <summary> 업데이트 할 인덱스 목록 </summary>
         private readonly HashSet<int> _indexSetForUpdate = new HashSet<int>();
 
@@ -91,6 +95,8 @@ namespace Litkey.InventorySystem
             { typeof(WeaponItemData),  20000 },
             { typeof(ArmorItemData),   30000 },
         };
+
+        public static UnityAction<DropItem> AddToInventory;
 
         private class ItemComparer : IComparer<Item>
         {
@@ -117,9 +123,14 @@ namespace Litkey.InventorySystem
 #endif
         private void Awake()
         {
+            //if (_inventoryUI == null)
+                //_inventoryUI = FindObjectOfType<InventoryUI>();
+            
+            _inventoryUI.SetInventoryReference(this);
+            //_inventoryUI.InitInventoryUI();
+            _maxCapacity = _inventoryUI.GetMaxSlot();
             _items = new Item[_maxCapacity];
             Capacity = _initalCapacity;
-            _inventoryUI.SetInventoryReference(this);
         }
 
         private void Start()
@@ -127,11 +138,28 @@ namespace Litkey.InventorySystem
             UpdateAccessibleStatesAll();
         }
 
+        private void OnEnable()
+        {
+            AddToInventory += AddItem;
+        }
+
+        private void OnDisable()
+        {
+            AddToInventory -= AddItem;
+        }
+
         #endregion
         /***********************************************************************
         *                               Private Methods
         ***********************************************************************/
         #region .
+
+        
+        private void AddItem(DropItem dp)
+        {
+            Add(dp.itemData);
+        }
+
         /// <summary> 인덱스가 수용 범위 내에 있는지 검사 </summary>
         private bool IsValidIndex(int index)
         {
@@ -161,6 +189,7 @@ namespace Litkey.InventorySystem
                 {
                     if (!ci.IsMax)
                         return i;
+                    
                 }
             }
 
@@ -195,7 +224,7 @@ namespace Litkey.InventorySystem
                     {
                         _inventoryUI.SetItemAmountText(index, ci.Amount);
                     }
-                }
+                } 
                 // 1-2. 셀 수 없는 아이템인 경우 수량 텍스트 제거
                 else
                 {
@@ -217,6 +246,7 @@ namespace Litkey.InventorySystem
                 _inventoryUI.RemoveItem(index);
                 _inventoryUI.HideItemAmountText(index); // 수량 텍스트 숨기기
             }
+
         }
 
         /// <summary> 해당하는 인덱스의 슬롯들의 상태 및 UI 갱신 </summary>
@@ -234,6 +264,33 @@ namespace Litkey.InventorySystem
             for (int i = 0; i < Capacity; i++)
             {
                 UpdateSlot(i);
+            }
+        }
+
+        // first remove applied stats from previously equipped 
+        private void ApplyStats(int index, bool unEquip=false)
+        {
+            // Remove previous equipment
+            
+            if(_items[index] is WeaponItem wi)
+            {
+                if (index >= 0)
+                {
+                    Debug.Log(unEquip);
+                    if (!unEquip)
+                        StatManager.OnEquipItem?.Invoke(wi);
+                    else
+                        StatManager.OnUnEquipItem?.Invoke(wi);
+                }
+            } else if(_items[index] is ArmorItem ai)
+            {
+                if (index >= 0)
+                {
+                    if (!unEquip)
+                        StatManager.OnEquipItem?.Invoke(ai);
+                    else
+                        StatManager.OnUnEquipItem?.Invoke(ai);
+                } 
             }
         }
 
@@ -378,7 +435,7 @@ namespace Litkey.InventorySystem
                         // 아이템을 생성하여 슬롯에 추가
                         _items[index] = itemData.CreateItem();
                         amount = 0;
-
+                        //Debug.Log("###################### " + index);
                         UpdateSlot(index);
                     }
                 }
@@ -494,8 +551,93 @@ namespace Litkey.InventorySystem
                 {
                     UpdateSlot(index);
                 }
+            } 
+            else if (_items[index] is IEquippable eItem)
+            {
+                // 아이템 사용
+                bool succeeded = eItem.Equip();
+
+                if (succeeded)
+                {
+                    if (weaponSlot < 0 && armorSlot < 0) // 무기 장착이 안돼있으면 
+                    {
+                        Debug.Log("00000000000000000");
+                        if (eItem is WeaponItem wi)
+                        {
+                            // 장착해 있는템은 제거 
+                            //if (weaponSlot >= 0)
+                            //    _inventoryUI.RemoveEquipped(weaponSlot);
+
+                            weaponSlot = index;
+                            _inventoryUI.SetEquipped(weaponSlot);
+                            ApplyStats(weaponSlot);
+                        }
+                        else if (eItem is ArmorItem ai)
+                        {
+                            //if (armorSlot < 0)
+                            //    armorSlot = index;
+                            //else
+                            //    _inventoryUI.RemoveEquipped(armorSlot);
+                            armorSlot = index;
+                            _inventoryUI.SetEquipped(armorSlot);
+                            // TODO add equip icon to its slot
+
+                            ApplyStats(armorSlot);
+                        }
+                    }
+                    else if (index != armorSlot && index != weaponSlot) // 장비 하나라도 장착 돼있는 상태, 새 아아템 장착
+                    {
+                        Debug.Log("11111111111111111111");
+                        if (eItem is WeaponItem wi)
+                        {
+                            // 장착해 있는템은 제거 
+                            if (weaponSlot >= 0)
+                                _inventoryUI.RemoveEquipped(weaponSlot);
+                            weaponSlot = index;
+                            ApplyStats(weaponSlot);
+                        }
+                        else if (eItem is ArmorItem ai)
+                        {
+                            if (armorSlot >= 0)
+                                _inventoryUI.RemoveEquipped(armorSlot);
+                            armorSlot = index;
+                            // TODO add equip icon to its slot
+                            ApplyStats(armorSlot);
+
+                        }
+                        _inventoryUI.SetEquipped(index);
+                        
+
+                    }
+                    else  // 이미 장착 돼있는 템은 해제한다
+                    {
+                        Debug.Log("2222222222222222222");
+                        if (eItem is WeaponItem wi)
+                        {
+                            // 장착해 있는템은 제거 
+                            _inventoryUI.RemoveEquipped(index);
+                            ApplyStats(weaponSlot, true);
+                            weaponSlot = -999;
+                            Debug.Log("Removed same item: " + weaponSlot);
+
+                        }
+                        else if (eItem is ArmorItem ai)
+                        {
+                            _inventoryUI.RemoveEquipped(index);
+                            ApplyStats(armorSlot, true);
+                            armorSlot = -999;
+                            // TODO add equip icon to its slot
+
+
+                        }
+
+                    }
+                    
+                    UpdateSlot(index);
+                }
             }
         }
+
 
         /// <summary> 모든 슬롯 UI에 접근 가능 여부 업데이트 </summary>
         public void UpdateAccessibleStatesAll()

@@ -89,6 +89,10 @@ public class MovementJoystick : MonoBehaviour
 
     public void PointerUp()
     {
+        se_highlight.gameObject.SetActive(false);
+        nw_highlight.gameObject.SetActive(false);
+        ne_highlight.gameObject.SetActive(false);
+        sw_highlight.gameObject.SetActive(false);
         joystickVec = Vector2.zero;
         joyStick.transform.position = joystickOriginalPos;
         joyStickBG.transform.position = joystickOriginalPos;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Litkey.InventorySystem;
 using Litkey.Utility;
-using GD.MinMaxSlider;
 
 
 [CreateAssetMenu(fileName = "LootTable", menuName = "Litkey/LootTable")]
@@ -16,7 +15,6 @@ public class LootTable : ScriptableObject
         public ItemData item;
         [Range(0f, 100f)]
         public float dropRate;
-        [MinMaxSlider(1, 100)]
         public Vector2Int dropCount = Vector2Int.one;
     }
 

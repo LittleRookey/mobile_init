@@ -48,6 +48,10 @@ public class SA_Unit : SA_UnitBase
 
     private void OnEnable()
     {
+        foreach (SpriteRenderer sp in spriteParts)
+        {
+            sp.material.SetFloat("_FadeAmount", -0.5f);   
+        }
         enableKnockBack = false;
         SetState(UnitState.idle);
         isDead = false;
@@ -70,7 +74,7 @@ public class SA_Unit : SA_UnitBase
     private void OnDisable()
     {
         OnDeath -= TurnOffCharacter;
-        
+        spriteMat.SetFloat("_FadeAmount", -0.5f);
         _ms.Init(this);
 
         
@@ -264,11 +268,11 @@ public class SA_Unit : SA_UnitBase
         circleColl.enabled = false;
         // loot
         
-
+        
         OnDeath?.Invoke(this);
         ItemDropManager.DropItems?.Invoke(this); // drop exp, gold visuals
         StatManager.OnEnemyDeath?.Invoke(this); // add exp
-        UIManager.OnUpdateGold?.Invoke(this.dropGold);
+        
 
         
     }

@@ -9,6 +9,9 @@ public class DropItem : MonoBehaviour
     public GameObject onDropEffect;
     public TextMeshProUGUI itemText;
     public Color textColor;
+    public string itemName;
+    public int itemCount;
+    public ItemData itemData;
 
     // 노말, 매직, 레어, 유니크, 레전드, 신화, 초월
     [SerializeField] private Color item_normalColor;
@@ -25,14 +28,19 @@ public class DropItem : MonoBehaviour
     public void SetDropItem(Sprite icon, string itemName, int itemCount = 1)
     {
         this.icon.sprite = icon;
-
+        this.itemName = itemName;
+        this.itemCount = itemCount;
         this.itemText.text = itemName;
         if (itemCount > 1)
             this.itemText.text = itemName + num + itemCount;
     }
-    public void SetDropItem(Sprite icon, string itemName, int itemCount, EquipmentRarity rarity)
+    public void SetDropItem(Sprite icon, string itemName, int itemCount, EquipmentRarity rarity, ItemData itemData)
     {
+        this.itemData = itemData;
+
         this.icon.sprite = icon;
+        this.itemName = itemName;
+        this.itemCount = itemCount;
         this.itemText.text = itemName;
         if (itemCount > 1)
             this.itemText.text = itemName + num + itemCount;
@@ -67,6 +75,8 @@ public class DropItem : MonoBehaviour
     public void SetDropItem(Sprite icon, string itemName, int itemCount, Color textColor)
     {
         this.icon.sprite = icon;
+        this.itemName = itemName;
+        this.itemCount = itemCount;
         this.itemText.text = itemName;
         this.textColor = textColor;
         this.itemText.color = this.textColor;
@@ -78,6 +88,8 @@ public class DropItem : MonoBehaviour
     public void SetDropItem(Sprite icon, string itemName, int itemCount, bool showCountText=false)
     {
         this.icon.sprite = icon;
+        this.itemName = itemName;
+        this.itemCount = itemCount;
         this.itemText.text = itemName;
         this.itemText.color = this.textColor;
 
@@ -91,6 +103,8 @@ public class DropItem : MonoBehaviour
     public void SetDropItem(Sprite icon, string itemName, int itemCount, EquipmentRarity rarity, GameObject onDropEffect)
     {
         this.icon.sprite = icon;
+        this.itemName = itemName;
+        this.itemCount = itemCount;
         this.itemText.text = itemName;
         if (itemCount > 1)
             this.itemText.text = itemName + num + itemCount;
@@ -125,6 +139,8 @@ public class DropItem : MonoBehaviour
     public void SetDropItem(Sprite icon, string itemName, int itemCount, GameObject onDropEffect)
     {
         this.icon.sprite = icon;
+        this.itemName = itemName;
+        this.itemCount = itemCount;
         this.itemText.text = itemName;
         this.itemText.color = this.textColor;
         onDropEffect.transform.SetParent(this.onDropEffect.transform);
@@ -135,6 +151,8 @@ public class DropItem : MonoBehaviour
     public void SetDropItem(Sprite icon, string itemName, int itemCount, Color textColor, GameObject onDropEffect)
     {
         this.icon.sprite = icon;
+        this.itemName = itemName;
+        this.itemCount = itemCount;
         this.itemText.text = itemName;
         this.textColor = textColor;
         this.itemText.color = this.textColor;
@@ -143,6 +161,4 @@ public class DropItem : MonoBehaviour
         if (itemCount > 1)
             this.itemText.text = itemName + num + itemCount;
     }
-
-
 }

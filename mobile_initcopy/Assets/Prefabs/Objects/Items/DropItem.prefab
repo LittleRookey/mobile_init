@@ -184,7 +184,7 @@ MonoBehaviour:
         m_CallState: 2
   trnsObject: {fileID: 6540023934055619830}
   trnsBody: {fileID: 6540023934055619830}
-  gravity: -30
+  gravity: -20
   groundVelocity: {x: 0, y: 0}
   verticalVelocity: 0
   isGrounded: 0
@@ -204,6 +204,9 @@ MonoBehaviour:
   onDropEffect: {fileID: 6540023934007855399}
   itemText: {fileID: 6540023934968310112}
   textColor: {r: 1, g: 1, b: 1, a: 1}
+  itemName: 
+  itemCount: 0
+  itemData: {fileID: 0}
   item_normalColor: {r: 1, g: 1, b: 1, a: 1}
   item_magicColor: {r: 0.07058824, g: 0.9882353, b: 0.08235294, a: 1}
   item_rareColor: {r: 0.043137256, g: 0.43137255, b: 0.8, a: 1}

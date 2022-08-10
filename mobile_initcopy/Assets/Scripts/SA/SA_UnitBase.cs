@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeStage.AntiCheat.ObscuredTypes;
 using UnityEngine.Events;
+using DG.Tweening;
 
 
 public class SA_UnitBase : MonoBehaviour
@@ -89,8 +90,12 @@ public class SA_UnitBase : MonoBehaviour
     protected WaitForSeconds hitDuration = new WaitForSeconds(.2f);
     protected SpriteRenderer[] spriteParts;
 
+    protected Material spriteMat;
+
     [SerializeField] protected float patrolTimer = 2f;
     protected float patrolTime = 0;
+    protected float turnOffTime = 2f;
+
     public enum UnitState
     {
         idle,
@@ -114,7 +119,9 @@ public class SA_UnitBase : MonoBehaviour
         _animAction = _spumPrefab._anim.GetComponent<SA_AnimationAction>();
         rb = GetComponent<Rigidbody2D>();
         circleColl = GetComponent<CircleCollider2D>();
-        
+        if (spriteParts == null)
+            spriteParts = _animAction.GetAllParts();
+        spriteMat = spriteParts[0].material;
     }
 
     protected virtual void Update()
@@ -146,7 +153,9 @@ public class SA_UnitBase : MonoBehaviour
 
     protected void TurnOffCharacter(SA_UnitBase sa)
     {
-        Invoke("TurnOff", 2f);
+        Invoke("DeathEffect", 1f);
+        
+        Invoke("TurnOff", turnOffTime);
     }
 
     void TurnOff()
@@ -155,7 +164,10 @@ public class SA_UnitBase : MonoBehaviour
         PoolManager.ReleaseObject(this.gameObject);
     }
 
-    
+
+
+
+
     protected virtual void CheckState()
     {
         
@@ -542,6 +554,17 @@ public class SA_UnitBase : MonoBehaviour
         {
             sp.material.SetFloat("_HitEffectBlend", 0f);
         }
+    }
+
+    protected void DeathEffect()
+    {
+        foreach (SpriteRenderer sp in spriteParts)
+        {
+            //DOTween.To(() =>  targObject.transform.localScale.x, x => targObject.transform.localScale = new Vector3(x, 1f, 1f), tValue, dur);
+            DOTween.To(() => sp.material.GetFloat("_FadeAmount"), x =>sp.material.SetFloat("_FadeAmount", x), 1f, 1f);
+            //sp.material.SetFloat("_FadeAmount", 0f);
+        }
+        
     }
 
     protected void DoMove()

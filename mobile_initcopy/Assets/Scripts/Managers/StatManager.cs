@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 using CodeStage.AntiCheat.ObscuredTypes;
-
+using Litkey.InventorySystem;
 
 public class Stat
 {
@@ -37,6 +37,22 @@ public class StatManager : MonoBehaviour
     public ObscuredInt statpoint_MagicForce;
     public ObscuredInt statpoint_AttackSpeed;
     public ObscuredInt statpoint_MoveSpeed;
+
+    public ObscuredFloat equip_MaxHP;
+    public ObscuredFloat equip_Attack;
+    public ObscuredFloat equip_HPRegen;
+    public ObscuredFloat equip_MagicForce;
+    public ObscuredFloat equip_MoveSpeed;
+    public ObscuredFloat equip_AttackSpeed;
+    public ObscuredFloat equip_Defense;
+
+    public ObscuredFloat equip_MaxHP_Percentage;
+    public ObscuredFloat equip_Attack_Percentage;
+    public ObscuredFloat equip_HPRegen_Percentage;
+    public ObscuredFloat equip_MagicForce_Percentage;
+    public ObscuredFloat equip_MoveSpeed_Percentage;
+    public ObscuredFloat equip_AttackSpeed_Percentage;
+    public ObscuredFloat equip_Defense_Percentage;
 
     private ObscuredFloat AttackMultiplier = 1;
     private ObscuredFloat MaxHPMultiplier = 1;
@@ -135,8 +151,11 @@ public class StatManager : MonoBehaviour
 
     public static UnityAction<SA_Unit> OnEnemyDeath;
 
+    public static UnityAction<EquipmentItem> OnEquipItem;
+    public static UnityAction<EquipmentItem> OnUnEquipItem;
 
-
+    private EquipmentItem equippedWeapon;
+    private EquipmentItem equippedArmor;
     private void Awake()
     {
         Instance = this;
@@ -155,12 +174,16 @@ public class StatManager : MonoBehaviour
     {
         OnEnemyDeath += GiveDropItems;
         Actions.OnPlayerLevelUp += LevelUp;
+        OnEquipItem += EquipStat;
+        OnUnEquipItem += UnEquipStat;
     }
 
     private void OnDisable()
     {
         OnEnemyDeath -= GiveDropItems;
         Actions.OnPlayerLevelUp -= LevelUp;
+        OnEquipItem -= EquipStat;
+        OnUnEquipItem -= UnEquipStat;
     }
 
     public void GiveDropItems(SA_Unit enem)
@@ -173,7 +196,7 @@ public class StatManager : MonoBehaviour
     void AddExp(SA_Unit sa)
     {
         _player._exp += sa.dropExp;
-        Debug.Log("EXP added");
+        //Debug.Log("EXP added");
         UIManager.OnUpdateExpBar?.Invoke(_player);
         if (_player._exp >= _player._maxExp)
         {
@@ -245,18 +268,26 @@ public class StatManager : MonoBehaviour
         return num;
     }
 
+
+
+    // Attack equation
+    // ((base_attack + attackstat * statPoint_attack) * (AttackMultiplier + TempAttackMultiplier) + weapon_attack * weapon_attack_Percentage)
     public ObscuredInt GetFinalPlayerAttack(int level)
     {
         // base attack by levelup + (stat attacks)
         //Debug.Log(name + ": 1-4");
         float num = ATTACK * Mathf.Pow(level_attackgrowth, level - 1) + (statpoint_Attack * ATTACKGROW);
 
+        // weapon stats 
+
         // attack multipliers
         num *= (AttackMultiplier + TempAttackMultiplier);
+        num += (equip_Attack * (1 + equip_Attack_Percentage));
 
-        num = Round(num, 1);
-        return (ObscuredInt)num;
+        return (ObscuredInt)Mathf.RoundToInt(num);
     }
+
+    
 
     // mult: 소수점 몇째자리, 
     // ex) 0.35 * 10 = 3.5 => 4 => return 0.4
@@ -343,4 +374,385 @@ public class StatManager : MonoBehaviour
 
     }
 
+
+
+    private void UnEquipStat(EquipmentItem item)
+    {
+        ClearEquipValues();
+
+        if (item is WeaponItem)
+        {
+            if (equippedArmor != null)
+            {
+                foreach (StatModifier st in equippedArmor.EquipmentData.GetStats())
+                {
+                    CalculateStat(st);
+                }
+            }
+            equippedWeapon = null;
+        } else if (item is ArmorItem)
+        {
+            if (equippedWeapon != null)
+            {
+                foreach (StatModifier st in equippedWeapon.EquipmentData.GetStats())
+                {
+                    CalculateStat(st);
+                }
+            }
+            equippedArmor = null;
+        }
+
+        
+    }
+
+    void ClearEquipValues()
+    {
+        equip_Attack = 0;
+        equip_AttackSpeed = 0;
+        equip_Defense = 0;
+        equip_HPRegen = 0;
+        equip_MagicForce = 0;
+        equip_MaxHP = 0;
+        equip_MoveSpeed = 0;
+
+        equip_Attack_Percentage = 0;
+        equip_AttackSpeed_Percentage = 0;
+        equip_Defense_Percentage = 0;
+        equip_HPRegen_Percentage = 0;
+        equip_MagicForce_Percentage = 0;
+        equip_MaxHP_Percentage = 0;
+        equip_MoveSpeed_Percentage = 0;
+    }
+
+    // make all equip values to 0. 
+    // if equippedweapon is not null, remove weapon and apply the new given item
+    // 
+    private void EquipStat(EquipmentItem item)
+    {
+        ClearEquipValues();
+        bool isWeapon = false;
+        // if given is weapon, apply weapon 
+        if (item is WeaponItem wi)
+        {
+            equippedWeapon = wi;
+            if (equippedWeapon != null) // if equipments are on
+            {
+                foreach (StatModifier st in wi.EquipmentData.GetStats())
+                {
+                    CalculateStat(st);
+                }
+            }
+            isWeapon = true;
+            // Assign weapon
+            
+        }
+        else if(item is ArmorItem ai)
+        {
+            equippedArmor = ai;
+            if (equippedArmor != null) // if equipments are on
+            {
+                foreach (StatModifier st in ai.EquipmentData.GetStats())
+                {
+                    CalculateStat(st);
+                }
+            }
+            // Assign armor
+        }
+
+        // if it is weapon, check if armor is not null and add armor stat too
+        if (isWeapon)
+        {
+            if (equippedArmor != null)
+            {
+                foreach (StatModifier st in equippedArmor.EquipmentData.GetStats())
+                {
+                    CalculateStat(st);
+                }
+            }
+        } else
+        {
+            if (equippedWeapon != null)
+            {
+                foreach (StatModifier st in equippedWeapon.EquipmentData.GetStats())
+                {
+                    CalculateStat(st);
+                }
+            }
+        }
+    }
+
+    // calculates statmodifier one time
+    void CalculateStat(StatModifier st, bool reverse = false)
+    {
+
+        if (!reverse)
+        {
+            switch (st.statType)
+            {
+                case StatType.attack:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_Attack += st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_Attack_Percentage += st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_Attack -= st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_Attack_Percentage -= st.value;
+                    }
+
+                    break;
+                case StatType.attackSpeed:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_AttackSpeed += st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_AttackSpeed_Percentage += st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_AttackSpeed -= st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_AttackSpeed_Percentage -= st.value;
+                    }
+                    break;
+                case StatType.moveSpeed:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_MoveSpeed += st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_MoveSpeed_Percentage += st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_MoveSpeed -= st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_MoveSpeed_Percentage -= st.value;
+                    }
+                    break;
+                case StatType.hpRegen:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_HPRegen += st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_HPRegen_Percentage += st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_HPRegen -= st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_HPRegen_Percentage -= st.value;
+                    }
+                    break;
+                case StatType.magicForce:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_HPRegen += st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_HPRegen_Percentage += st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_HPRegen -= st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_HPRegen_Percentage -= st.value;
+                    }
+                    break;
+                case StatType.maxHP:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_MaxHP += st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_MaxHP_Percentage += st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_MaxHP -= st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_MaxHP_Percentage -= st.value;
+                    }
+                    break;
+                case StatType.defense:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_Defense += st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_Defense_Percentage += st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_Defense -= st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_Defense_Percentage -= st.value;
+                    }
+
+                    break;
+            }
+        }
+        else
+        {
+            switch (st.statType)
+            {
+                case StatType.attack:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_Attack -= st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_Attack_Percentage -= st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_Attack += st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_Attack_Percentage += st.value;
+                    }
+
+                    break;
+                case StatType.attackSpeed:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_AttackSpeed -= st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_AttackSpeed_Percentage -= st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_AttackSpeed += st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_AttackSpeed_Percentage += st.value;
+                    }
+                    break;
+                case StatType.moveSpeed:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_MoveSpeed -= st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_MoveSpeed_Percentage -= st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_MoveSpeed += st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_MoveSpeed_Percentage += st.value;
+                    }
+                    break;
+                case StatType.hpRegen:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_HPRegen -= st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_HPRegen_Percentage -= st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_HPRegen += st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_HPRegen_Percentage += st.value;
+                    }
+                    break;
+                case StatType.magicForce:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_HPRegen -= st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_HPRegen_Percentage -= st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_HPRegen += st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_HPRegen_Percentage += st.value;
+                    }
+                    break;
+                case StatType.maxHP:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_MaxHP -= st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_MaxHP_Percentage -= st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_MaxHP += st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_MaxHP_Percentage += st.value;
+                    }
+                    break;
+                case StatType.defense:
+                    if (st.oper == OperatorType.plus)
+                    {
+                        equip_Defense -= st.value;
+                    }
+                    else if (st.oper == OperatorType.multiply)
+                    {
+                        equip_Defense_Percentage -= st.value;
+                    }
+                    else if (st.oper == OperatorType.subtract)
+                    {
+                        equip_Defense += st.value;
+                    }
+                    else if (st.oper == OperatorType.divide)
+                    {
+                        equip_Defense_Percentage += st.value;
+                    }
+
+                    break;
+            }
+        }
+        
+    }
 }

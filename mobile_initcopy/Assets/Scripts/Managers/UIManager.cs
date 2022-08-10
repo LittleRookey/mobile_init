@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
 
         //hploseEffect.gameObject.SetActive(true);
 
-        MoveAlphaParticle(hploseEffect, alphafull, .01f);
+        MoveAlphaParticle(hploseEffect, alphafull, .1f);
         //MoveBar(hpBar, tValue, 1f);
         //StartCoroutine(MoveBarWithEffect(hpBar, tValue, 1f, hploseEffect));
         MoveBar(hpBar, tValue, 1f);

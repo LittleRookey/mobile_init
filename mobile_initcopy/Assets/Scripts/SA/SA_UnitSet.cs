@@ -67,13 +67,25 @@ public class SA_UnitSet : MonoBehaviour
     void Start()
     {
         if (!isPlayer)
+        {
             _unitST = GetComponent<SA_Unit>();
+
+        }
         else
             _unitST = GetComponent<SA_Player>();
         SpriteRenderer[] mats = GetComponentsInChildren<SpriteRenderer>();
-        foreach (SpriteRenderer mat in mats)
+        if (isPlayer)
         {
-            mat.material = SA_ResourceManager.Instance.hitMatsDefault;
+            foreach (SpriteRenderer mat in mats)
+            {
+                mat.material = SA_ResourceManager.Instance.hitMatsDefault;
+            }
+        } else
+        {
+            foreach (SpriteRenderer mat in mats)
+            {
+                mat.material = SA_ResourceManager.Instance.enemyMatDefault;
+            }
         }
 
         
@@ -158,7 +170,7 @@ public class SA_UnitSet : MonoBehaviour
 
     void UpdateLevel()
     {
-        Debug.Log("Level updated");
+        //Debug.Log("Level updated");
         _UnitSubset._levelText.text = _unitST._level.ToString();
     }
 
