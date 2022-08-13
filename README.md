@@ -3,7 +3,8 @@
 Documentation: (Design_Document)[https://docs.google.com/document/d/1drV4VZ-03yBDjfCO-2n1_Ci0OxIjAG39GUgGG2CVHhc/edit#]
 
 ### Game DevLog
-- 
+- (07/23/2022)[https://litkeystudio.tistory.com/2?category=993626]
+- (08/13/22)[https://litkeystudio.tistory.com/3?category=993626]
 
 ### Script Folders
 I made some changes to the original sources. 
