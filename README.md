@@ -16,6 +16,6 @@ I made some changes to the original sources.
 
 
 #### Inventory OpenSource:
-Rito's inventory: (link)[https://github.com/rito15/Unity-RPG-Inventory]
+Rito's inventory: [link](https://github.com/rito15/Unity-RPG-Inventory)
 
 
