@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -5554,26 +5554,26 @@ TextureImporter:
       Icon Sheet_187: -975651984
       Icon Sheet_51: 322632664
       Icon Sheet_173: -1736424463
+      Icon Sheet_199: 421540724
       Icon Sheet_127: 1752387949
       Icon Sheet_62: -1684609784
-      Icon Sheet_199: 421540724
       Icon Sheet_150: 1904851225
       Icon Sheet_69: 1168488434
       Icon Sheet_23: -103115493
       Icon Sheet_110: 1618312826
       Icon Sheet_179: 930771050
-      Icon Sheet_129: -1158652308
+      Icon Sheet_213: -1492921058
       Icon Sheet_142: -1617741306
       Icon Sheet_205: -1461926293
-      Icon Sheet_214: -2128893925
-      Icon Sheet_213: -1492921058
+      Icon Sheet_129: -1158652308
       Icon Sheet_172: -1039409047
+      Icon Sheet_214: -2128893925
       Icon Sheet_39: 569208191
       Icon Sheet_73: 340087155
       Icon Sheet_36: -59602926
       Icon Sheet_139: 2129328649
-      Icon Sheet_186: -1568011408
       Icon Sheet_203: -1220590470
+      Icon Sheet_186: -1568011408
       Icon Sheet_88: 1549989892
       Icon Sheet_94: -1128875028
       Icon Sheet_113: 1844843021

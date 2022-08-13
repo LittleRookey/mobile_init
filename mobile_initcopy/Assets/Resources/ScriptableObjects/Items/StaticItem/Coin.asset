@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abc28c316067fc245add250dbdcba9ac, type: 3}
+  m_Name: Coin
+  m_EditorClassIdentifier: 
+  _rarity: 0
+  _weight:
+    currentCryptoKey: 1827465756
+    hiddenValue: 1827465716
+    inited: 1
+    fakeValue: 1000
+    fakeValueActive: 1
+  _id: 0
+  _name: "\uAE08\uD654"
+  _tooltip: "\uC81C\uAD6D\uC5D0\uC11C \uC0AC\uC6A9\uD558\uB294 \uAE08\uD654"
+  _iconSprite: {fileID: -1921053685, guid: 049745f0a50cbbe4c9d3ef45174c8fc9, type: 3}
+  _dropItemPrefab: {fileID: 0}
+  _maxAmount: 999999
+  _value: 0

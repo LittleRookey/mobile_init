@@ -1,0 +1,335 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MonsterSetting
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 58db294b88879904e8022e0c01c7c2ae, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: basicGrowth.m_Curve.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: basicGrowth.m_PreInfinity
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: basicGrowth.m_PostInfinity
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: basicGrowth.m_RotationOrder
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: monsterStatPerLevel.currentCryptoKey
+    value: 1772654819
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: monsterStatPerLevel.hiddenValue
+    value: 1772654816
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: monsterStatPerLevel.inited
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: monsterStatPerLevel.fakeValue
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: monsterStatPerLevel.fakeValueActive
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _monsterSize
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _monsterType
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _attackType
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: basis.currentCryptoKey
+    value: 1708765426
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: basis.hiddenValue
+    value: 1708765420
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: basis.inited
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: basis.fakeValue
+    value: 30
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: basis.fakeValueActive
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: extra.currentCryptoKey
+    value: 1873717179
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: extra.hiddenValue
+    value: 1873717129
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: extra.inited
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: extra.fakeValue
+    value: 50
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: extra.fakeValueActive
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: acc_a.currentCryptoKey
+    value: 1115535646
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: acc_a.hiddenValue
+    value: 1115535616
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: acc_a.inited
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: acc_a.fakeValue
+    value: 30
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: acc_a.fakeValueActive
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: acc_b.currentCryptoKey
+    value: 1191595226
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: acc_b.hiddenValue
+    value: 1191595204
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: acc_b.inited
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: acc_b.fakeValue
+    value: 30
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: acc_b.fakeValueActive
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mob_count_basis.currentCryptoKey
+    value: 1917800457
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mob_count_basis.hiddenValue
+    value: 1917800462
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mob_count_basis.inited
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mob_count_basis.fakeValue
+    value: 7
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mob_count_basis.fakeValueActive
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mob_extra.currentCryptoKey
+    value: 2042172375
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mob_extra.hiddenValue
+    value: 2042172381
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mob_extra.inited
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mob_extra.fakeValue
+    value: 10
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mob_extra.fakeValueActive
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_attackgrowth.migratedVersion
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_attackgrowth.currentCryptoKey
+    value: 1466124689
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_attackgrowth.hiddenValue
+    value: 1760027781
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_attackgrowth.hiddenValueOldByte4.b1
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_attackgrowth.hiddenValueOldByte4.b2
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_attackgrowth.hiddenValueOldByte4.b3
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_attackgrowth.hiddenValueOldByte4.b4
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_attackgrowth.inited
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_attackgrowth.fakeValue
+    value: 1.06
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_attackgrowth.fakeValueActive
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_maxhpgrowth.migratedVersion
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_maxhpgrowth.currentCryptoKey
+    value: 1118877415
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_maxhpgrowth.hiddenValue
+    value: 2100509688
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_maxhpgrowth.hiddenValueOldByte4.b1
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_maxhpgrowth.hiddenValueOldByte4.b2
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_maxhpgrowth.hiddenValueOldByte4.b3
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_maxhpgrowth.hiddenValueOldByte4.b4
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_maxhpgrowth.inited
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_maxhpgrowth.fakeValue
+    value: 1.09
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: level_maxhpgrowth.fakeValueActive
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gold_base.currentCryptoKey
+    value: 1360597535
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gold_base.hiddenValue
+    value: 1360597534
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gold_base.inited
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gold_base.fakeValue
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gold_base.fakeValueActive
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gold_extra.currentCryptoKey
+    value: 2079413099
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gold_extra.hiddenValue
+    value: 2079413102
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gold_extra.inited
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gold_extra.fakeValue
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gold_extra.fakeValueActive
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mob_count_growthRate
+    value: 0.3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: dropExp
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: A
+    value: 15
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: p
+    value: 0.64
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: s
+    value: 0.42
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []

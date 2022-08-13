@@ -1,24 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SA_Manager : MonoBehaviour
 {
 
     public float _findTimer;
 
+    public float scanRadius = 3f;
+
     public List<Transform> _unitPool = new List<Transform>();
 
-    public List<SA_Unit> _p1UnitList = new List<SA_Unit>();
+    public List<SA_Player> _playerList = new List<SA_Player>();
 
-    public List<SA_Unit> _p2UnitList = new List<SA_Unit>();
+    public List<SA_UnitBase> _enemyList = new List<SA_UnitBase>();
 
-    public List<SA_Unit> _p3UnitList = new List<SA_Unit>();
+    public List<SA_Unit> _objectList = new List<SA_Unit>();
 
+
+    public UnityEvent<SA_Unit> OnFindTarget;
+
+    Collider2D[] units;
+    //List<Collider2D> colliderList;
 
     private void Awake()
     {
         SoonsoonData.Instance.SAM = this;
+
     }
     // Start is called before the first frame update
     void Start()
@@ -27,45 +36,132 @@ public class SA_Manager : MonoBehaviour
 
     }
 
-
-    public SA_Unit GetTarget(SA_Unit unit)
+    private void OnEnable()
     {
-        SA_Unit tUnit = null;
+        Actions.OnEnemySpawn += AddEnemy;
+    }
 
-        List<SA_Unit> tList = new List<SA_Unit>();
-        switch(unit.tag)
+    private void OnDisable()
+    {
+        Actions.OnEnemySpawn -= AddEnemy;
+    }
+
+    public void AddEnemy(SA_Unit enemy)
+    {
+        enemy.tag = "Enemy";
+        _enemyList.Add(enemy);
+
+    }
+
+    // Find Target with circle scan and return closest
+    public SA_UnitBase FindTargetOf(SA_UnitBase sa)
+    {
+        //colliderList.Clear();
+        string enemTag = "";
+        switch(sa.tag)
         {
-            case "Player": tList = _p2UnitList; break;
-            case "Enemy": tList = _p1UnitList; break;
+            case "Player": enemTag = "Enemy"; break;
+            case "Enemy": enemTag = "Player"; break;
         }
+        units = Physics2D.OverlapCircleAll(sa.transform.position, scanRadius, LayerMask.GetMask("Units"));
+        //RaycastHit2D[] units = Physics2D.CircleCastAll(sa.transform.position, scanRadius, Vector2.zero, 0f, LayerMask.GetMask("Units"));
+        if (units.Length <= 0) return null;
+
+        //for (int i = 0; i < units.Length; i++)
+        //{
+        //    colliderList.Add(units[i]);
+        //}
+
+        //SortObjectsOnDistance(colliderList);
+
+        //SA_UnitBase retUnit = colliderList[0].GetComponent<SA_UnitBase>();
+        SA_UnitBase retUnit = null;
 
         float tSDis = 999999;
-        for (int i = 0; i < tList.Count; i++)
+        for (int i = 0; i < units.Length; i++)
         {
-            float tDis = ((Vector2)tList[i].transform.localPosition - (Vector2)unit.transform.localPosition).sqrMagnitude;
-            if (tDis <= unit._unitFightRange * unit._unitAttackRange)
-            {
-                if (tList[i].gameObject.activeInHierarchy)
-                {
-                    if (tList[i]._unitState != SA_Unit.UnitState.death)
-                    {
-                        if (tDis < tSDis)
-                        {
-                            tUnit = tList[i];
-                            tSDis = tDis;
-                        }
-                    }
+            float tDis = ((Vector2)units[i].transform.position - (Vector2)sa.transform.position).sqrMagnitude;
 
+            if (units[i].transform.gameObject.activeInHierarchy && units[i].transform.CompareTag(enemTag))
+            {
+                SA_UnitBase enemSide = units[i].transform.GetComponent<SA_UnitBase>();
+                if (enemSide._unitState != SA_Unit.UnitState.death)
+                {
+                    if (tDis < tSDis)
+                    {
+                        retUnit = enemSide;
+                        tSDis = tDis;
+                    }
                 }
+
             }
+
         }
-        return tUnit;
+        return retUnit;
     }
+
+    public void SortObjectsOnDistance(List<Collider2D> objects)
+    {
+        //objects.Sort(delegate (Collider2D a, Collider2D b)
+        //{
+        //    return Vector2.Distance(transform.position, a.transform.position).CompareTo(Vector2.Distance(transform.position, b.transform.position));
+        //});
+        objects.Sort(SortByDistanceToMe);
+        //objects = objects.OrderBy((d) => (transform.position - d.transform.position).sqrMagnitude).ToArray();
+        //for (int i = 0; i < objects.Count; i++)
+        //{
+        //    //Debug.Log("Distance to " + objects[i].name + ": " + (objects[i].transform.position - transform.position).sqrMagnitude);
+
+        //}
+    }
+
+    int SortByDistanceToMe(Collider2D a, Collider2D b)
+    {
+        float squaredRangeA = (a.transform.position - transform.position).sqrMagnitude;
+        float squaredRangeB = (b.transform.position - transform.position).sqrMagnitude;
+        return squaredRangeA.CompareTo(squaredRangeB);
+    }
+
+    //public void ContainsEnemy()
+    //public SA_Unit GetTarget(SA_Unit unit)
+    //{
+    //    SA_Unit tUnit = null;
+
+    //    List<SA_UnitBase> tList = new List<SA_UnitBase>();
+    //    switch(unit.tag)
+    //    {
+    //        case "Player": tList = _enemyList; break;
+    //        case "Enemy": tList = _playerList; break;
+    //    }
+
+    //    float tSDis = 999999;
+    //    for (int i = 0; i < tList.Count; i++)
+    //    {
+    //        float tDis = ((Vector2)tList[i].transform.localPosition - (Vector2)unit.transform.localPosition).sqrMagnitude;
+    //        if (tDis <= unit._unitFightRange * unit._unitAttackRange)
+    //        {
+    //            if (tList[i].gameObject.activeInHierarchy)
+    //            {
+    //                if (tList[i]._unitState != SA_Unit.UnitState.death)
+    //                {
+    //                    if (tDis < tSDis)
+    //                    {
+    //                        tUnit = tList[i];
+    //                        tSDis = tDis;
+    //                    }
+    //                }
+
+    //            }
+    //        }
+    //    }
+    //    return tUnit;
+    //}
+
     void SetUnitList()
     {
-        _p1UnitList.Clear();
-        _p2UnitList.Clear();
-        _p3UnitList.Clear();
+        _playerList.Clear();
+        _enemyList.Clear();
+        _objectList.Clear();
 
         for (var i = 0; i < _unitPool.Count; i++)
         {
@@ -73,20 +169,20 @@ public class SA_Manager : MonoBehaviour
             {
                 switch(i)
                 {
-                    case 0:
+                    case 0: // for players
                         
-                        _p1UnitList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
+                        _playerList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Player>());
                         //Debug.Log(_unitPool[i].GetChild(j).gameObject.name);
                         _unitPool[i].GetChild(j).gameObject.tag = "Player";
                         break;
-                    case 1:
-                        _p2UnitList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
+                    case 1: // for enemies
+                        _enemyList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
                         //Debug.Log(_unitPool[i].GetChild(j).gameObject.name);
                         _unitPool[i].GetChild(j).gameObject.tag = "Enemy";
                         break;
 
                     case 2:
-                        _p3UnitList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
+                        _objectList.Add(_unitPool[i].GetChild(j).GetComponent<SA_Unit>());
                         _unitPool[i].GetChild(j).gameObject.tag = "Object";
                         break;
 

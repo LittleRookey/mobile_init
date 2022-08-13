@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ba0b736a76e03f4193267e8ccf03893, type: 3}
+  m_Name: Weapon_RockSword
+  m_EditorClassIdentifier: 
+  _rarity: 0
+  _weight:
+    currentCryptoKey: 1203969131
+    hiddenValue: 1203969039
+    inited: 1
+    fakeValue: 100
+    fakeValueActive: 1
+  _id: 1
+  _name: "\uD3C9\uBC94\uD55C \uB3CC\uAC80"
+  _tooltip: "\uC5B4\uB9AC\uC219\uD55C \uB300\uC7A5\uC7A5\uC774\uAC00 \uB9CC\uB4E0
+    \uB3CC\uAC80\uC774\uB2E4 "
+  _iconSprite: {fileID: 221919225, guid: 049745f0a50cbbe4c9d3ef45174c8fc9, type: 3}
+  _dropItemPrefab: {fileID: 0}
+  _maxDurability: 100
+  stats:
+  - statType: 1
+    value:
+      migratedVersion: 
+      currentCryptoKey: 1783669613
+      hiddenValue: 1436799085
+      hiddenValueOldByte4:
+        b1: 0
+        b2: 0
+        b3: 0
+        b4: 0
+      inited: 1
+      fakeValue: 1
+      fakeValueActive: 1
+    oper: 1
