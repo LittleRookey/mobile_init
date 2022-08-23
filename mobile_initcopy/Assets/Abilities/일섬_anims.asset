@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2bbffacaaae7942ace7c3c3ad3fdad, type: 3}
+  m_Name: "\uC77C\uC12C_anims"
+  m_EditorClassIdentifier: 
+  _animationWarmupTime: 0
+  _animationCastTime: 0
+  _animationCooldownTime: 0
+  _warmupTriggerName: 
+  _castTriggerName: 
+  _castBoolName: 
+  _cooldownTriggerName: 
+  _warmupAnimation: {fileID: 0}
+  _castAnimation: {fileID: 0}
+  _cooldownAnimation: {fileID: 0}

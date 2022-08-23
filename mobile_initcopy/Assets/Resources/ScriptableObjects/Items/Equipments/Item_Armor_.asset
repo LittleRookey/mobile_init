@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea7f00a85ad8b1498859ff5fba5d0a2, type: 3}
   m_Name: Item_Armor_
   m_EditorClassIdentifier: 
-  _rarity: 0
+  _rarity: 1
   _weight:
     currentCryptoKey: 1328043263
     hiddenValue: 1328043163
@@ -23,7 +23,7 @@ MonoBehaviour:
   _name: "\uCC9C\uC637"
   _tooltip: "\uAC00\uBCBC\uC6B4 \uCC9C\uC637\uC774\uB2E4. \uBC29\uC5B4 \uD6A8\uACFC\uB294
     \uBBF8\uBBF8\uD574 \uBCF4\uC778\uB2E4. "
-  _iconSprite: {fileID: -7896407437694424259, guid: 50fc8ea05e8ba3c4abe0062bb85830c6, type: 3}
+  _iconSprite: {fileID: -1219066558808019568, guid: 0d7d0bf8307514eaf81aa72f558d3fb4, type: 3}
   _dropItemPrefab: {fileID: 0}
   _maxDurability: 100
   stats:

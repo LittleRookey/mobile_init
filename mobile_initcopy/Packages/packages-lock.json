@@ -7,6 +7,14 @@
       "dependencies": {},
       "hash": "4edcef1bbf49519ed2b841e669adb82fdc6a3d9b"
     },
+    "com.infinitevoid.spamabilityframework": {
+      "version": "file:com.infinitevoid.spamabilityframework",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.textmeshpro": "3.0.6"
+      }
+    },
     "com.unity.2d.animation": {
       "version": "7.0.4",
       "depth": 1,
@@ -148,7 +156,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.14",
+      "version": "2.0.16",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -175,6 +183,15 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.postprocessing": {
+      "version": "3.2.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.physics": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.purchasing": {

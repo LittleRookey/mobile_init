@@ -54,6 +54,10 @@ namespace Litkey.InventorySystem
         /***********************************************************************
         *                               Public Properties
         ***********************************************************************/
+        [Header("ItemView")]
+        public ItemViewer itemViewer;
+        public GameObject parentInventory;
+
         #region .
         /// <summary> 아이템 수용 한도 </summary>
         public int Capacity { get; private set; }
@@ -299,6 +303,11 @@ namespace Litkey.InventorySystem
         *                               Check & Getter Methods
         ***********************************************************************/
         #region .
+
+        public void OpenItemInfo(ItemData item)
+        {
+            itemViewer.OpenSlot(item, parentInventory);
+        }
 
         /// <summary> 해당 슬롯이 아이템을 갖고 있는지 여부 </summary>
         public bool HasItem(int index)

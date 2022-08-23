@@ -8,11 +8,16 @@ namespace Litkey.InventorySystem
     public class PortionItemData : CountableItemData
     {
         /// <summary> 효과량(회복량 등) </summary>
-        public float Value => _value;
-        [SerializeField] private float _value;
+        [SerializeField] protected StatModifier[] stats;
         public override Item CreateItem()
         {
             return new PortionItem(this);
         }
+
+        public StatModifier[] GetStats()
+        {
+            return stats;
+        }
+
     }
 }

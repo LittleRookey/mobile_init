@@ -1,0 +1,123 @@
+﻿.header {
+    font-size: 20px;
+    -unity-font-style: bold;
+    width: 100%;
+}
+
+.header-2 {
+    font-size: 14px;
+    -unity-font-style: bold;
+    width: 100%;
+}
+
+.header-3 {
+    font-size: 12px;
+    -unity-font-style: bold;
+    width: 100%;
+}
+
+.c-left-col {
+    width: 250px;
+    flex-grow: 0;
+    padding: 10px;
+}
+
+Box {
+    flex-grow: 1;
+}
+
+Button {
+    max-width: 250px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.c-box PropertyField {
+    height: 25px;
+}
+
+PropertyField.u-list-property {
+    height: auto;
+}
+
+.u-margin-top {
+    margin-top: 20px;
+}
+
+.u-margin-bottom {
+    margin-bottom: 20px;
+}
+
+.u-text-center {
+    -unity-text-align: middle-center;
+}
+
+.c-content-container {
+    padding: 10px;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.u-bold {
+    -unity-font-style: bold;
+}
+
+.u-italic {
+    -unity-font-style: italic
+}
+
+.c-button--blue {
+    background-color: rgb(68, 138, 255);
+    color: white;
+}
+
+.c-box {
+    border-width: 1px;
+    border-color: #080808;
+    background-color: #333333;
+    margin-top: 10px;
+}
+
+.c-box .c-box__content {
+    padding: 10px;
+}
+
+.c-box .c-box__content.hidden {
+    padding: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.c-box .c-box__content.c-box__content--row {
+    flex-direction: row;
+}
+
+.c-box Box {
+    background-color: #323232;
+    border-width: 0;
+}
+
+.c-box .c-box__header {
+    background-color: rgb(38, 38, 38);
+    padding: 3px;
+    flex-grow: 0;
+}
+
+.c-box__header Label {
+    color: #CCC;
+    font-size: 14px;
+    -unity-font-style: bold;
+}
+
+.error-message {
+    color: white;
+    background-color: darkred;
+    padding: 20px;
+}
+
+.c-multiline-input {
+    white-space: normal;   
+}
+

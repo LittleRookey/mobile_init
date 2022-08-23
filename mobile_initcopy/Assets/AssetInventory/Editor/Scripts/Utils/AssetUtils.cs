@@ -25,6 +25,14 @@ namespace AssetInventory
         {
             if (!File.Exists(filePath)) return null;
 
+            // workaround for Unity not supporting loading local files with # or + in the name
+            if (filePath.Contains("#") || filePath.Contains("+"))
+            {
+                string newName = Path.Combine(Application.temporaryCachePath, "AIAudioPreview" + Path.GetExtension(filePath));
+                File.Copy(filePath, newName, true);
+                filePath = newName;
+            }
+
             // select appropriate audio type from extension where UNKNOWN heuristic can fail, especially for AIFF
             AudioType type = AudioType.UNKNOWN;
             switch (Path.GetExtension(filePath).ToLower())
@@ -51,7 +59,12 @@ namespace AssetInventory
                 }
 
                 DownloadHandlerAudioClip dlHandler = (DownloadHandlerAudioClip) uwr.downloadHandler;
-                if (dlHandler.isDone) return dlHandler.audioClip;
+                dlHandler.streamAudio = false; // otherwise tracker files won't work
+                if (dlHandler.isDone)
+                {
+                    // can fail if FMOD encounters incorrect file, will return null then, error cannot be surpressed
+                    return dlHandler.audioClip;
+                }
             }
 
             return null;

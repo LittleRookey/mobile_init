@@ -44,9 +44,9 @@ public class MonsterSetting : ScriptableObject
     public static readonly int ATTACKRANGESWORD = 1;
     public static readonly int ATTACKRANGE_MAGIC = 10;
 
-    public static readonly float ATTACKGROW = 3.0f;
+    public static readonly float ATTACKGROW = 3.0f; 
     public static readonly float MAXHPGROW = 10.0f;
-    public static readonly float DEFENSEGROW = 1.0f;
+    public static readonly int DEFENSEGROW = 1;
     public static readonly float HPREGENGROW = 0.2f;
 
 
@@ -174,6 +174,12 @@ public class MonsterSetting : ScriptableObject
         return (ObscuredInt)num;
     }
 
+    private ObscuredInt CalcMonsterDefense(int level)
+    {
+        int tempStatDef = (level - 1) * monsterStatPerLevel;
+        ObscuredInt num = DEFENSE + (level - 1) * DEFENSEGROW * tempStatDef;
+        return num;
+    }
 
     // 2.3 => mult = 1
     // 2 => mult = 0
@@ -241,7 +247,7 @@ public class MonsterSetting : ScriptableObject
         sa._unitHP = sa._unitMaxHP;
         sa._unitMagicForce = MAGICFORCE;
         sa._unitAttack = CalcMonsterAttack(level);
-        sa._unitDefense = DEFENSE;
+        sa._unitDefense = CalcMonsterDefense(level);
         sa._unitAttackSpeed = ATTACKSPEED;
         
 

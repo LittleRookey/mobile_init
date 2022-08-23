@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:engine="UnityEngine.UIElements"
+        xmlns:editor="UnityEditor.UIElements"
+        xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd">
+    <engine:Box class="c-left-col">
+        <engine:Label class="header-2" text="Abilities"/>
+        <engine:Button name="create-new-ability" text="Create new ability" class="c-button--blue"/>
+        <engine:Label text="Filter" class="u-margin-top"/>
+        <engine:TextField name="search"/>
+        <engine:ListView class="c-abilities-list-view u-margin-top"/>
+    </engine:Box>
+    <engine:Box class="c-right-col">
+        <engine:ScrollView>
+            <engine:Box class="c-content-container"/>
+        </engine:ScrollView>
+    </engine:Box>
+</engine:UXML>

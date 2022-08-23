@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace AssetInventory
@@ -50,6 +51,20 @@ namespace AssetInventory
         public Texture2D PreviewTexture { get; set; }
         public string ProjectPath { get; set; }
         public bool InProject => !string.IsNullOrWhiteSpace(ProjectPath);
+        public bool IsIndexed => FileCount > 0 && CurrentState == Asset.State.Done;
+        public bool IsMaterialized { get; set; }
+
+        public bool Downloaded
+        {
+            get
+            {
+                if (_downloaded == null) _downloaded = !string.IsNullOrEmpty(Location) && File.Exists(Location);
+                return _downloaded.Value;
+            }
+        }
+
+        private bool? _downloaded;
+
         public string GetDisplayName => string.IsNullOrEmpty(DisplayName) ? SafeName : DisplayName;
         public string GetDisplayPublisher => string.IsNullOrEmpty(DisplayPublisher) ? SafePublisher : DisplayPublisher;
         public string GetDisplayCategory => string.IsNullOrEmpty(DisplayCategory) ? SafeCategory : DisplayCategory;
@@ -59,6 +74,29 @@ namespace AssetInventory
         public List<AssetFile> MediaDependencies { get; set; }
         public List<AssetFile> ScriptDependencies { get; set; }
         public long DependencySize { get; set; }
+
+        public AssetInfo WithTreeData(string name, int id = 0, int depth = 0)
+        {
+            m_Name = name;
+            m_ID = id;
+            m_Depth = depth;
+
+            return this;
+        }
+
+        public AssetInfo WithTreeId(int id)
+        {
+            m_ID = id;
+
+            return this;
+        }
+
+        public AssetInfo WithProjectPath(string path)
+        {
+            ProjectPath = path;
+
+            return this;
+        }
 
         public Asset ToAsset()
         {

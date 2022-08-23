@@ -5,10 +5,9 @@ namespace AssetInventory
 {
     public static class UIStyles
     {
+        public const int TILE_DIMENSIONS = 150;
         public const int BORDER_WIDTH = 30;
         public const int INSPECTOR_WIDTH = 300;
-        public const int TILE_WIDTH = 150;
-        public const int TILE_HEIGHT = 150;
         public const int BUTTON_WIDTH = 25;
 
         private const int entryFontSize = 11;
@@ -18,8 +17,6 @@ namespace AssetInventory
         public static readonly GUIStyle tile = new GUIStyle(GUI.skin.button)
         {
             alignment = TextAnchor.MiddleCenter,
-            fixedWidth = TILE_WIDTH,
-            fixedHeight = TILE_HEIGHT,
             fontSize = 10,
             imagePosition = ImagePosition.ImageAbove,
             wordWrap = true

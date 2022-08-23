@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba0b736a76e03f4193267e8ccf03893, type: 3}
   m_Name: Weapon_WoodenSword
   m_EditorClassIdentifier: 
-  _rarity: 0
+  _rarity: 3
   _weight:
     currentCryptoKey: 1203969131
     hiddenValue: 1203969039

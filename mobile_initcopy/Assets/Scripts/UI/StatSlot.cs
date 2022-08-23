@@ -11,7 +11,8 @@ public enum StatType
     magicForce = 3,
     attackSpeed = 4,
     moveSpeed = 5,
-    defense = 6
+    defense = 6,
+    currentHP = 7
 };
 
 public class Slot : MonoBehaviour

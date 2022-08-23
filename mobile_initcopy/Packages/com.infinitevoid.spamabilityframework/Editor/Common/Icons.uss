@@ -1,0 +1,13 @@
+﻿.icon-prefab {
+    background-image: resource("Prefab Icon");
+}
+
+.icon-minus {
+    background-image: resource("d_Toolbar Minus");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.icon-settings {
+    background-image: resource("d_CustomTool");
+    -unity-background-scale-mode: scale-to-fit;
+}

@@ -149,6 +149,14 @@ public class SA_Player : SA_UnitBase
         float realdmg = dmg;
         realdmg = Random.Range((int)(realdmg * 0.85f), (int)(realdmg * 1.15f));
 
+        if (realdmg - _unitDefense < 0)
+        {
+            realdmg = 0;
+        } else
+        {
+            realdmg -= _unitDefense;
+        }
+
         // TODO crithit 
 
         _unitHP -= realdmg;

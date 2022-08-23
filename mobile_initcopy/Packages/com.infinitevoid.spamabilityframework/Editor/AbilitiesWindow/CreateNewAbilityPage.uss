@@ -1,0 +1,42 @@
+.c-create-ability-box {
+    flex-grow: 1;
+    flex-wrap: wrap;
+}
+
+.c-create-ability-box__item {
+    padding: 10px;
+    flex-basis: 50%;
+    /*flex-grow: .2;*/
+    /*flex-shrink: 1;*/
+    margin-bottom: 15px;
+}
+.c-create-ability-box__button {
+    background-color: rgb(68, 138, 255);
+    padding: 10px;
+    color: white;
+    margin-top: auto;
+    align-self: center;
+    width: 80%;
+}
+.c-create-ability-box__button:hover {
+    background-color: rgb(55, 125, 242);
+}
+
+.c-ability-image {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    height: 150px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.targeted-ability-image {
+    background-image: url("/Packages/com.infinitevoid.spamabilityframework/Editor/Textures/lightning_strike.png");
+}
+.directional-ability-image {
+    background-image: url("/Packages/com.infinitevoid.spamabilityframework/Editor/Textures/lightning_strike.png");
+}
+
+.projectile-ability-image {
+    background-image: url("/Packages/com.infinitevoid.spamabilityframework/Editor/Textures/projectile.png");
+}

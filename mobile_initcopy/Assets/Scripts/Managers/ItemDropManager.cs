@@ -26,6 +26,7 @@ public class ItemDropManager : MonoBehaviour
     public int smallParticlesNum = 5;
     public float magnetSpeed = 3f;
     //public float dropRadius = 2f;
+    [SerializeField] private ItemViewer itemViewer;
     [SerializeField] private DropItem dropItemTemplate;
 
     [SerializeField] private PortionItemData coinData;
@@ -63,6 +64,7 @@ public class ItemDropManager : MonoBehaviour
             Instance = this;
         lootLibrary = new Dictionary<string, LootTable>();
         lootTable = new Dictionary<string, LootTable>();
+
     }
     private void Start()
     {
@@ -183,7 +185,7 @@ public class ItemDropManager : MonoBehaviour
         for (int i = 0; i < items.Count; i++)
         {
             DropItem di = PoolManager.SpawnObject(dropItemTemplate.gameObject).GetComponent<DropItem>();
-            
+            Debug.Log(items[i].item.Data.Name);
             di.transform.position = pos;
             di.SetDropItem(items[i].item.Data.IconSprite, 
                             items[i].item.Data.Name, 

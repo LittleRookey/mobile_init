@@ -48,9 +48,14 @@ public class SA_Unit : SA_UnitBase
 
     private void OnEnable()
     {
+        if (spriteParts == null)
+            spriteParts = _animAction.GetAllParts().ToArray();
         foreach (SpriteRenderer sp in spriteParts)
         {
-            sp.material.SetFloat("_FadeAmount", -0.5f);   
+            if (sp.sprite == null)
+                continue;
+            Material mat = sp.material;
+            mat.SetFloat("_FadeAmount", -0.1f);
         }
         enableKnockBack = false;
         SetState(UnitState.idle);
@@ -74,10 +79,14 @@ public class SA_Unit : SA_UnitBase
     private void OnDisable()
     {
         OnDeath -= TurnOffCharacter;
-        spriteMat.SetFloat("_FadeAmount", -0.5f);
+        spriteMat.SetFloat("_FadeAmount", -0.1f);
         _ms.Init(this);
+        foreach (SpriteRenderer sp in spriteParts)
+        {
+            Material mat = sp.material;
+            mat.SetFloat("_FadeAmount", 0f);
+        }
 
-        
         //PoolManager.ReleaseObject(this.gameObject);   
     }
 
@@ -230,7 +239,18 @@ public class SA_Unit : SA_UnitBase
         float realdmg = dmg;
         realdmg = Random.Range((int)(realdmg * 0.85f), (int)(realdmg * 1.15f));
 
+        // Calculate Defense
+        if (realdmg - _unitDefense <= 0)
+        {
+            realdmg = 0;
+        } else
+        {
+            realdmg -= _unitDefense;
+        }
+
         // TODO crithit 
+
+
 
         _unitHP -= realdmg;
 
@@ -248,6 +268,7 @@ public class SA_Unit : SA_UnitBase
 
         if (_unitHP <= 0)
         {
+            owner._target = null;
             SetDeath();
         }
         isAttacking = false;
@@ -262,6 +283,7 @@ public class SA_Unit : SA_UnitBase
     protected override void SetDeath()
     {
         _unitHP = 0;
+
         _UnitSet.TurnOffHPBar(1f);
         //TODO disable character
         SetState(UnitState.death);

@@ -50,6 +50,8 @@ namespace Litkey.InventorySystem
             private set { _totalSlotCount = _horizontalSlotCount * _verticalSlotCount; }
         }
         private int _totalSlotCount;
+
+
         [Header("Options")]
         [Range(0, 10)]
         [SerializeField] private int _horizontalSlotCount = 8;  // 슬롯 가로 개수
@@ -123,6 +125,8 @@ namespace Litkey.InventorySystem
         ToggleTab equipTab;
         ToggleTab etcTab;
 
+        [SerializeField] private float dragTimer = .2f;
+        private float dragTime = 0f;
         /// <summary> 인벤토리 UI 내 아이템 필터링 옵션 </summary>
         public enum FilterOption
         {
@@ -191,12 +195,13 @@ namespace Litkey.InventorySystem
         private void Update()
         {
             _ped.position = Input.mousePosition;
-
+            
             //OnPointerEnterAndExit();
             if (_showTooltip) ShowOrHideItemTooltip();
             OnPointerDown();
             //OnPointerDrag();
-            //OnPointerUp();
+            OnPointer();
+            OnPointerUp();
         }
 
         #endregion
@@ -375,14 +380,19 @@ namespace Litkey.InventorySystem
         private bool IsOverUI()
             => EventSystem.current.IsPointerOverGameObject();
 
+        private bool IsOverSlotUI()
+        {
+            return RaycastAndGetFirstComponent<ItemSlotUI>() != null && IsOverUI();
+        }
+            
         /// <summary> 레이캐스트하여 얻은 첫 번째 UI에서 컴포넌트 찾아 리턴 </summary>
         private T RaycastAndGetFirstComponent<T>() where T : Component
         {
             _rrList.Clear();
 
             _gr.Raycast(_ped, _rrList);
-            Debug.Log(_ped);
-            Debug.Log(_rrList[0].gameObject.name);
+            //Debug.Log(_ped);
+            //Debug.Log(_rrList[0].gameObject.name);
             if (_rrList.Count == 0)
                 return null;
 
@@ -491,14 +501,135 @@ namespace Litkey.InventorySystem
         //    }
         //}
 
-        // select the given UI
+        // 1. OnPoniterDown checks if the slot is selected and assign slot 
+        // 2. OnPointer checks whether it is still selecting the same slot, if it is, make progress bar to show item
+        // 3. OnPointerUp makes event happen, equip, use, unequip items. Checks if the slot clicked on pointerdown is same slot, 
+
         private void OnPointerDown()
         {
             // Left Click : Begin Drag
             if (Input.GetMouseButtonDown(_leftClick))
             {
+                Debug.Log("PointerDown");
                 _beginDragSlot = RaycastAndGetFirstComponent<ItemSlotUI>();
-                //Debug.Log(_beginDragSlot.Index + " /// " + lastClickSlotIndex);
+                // TODO start timer for OnPoiner
+                dragTime = 0f;
+            }
+        }
+
+        // 1. OnPoniterDown checks if the slot is selected and assign slot 
+        // 2. OnPointer checks whether it is still selecting the same slot, if it is, make progress bar to show item
+        // 3. OnPointerUp makes event happen, equip, use, unequip items. Checks if the slot clicked on pointerdown is same slot, 
+        ItemSlotUI prevSlot;
+        ItemSlotUI curSlot;
+        float magnifyTimer = 2f;
+        float magnifyTime = 0f;
+        bool exitOnPointer = false;
+        private void OnPointer()
+        {
+
+            // Check mouse button for 0.2 second and if it is still on same slot, 
+            // make progress bar to show item info
+            //Debug.Log("Pointer " + exitOnPointer);
+            if (Input.GetMouseButton(_leftClick) && !exitOnPointer)
+            {
+                dragTime += Time.deltaTime;
+                if (_beginDragSlot != null && dragTime >= dragTimer)
+                {
+                    // Start progressbar
+                    // Check if drag gets out of slot 
+
+                    // 이전 프레임의 슬롯
+                    //if (prevSlot == null)
+                    //{
+                    //    prevSlot = _beginDragSlot;
+                    //}
+                    if (!_slotUIList[_beginDragSlot.Index].HasItem)
+                        return;
+
+                    // 현재 프레임의 슬롯
+                    curSlot = RaycastAndGetFirstComponent<ItemSlotUI>();
+                    // Start Progress
+                    // check if curent slot is null, if it is null, stop progress and exit OnPointer
+                    // if it is not null, continue 
+                    if (prevSlot == null)
+                    {
+                        // Enter
+                        if (curSlot != null)
+                        {
+                            //OnCurrentEnter();
+                            // enter progress bar
+                            Debug.Log("StartProgress");
+                            prevSlot = curSlot;
+                            magnifyTime = 0f;
+                            _beginDragSlot.StartProgress();
+                        }
+                    }
+                    else
+                    {
+                        magnifyTime += Time.deltaTime;
+                        //Debug.Log(magnifyTime / magnifyTimer);
+                        _beginDragSlot.UpdateProgress(magnifyTime/magnifyTimer);
+                        if (magnifyTime >= magnifyTimer)
+                        {
+                            Debug.Log("OpenWindow " + _inventory.GetItemData(_beginDragSlot.Index).Name);
+                            _beginDragSlot.StopProgress();
+                            exitOnPointer = true;
+                            prevSlot = null;
+                            if (_inventory.GetItemData(_beginDragSlot.Index) != null)
+                            {
+                                _inventory.OpenItemInfo(_inventory.GetItemData(_beginDragSlot.Index));
+                            }
+                            
+                        } 
+                        // after first frame
+                        // when mousebutton exits begindragslot 
+                        if (curSlot == null)
+                        {
+
+                            //dragTime = 0f;
+                            Debug.Log("StopProgress11111111111");
+                            _beginDragSlot.StopProgress();
+                            exitOnPointer = true;
+                            prevSlot = null;
+                        }
+                        // if drags out of Slot, exit
+                        else if (curSlot.Index != _beginDragSlot.Index)
+                        {
+                            //dragTime = 0f;
+                            Debug.Log("StopProgress2222222");
+                            _beginDragSlot.StopProgress();
+                            exitOnPointer = true;
+                            prevSlot = null;
+                        }
+
+                    }
+
+                }
+            }            
+        }
+
+        ItemSlotUI temp;
+        // select the given UI
+        private void OnPointerUp()
+        {
+            // Left Click : Begin Drag
+            if (Input.GetMouseButtonUp(_leftClick))
+            {
+                Debug.Log("PointerUp");
+                dragTime = 0f;
+                prevSlot = null;
+                curSlot = null;
+                exitOnPointer = false;
+                temp = RaycastAndGetFirstComponent<ItemSlotUI>();
+
+                if (temp == null) return;
+                if (_beginDragSlot != null)
+                    _beginDragSlot.StopProgress();
+
+                Debug.Log(_beginDragSlot.Index + " /// " + temp.name);
+                if (_beginDragSlot.Index != temp.Index)
+                    return;
 
 
                 // 아이템을 갖고 있는 슬롯만 해당
@@ -576,31 +707,31 @@ namespace Litkey.InventorySystem
             }
         }
         /// <summary> 클릭을 뗄 경우 </summary>
-        private void OnPointerUp()
-        {
-            if (Input.GetMouseButtonUp(_leftClick))
-            {
-                // End Drag
-                if (_beginDragSlot != null)
-                {
-                    // 위치 복원
-                    _beginDragIconTransform.position = _beginDragIconPoint;
+        //private void OnPointerUp()
+        //{
+        //    if (Input.GetMouseButtonUp(_leftClick))
+        //    {
+        //        // End Drag
+        //        if (_beginDragSlot != null)
+        //        {
+        //            // 위치 복원
+        //            _beginDragIconTransform.position = _beginDragIconPoint;
 
-                    // UI 순서 복원
-                    _beginDragSlot.transform.SetSiblingIndex(_beginDragSlotSiblingIndex);
+        //            // UI 순서 복원
+        //            _beginDragSlot.transform.SetSiblingIndex(_beginDragSlotSiblingIndex);
 
-                    // 드래그 완료 처리
-                    EndDrag();
+        //            // 드래그 완료 처리
+        //            EndDrag();
 
-                    // 해당 슬롯의 하이라이트 이미지를 아이콘보다 앞에 위치시키기
-                    _beginDragSlot.SetHighlightOnTop(true);
+        //            // 해당 슬롯의 하이라이트 이미지를 아이콘보다 앞에 위치시키기
+        //            _beginDragSlot.SetHighlightOnTop(true);
 
-                    // 참조 제거
-                    _beginDragSlot = null;
-                    _beginDragIconTransform = null;
-                }
-            }
-        }
+        //            // 참조 제거
+        //            _beginDragSlot = null;
+        //            _beginDragIconTransform = null;
+        //        }
+        //    }
+        //}
 
         private void EndDrag()
         {
@@ -673,6 +804,10 @@ namespace Litkey.InventorySystem
         ***********************************************************************/
         #region .
 
+        private void ShowItem(int index)
+        {
+
+        }
         /// <summary> UI 및 인벤토리에서 아이템 제거 </summary>
         private void TryRemoveItem(int index)
         {

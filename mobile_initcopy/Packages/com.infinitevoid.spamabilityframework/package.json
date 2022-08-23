@@ -1,0 +1,24 @@
+{
+	"name": "com.infinitevoid.spamabilityframework",
+	"description": "A high performance and garbage free framework for spells, abilities and projectiles.\n\nFor more information, please visit https://spam.infinitevoid.games or https://u3d.as/2FRG",
+	"unity": "2020.3",
+	"version": "1.1.0",
+	"displayName": "SPAM Ability Framework",
+	"documentationUrl": "https://spam.infinitevoid.games/",
+	"dependencies": {
+		"com.unity.textmeshpro": "3.0.6"
+	},
+	"keywords": 
+	[
+		"abilities", "ability",	"pojectile", "pojectiles", "system", "framework", "spam"
+	],
+	"type": "tool",
+	"samples": 
+	[
+        {
+            "displayName": "Example game - Top Down Royale",
+            "description": "Contains an example game. Top-down shooter with a couple of abilities",
+            "path": "Samples~/TopDownRoyale"
+        }
+	]
+}

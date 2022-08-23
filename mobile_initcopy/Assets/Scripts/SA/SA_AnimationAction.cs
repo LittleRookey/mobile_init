@@ -7,6 +7,11 @@ public class SA_AnimationAction : MonoBehaviour
     public  SA_UnitBase _player;
 
 
+    string rightWeapon = "R_Weapon";
+    string leftWeapon = "L_Weapon";
+
+    public List<SpriteRenderer> spriteParts;
+
     private void OnEnable()
     {
         if (_player == null)
@@ -40,9 +45,18 @@ public class SA_AnimationAction : MonoBehaviour
         EffectManager.OnPlayerAttackV1?.Invoke(_player);
     }
 
-    public SpriteRenderer[] GetAllParts()
+    public List<SpriteRenderer> GetAllParts()
     {
-        return GetComponentsInChildren<SpriteRenderer>();
+        spriteParts.Clear();
+        foreach(SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
+        {
+            if (sr.gameObject.name.Equals(rightWeapon) || sr.gameObject.name.Equals(leftWeapon))
+            {
+                continue;
+            }
+            spriteParts.Add(sr);
+        }
+        return spriteParts;
     }
 
     public void AttackFinish()

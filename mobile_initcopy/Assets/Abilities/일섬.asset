@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd538efe7c604c91b15c4cb8fc5d68d8, type: 3}
+  m_Name: "\uC77C\uC12C"
+  m_EditorClassIdentifier: 
+  _name: "\uC77C\uC12C"
+  _description: 
+  _icon: {fileID: 0}
+  _cooldownType: 0
+  _abilityCooldown: 5
+  _castRange: 10.69
+  _requiresAbilityTarget: 0
+  _telegraph: 2
+  _abilityEffects: []
+  _effectRadius: 0
+  _maxEffectTargets: 1
+  _lineOfSightCheck: 1
+  _losBlockingLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  _effectLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  _effectApplication: 0
+  _perTargetEffectApplicationDelay: 0
+  _animationTimings: {fileID: 11400000, guid: c55cc3ae4b5d6b34584bacc8c960a2f7, type: 2}
+  _abilityVfx: {fileID: 11400000, guid: 4fe99f5dbb108374aaceb31edb988c73, type: 2}
+  _abilitySfx: {fileID: 0}
+  _angle: 45
+  _distance: 3

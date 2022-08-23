@@ -5,26 +5,28 @@ namespace AllIn1SpriteShader
 {
     public class RandomSeed : MonoBehaviour
     {
-        //If you want to randomize UI Images, you'll need to create different materials
-        void Start()
+        private readonly int randomSeedProperty = Shader.PropertyToID("_RandomSeed");
+        private MaterialPropertyBlock propertyBlock;
+
+        //If you want to randomize UI Images, you'll need to create different materials since materials are always shared
+        //This can be done at runtime with scripting or manually in the editor
+        private void Start()
         {
-            Renderer sr = GetComponent<Renderer>();
-            if (sr != null)
+            Renderer renderer = GetComponent<Renderer>();
+            if(renderer != null)
             {
-                if (sr.material != null)
-                {
-                    sr.material.SetFloat("_RandomSeed", Random.Range(0, 1000f));
-                }
-                else Debug.LogError("Missing Renderer or Material: " + gameObject.name);
+                propertyBlock = new MaterialPropertyBlock();
+                propertyBlock.SetFloat(randomSeedProperty, Random.Range(0f, 100f));
+                renderer.SetPropertyBlock(propertyBlock);
             }
             else
             {
-                Image i = GetComponent<Image>();
-                if (i != null)
+                Image image = GetComponent<Image>();
+                if (image != null)
                 {
-                    if (i.material != null)
+                    if (image.material != null)
                     {
-                        i.material.SetFloat("_RandomSeed", Random.Range(0, 1000f));
+                        image.material.SetFloat(randomSeedProperty, Random.Range(0, 1000f));
                     }
                     else Debug.LogError("Missing Material on UI Image: " + gameObject.name);
                 }

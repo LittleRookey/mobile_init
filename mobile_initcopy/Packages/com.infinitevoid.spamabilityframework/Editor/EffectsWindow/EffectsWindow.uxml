@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:engine="UnityEngine.UIElements"
+        xmlns:editor="UnityEditor.UIElements"
+        xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
+>
+    <engine:Box class="c-left-col">
+        <engine:Label class="header-2" text="Effects"/>
+        <engine:Button name="create-new-effect" text="Create new effect" class="c-button--blue"/>
+        <engine:ListView class="c-effects-list-view u-margin-top"/>
+    </engine:Box>
+    <engine:Box name="c-right-col">
+        <engine:ScrollView>
+            <engine:Box class="c-content-container" name="effect-info" style="display: none">
+                <engine:Label class="header" name="effect-header"/>
+                <engine:Button text="Select asset in project" name="select-asset-button" />
+                <engine:Label name="effect-type-name"/>
+                <engine:TextElement name="effect-desc"/>
+                <engine:Box name="effect-settings"/>
+                <engine:Box name="effect-specific-settings"/>
+            </engine:Box>
+            <engine:Box name="new-effect-page" class="c-content-container" style="display: none">
+                <engine:Label class="header u-margin-bottom" text="Create new effect"/>
+                <engine:Box class="c-box">
+                    <engine:Box class="c-box__header">
+                        <engine:Label text="Basic settings"/>
+                    </engine:Box>
+                    <engine:Box class="c-box__content">
+                        <engine:Label text="Path to where the effect should be created"/>
+                        <engine:TextField text="Assets/Effects" name="new-effect-path"/>
+                        <engine:Button text="Use currently selected project folder as path"
+                                       name="get-path-from-selection-button" class="u-margin-top"/>
+                    </engine:Box>
+                </engine:Box>
+                <engine:Box name="new-effect" class="u-margin-top"/>
+            </engine:Box>
+        </engine:ScrollView>
+    </engine:Box>
+</engine:UXML>

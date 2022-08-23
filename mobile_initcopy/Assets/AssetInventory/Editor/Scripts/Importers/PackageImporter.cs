@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,10 @@ namespace AssetInventory
                     DirectoryInfo dirInfo = new DirectoryInfo(Path.GetDirectoryName(package));
                     asset.SafeCategory = dirInfo.Name;
                     asset.SafePublisher = dirInfo.Parent.Name;
+                    if (string.IsNullOrEmpty(asset.DisplayCategory))
+                    {
+                        asset.DisplayCategory = System.Text.RegularExpressions.Regex.Replace(asset.SafeCategory, "([a-z])([A-Z])", "$1/$2", System.Text.RegularExpressions.RegexOptions.Compiled).Trim();
+                    }
                 }
                 else
                 {
@@ -112,7 +117,7 @@ namespace AssetInventory
                     guid = File.ReadLines(metaFile).FirstOrDefault(line => line.StartsWith("guid:"));
                     if (string.IsNullOrEmpty(guid))
                     {
-                        Debug.LogWarning($"Could not find meta file in {dir}");
+                        Debug.LogWarning($"Could not find meta file in '{dir}'");
                         continue;
                     }
                     guid = guid.Substring(6);
@@ -127,6 +132,7 @@ namespace AssetInventory
                 file.AssetId = asset.Id;
                 file.Path = fileName;
                 file.SourcePath = assetFile.Substring(tempPath.Length + 1);
+                file.FileName = Path.GetFileName(file.Path);
                 file.Size = size;
                 file.Type = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
 
@@ -135,9 +141,11 @@ namespace AssetInventory
                 {
                     Texture2D tmpTexture = new Texture2D(1, 1);
                     byte[] assetContent = File.ReadAllBytes(assetFile);
-                    tmpTexture.LoadImage(assetContent);
-                    file.Width = tmpTexture.width;
-                    file.Height = tmpTexture.height;
+                    if (tmpTexture.LoadImage(assetContent))
+                    {
+                        file.Width = tmpTexture.width;
+                        file.Height = tmpTexture.height;
+                    }
                 }
                 if (AssetInventory.IsFileType(fileName, "Audio"))
                 {

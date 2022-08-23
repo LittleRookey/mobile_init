@@ -200,6 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b603e26680aa9f742bc30a6f68067ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemViewer: {fileID: 11400000, guid: e6f50421fc8ee5d49829bdbe91314f3a, type: 2}
   icon: {fileID: 2096278943039729142}
   onDropEffect: {fileID: 6540023934007855399}
   itemText: {fileID: 6540023934968310112}
@@ -207,13 +208,6 @@ MonoBehaviour:
   itemName: 
   itemCount: 0
   itemData: {fileID: 0}
-  item_normalColor: {r: 1, g: 1, b: 1, a: 1}
-  item_magicColor: {r: 0.07058824, g: 0.9882353, b: 0.08235294, a: 1}
-  item_rareColor: {r: 0.043137256, g: 0.43137255, b: 0.8, a: 1}
-  item_uniqueColor: {r: 0.8862745, g: 0.49019608, b: 0.07450981, a: 1}
-  item_legendColor: {r: 0.99215686, g: 0.11764706, b: 0.09803922, a: 1}
-  item_mythColor: {r: 1, g: 0.63836473, b: 0.63836473, a: 0}
-  item_transcendColor: {r: 0, g: 0.8710258, b: 1, a: 0}
 --- !u!58 &2074960992533402769
 CircleCollider2D:
   m_ObjectHideFlags: 0

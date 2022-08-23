@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:engine="UnityEngine.UIElements"
+        xmlns:editor="UnityEditor.UIElements"
+        xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd">
+
+    <engine:Label class="header" text="Create new ability"/>
+    <engine:Box class="c-box">
+        <engine:Box class="c-box__header">
+            <engine:Label text="Basic settings"/>
+        </engine:Box>
+        <engine:Box class="c-box__content">
+            <engine:Label text="Ability name" />
+            <engine:TextField text="Epic Ability" name="new-ability-name"/>
+            <engine:Label text="Path to where the ability should be created" class="u-margin-top"/>
+            <engine:TextField text="Assets/Abilities" name="new-ability-path"/>
+            <engine:Button text="Use currently selected project folder as path" name="get-path-from-selection-button"/>
+        </engine:Box>
+    </engine:Box>
+    <engine:Box class="c-box">
+        <engine:Box class="c-box__header">
+            <engine:Label text="Ability type"/>
+        </engine:Box>
+        <engine:Box class="c-box__content">
+            <engine:Box class="row c-create-ability-box">
+                <engine:Box class="c-create-ability-box__item">
+                    <engine:Label class="header-2 u-text-center" text="Targeted ability"/>
+                    <engine:TextElement class="u-text-center"
+                                        text="A targeted ability can either be cast on the ground or at a given IAbilityTarget."/>
+                    <engine:TextElement class="u-text-center u-margin-top u-bold" text="Common ability types:"/>
+                    <engine:TextElement class="u-text-center" text="Spell, Lightning strike, Heal..."/>
+                    <engine:VisualElement class="c-ability-image targeted-ability-image"/>
+                    <engine:Button text="Create" class="c-create-ability-box__button"
+                                   name="new-targeted-ability-button"/>
+                </engine:Box>
+                <engine:Box class="c-create-ability-box__item">
+                    <engine:Label class="header-2 u-text-center" text="Projectile ability"/>
+                    <engine:TextElement class="u-text-center"
+                                        text="A projectile is either fired in a direction or follows a target until it dies or hits a target."/>
+                    <engine:TextElement class="u-text-center u-margin-top u-bold" text="Common ability types:"/>
+                    <engine:TextElement class="u-text-center" text="Bullet, Skill-shot, Fireball..."/>
+                    <engine:VisualElement class="c-ability-image projectile-ability-image"/>
+                    <engine:Button text="Create" class="c-create-ability-box__button"
+                                   name="new-projectile-ability-button"/>
+                </engine:Box>
+                <engine:Box class="c-create-ability-box__item">
+                    <engine:Label class="header-2 u-text-center" text="Directional ability"/>
+                    <engine:TextElement class="u-text-center"
+                                        text="A directional ability covers a given area in the given direction."/>
+                    <engine:TextElement class="u-text-center u-margin-top u-bold" text="Common ability types:"/>
+                    <engine:TextElement class="u-text-center" text="Flame breath, Ice Spikes..."/>
+                    <engine:VisualElement class="c-ability-image directional-ability-image"/>
+                    <engine:Button text="Create" class="c-create-ability-box__button"
+                                   name="new-directional-ability-button"/>
+                </engine:Box>
+                <engine:Box class="c-create-ability-box__item">
+                    <engine:Label class="header-2 u-text-center" text="Raycast ability"/>
+                    <engine:TextElement class="u-text-center"
+                                        text="A raycast ability will fire a ray in the given direction and check for targets."/>
+                    <engine:TextElement class="u-text-center u-margin-top u-bold" text="Common ability types:"/>
+                    <engine:TextElement class="u-text-center" text="Shot, Beam, Laser..."/>
+                    <engine:VisualElement class="c-ability-image directional-ability-image"/>
+                    <engine:Button text="Create" class="c-create-ability-box__button"
+                                   name="new-raycast-ability-button"/>
+                </engine:Box>
+
+            </engine:Box>
+        </engine:Box>
+    </engine:Box>
+</engine:UXML>

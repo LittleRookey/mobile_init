@@ -69,14 +69,11 @@ public class AllIn1SpriteShaderMaterialInspector : ShaderGUI
             DrawLine(Color.grey, 1, 3);
             SpriteAtlas("Sprite inside an atlas?", "ATLAS_ON");
             DrawLine(Color.grey, 1, 3);
+            materialEditor.EnableInstancingField();
+            DrawLine(Color.grey, 1, 3);
             materialEditor.RenderQueueField();
             EditorGUILayout.EndVertical();
         }
-
-        //Not needed since Unity batches sprites on its own
-        //EditorGUILayout.Separator();
-        //materialEditor.EnableInstancingField();
-        //Debug.Log(materialEditor.IsInstancingEnabled() + "  " + Application.isBatchMode);
 
         EditorGUILayout.Separator();
         DrawLine(Color.grey, 1, 3);

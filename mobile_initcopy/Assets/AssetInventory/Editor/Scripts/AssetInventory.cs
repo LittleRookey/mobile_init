@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using JD.EditorAudioUtils;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
@@ -14,15 +15,18 @@ namespace AssetInventory
 {
     public static class AssetInventory
     {
-        public static string[] SCAN_DEPENDENCIES = {"prefab", "mat", "controller", "anim", "asset", "physicmaterial", "physicsmaterial", "sbs", "sbsar", "cubemap", "shadergraph", "shadersubgraph"};
+        public const string ToolVersion = "1.1.0";
+        public static readonly string[] ScanDependencies = {"prefab", "mat", "controller", "anim", "asset", "physicmaterial", "physicsmaterial", "sbs", "sbsar", "cubemap", "shadergraph", "shadersubgraph"};
 
         public static string CurrentMain { get; set; }
         public static int MainCount { get; set; }
         public static int MainProgress { get; set; }
+        public static string UsedConfigLocation { get; private set; }
 
-        private const int BREAK_INTERVAL = 5;
-        private const string CONFIG_NAME = "AssetInventoryConfig.json";
-        private static Regex FILE_GUID = new Regex("guid: (?:([a-z0-9]*))");
+        private const int BreakInterval = 5;
+        private const string ConfigName = "AssetInventoryConfig.json";
+        private const string AssetStoreFolderName = "Asset Store-5.x";
+        private static readonly Regex FileGuid = new Regex("guid: (?:([a-z0-9]*))");
 
         public static AssetInventorySettings Config
         {
@@ -36,16 +40,17 @@ namespace AssetInventory
         private static AssetInventorySettings _config;
 
         public static bool IndexingInProgress { get; private set; }
+        public static bool ClearCacheInProgress { get; private set; }
 
         public static Dictionary<string, string[]> TypeGroups { get; } = new Dictionary<string, string[]>
         {
-            {"Audio", new[] {"wav", "mp3", "ogg", "aiff"}},
-            {"Images", new[] {"png", "jpg", "jpeg", "bmp", "tga", "tif", "tiff", "psd", "svg", "webp", "ico"}},
+            {"Audio", new[] {"wav", "mp3", "ogg", "aiff", "aif", "mod", "it", "s3m", "xm"}},
+            {"Images", new[] {"png", "jpg", "jpeg", "bmp", "tga", "tif", "tiff", "psd", "svg", "webp", "ico", "exr", "gif", "hdr", "iff", "pict"}},
             {"Video", new[] {"mp4"}},
             {"Prefabs", new[] {"prefab"}},
             {"Materials", new[] {"mat", "physicmaterial", "physicsmaterial", "sbs", "sbsar", "cubemap"}},
             {"Shaders", new[] {"shader", "shadergraph", "shadersubgraph", "compute"}},
-            {"Models", new[] {"fbx", "obj", "blend", "dae"}},
+            {"Models", new[] {"fbx", "obj", "blend", "dae", "3ds", "dxf", "max", "c4d", "mb", "ma"}},
             {"Scripts", new[] {"cs", "php"}},
             {"Libraries", new[] {"zip", "unitypackage", "so", "bundle", "dll", "jar"}},
             {"Documents", new[] {"md", "doc", "docx", "txt", "json", "rtf", "pdf", "html", "readme", "xml", "chm"}}
@@ -59,22 +64,33 @@ namespace AssetInventory
 
         public static string GetStorageFolder()
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "AssetInventory");
+            if (!string.IsNullOrEmpty(Config.customStorageLocation)) return Path.GetFullPath(Config.customStorageLocation);
+
+            return IOUtils.PathCombine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "AssetInventory");
         }
 
-        public static string GetPreviewFolder()
+        private static string GetConfigLocation()
         {
-            return Path.Combine(GetStorageFolder(), "Previews");
+            // search for local project-specific override first
+            string guid = AssetDatabase.FindAssets(Path.GetFileNameWithoutExtension(ConfigName)).FirstOrDefault();
+            if (guid != null) return AssetDatabase.GUIDToAssetPath(guid);
+
+            return IOUtils.PathCombine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ConfigName);
+        }
+
+        public static string GetPreviewFolder(string customFolder = null)
+        {
+            return IOUtils.PathCombine(customFolder ?? GetStorageFolder(), "Previews");
         }
 
         private static string GetMaterializePath()
         {
-            return Path.Combine(GetStorageFolder(), "Extracted");
+            return IOUtils.PathCombine(GetStorageFolder(), "Extracted");
         }
 
         private static string GetMaterializedAssetPath(Asset asset)
         {
-            return Path.Combine(GetMaterializePath(), asset.SafeName);
+            return IOUtils.PathCombine(GetMaterializePath(), asset.SafeName);
         }
 
         public static async Task<string> ExtractAsset(Asset asset)
@@ -92,13 +108,20 @@ namespace AssetInventory
             return File.Exists(sourcePath);
         }
 
+        public static async Task<string> EnsureMaterializedAsset(AssetInfo info)
+        {
+            string targetPath = await EnsureMaterializedAsset(info.ToAsset(), info);
+            info.IsMaterialized = IsMaterialized(info.ToAsset(), info);
+            return targetPath;
+        }
+
         public static async Task<string> EnsureMaterializedAsset(Asset asset, AssetFile assetFile)
         {
             string sourcePath = Path.Combine(GetMaterializedAssetPath(asset), assetFile.SourcePath);
             if (!File.Exists(sourcePath)) await ExtractAsset(asset);
             if (!File.Exists(sourcePath)) return null;
 
-            string targetPath = Path.Combine(Path.Combine(Path.GetDirectoryName(sourcePath), "Content"), Path.GetFileName(assetFile.Path));
+            string targetPath = Path.Combine(Path.GetDirectoryName(sourcePath), "Content", Path.GetFileName(assetFile.Path));
             if (!File.Exists(targetPath))
             {
                 if (!Directory.Exists(Path.GetDirectoryName(targetPath))) Directory.CreateDirectory(Path.GetDirectoryName(targetPath));
@@ -127,7 +150,7 @@ namespace AssetInventory
             List<AssetFile> result = new List<AssetFile>();
 
             // only scan file types that contain guid references
-            if (!SCAN_DEPENDENCIES.Contains(Path.GetExtension(path).Replace(".", string.Empty))) return result;
+            if (!ScanDependencies.Contains(Path.GetExtension(path).Replace(".", string.Empty))) return result;
 
             string content = File.ReadAllText(path);
             // TODO: handle binary serialized files, e.g. prefabs
@@ -136,7 +159,7 @@ namespace AssetInventory
                 assetInfo.DepState = AssetInfo.DependencyState.NotPossible;
                 return result;
             }
-            MatchCollection matches = FILE_GUID.Matches(content);
+            MatchCollection matches = FileGuid.Matches(content);
 
             foreach (Match match in matches)
             {
@@ -218,7 +241,9 @@ namespace AssetInventory
         public static string[] LoadTypes()
         {
             List<string> result = new List<string> {"-all-", string.Empty};
-            IOrderedEnumerable<string> raw = DBAdapter.DB.Table<AssetFile>().Where(a => a.Type != "").Select(a => a.Type).Distinct().OrderBy(s => s);
+
+            string query = "select Distinct(Type) from AssetFile where Type not null and Type != \"\" order by Type";
+            List<string> raw = DBAdapter.DB.QueryScalars<string>($"{query}");
 
             List<string> groupTypes = new List<string>();
             foreach (KeyValuePair<string, string[]> group in TypeGroups)
@@ -246,16 +271,7 @@ namespace AssetInventory
 
         public static async Task<long> GetCacheFolderSize()
         {
-            if (!Directory.Exists(GetMaterializePath())) return 0;
-            DirectoryInfo dirInfo = new DirectoryInfo(GetMaterializePath());
-            try
-            {
-                return await Task.Run(() => dirInfo.EnumerateFiles("*", SearchOption.AllDirectories).Sum(file => file.Length));
-            }
-            catch
-            {
-                return 0;
-            }
+            return await IOUtils.GetFolderSize(GetMaterializePath());
         }
 
         public static IEnumerator RefreshIndex()
@@ -281,6 +297,8 @@ namespace AssetInventory
             // scan custom folders
             for (int i = 0; i < Config.folders.Count; i++)
             {
+                if (AssertImporter.CancellationRequested) break;
+
                 FolderSpec folder = Config.folders[i];
                 if (!folder.Enabled) continue;
                 if (!Directory.Exists(folder.Location))
@@ -291,7 +309,8 @@ namespace AssetInventory
                 switch (folder.ScanFor)
                 {
                     case FolderSpec.ScanType.Packages:
-                        yield return new PackageImporter().Index(folder.Location, false);
+                        bool hasAssetStoreLayout = Path.GetFileName(folder.Location) == AssetStoreFolderName;
+                        yield return new PackageImporter().Index(folder.Location, hasAssetStoreLayout);
                         break;
 
                     default:
@@ -306,9 +325,9 @@ namespace AssetInventory
         private static string GetAssetDownloadPath()
         {
 #if UNITY_EDITOR_WIN
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Unity", "Asset Store-5.x");
+            return IOUtils.PathCombine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Unity", AssetStoreFolderName);
 #else
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Library", "Unity", "Asset Store-5.x");
+            return IOUtils.PathCombine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Library", "Unity", AssetStoreFolderName);
 #endif
         }
 
@@ -317,44 +336,61 @@ namespace AssetInventory
             string folder = GetStorageFolder();
             if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
             DBAdapter.InitDB();
+            PerformUpgrades();
+        }
+
+        private static void PerformUpgrades()
+        {
+            // filename was introduced in version 2
+            AppProperty dbVersion = DBAdapter.DB.Find<AppProperty>("Version");
+
+            // Upgrade from Initial to v2
+            if (dbVersion == null)
+            {
+                List<AssetFile> assetFiles = DBAdapter.DB.Table<AssetFile>().ToList();
+                foreach (AssetFile assetFile in assetFiles)
+                {
+                    assetFile.FileName = Path.GetFileName(assetFile.Path);
+                }
+                DBAdapter.DB.UpdateAll(assetFiles);
+            }
+
+            if (dbVersion?.Value != "2")
+            {
+                AppProperty version = new AppProperty("Version", "2");
+                DBAdapter.DB.InsertOrReplace(version);
+            }
         }
 
         public static void ClearCache(Action callback = null)
         {
+            ClearCacheInProgress = true;
             Task _ = Task.Run(() =>
             {
                 if (Directory.Exists(GetMaterializePath())) Directory.Delete(GetMaterializePath(), true);
                 callback?.Invoke();
+                ClearCacheInProgress = false;
             });
-        }
-
-        private static string GetConfigFile()
-        {
-            string guid = AssetDatabase.FindAssets(Path.GetFileNameWithoutExtension(CONFIG_NAME)).FirstOrDefault();
-            if (guid == null)
-            {
-                Debug.LogError($"Cannot persist Asset Inventory configuration since '{CONFIG_NAME}' file is missing.");
-                return null;
-            }
-            return AssetDatabase.GUIDToAssetPath(guid);
         }
 
         private static void LoadConfig()
         {
-            string configFile = GetConfigFile();
-            if (configFile == null)
+            string configLocation = GetConfigLocation();
+            UsedConfigLocation = configLocation;
+
+            if (configLocation == null || !File.Exists(configLocation))
             {
                 _config = new AssetInventorySettings();
                 return;
             }
-            _config = JsonConvert.DeserializeObject<AssetInventorySettings>(File.ReadAllText(configFile));
+            _config = JsonConvert.DeserializeObject<AssetInventorySettings>(File.ReadAllText(configLocation));
             if (_config == null) _config = new AssetInventorySettings();
             if (_config.folders == null) _config.folders = new List<FolderSpec>();
         }
 
         public static void SaveConfig()
         {
-            string configFile = GetConfigFile();
+            string configFile = GetConfigLocation();
             if (configFile == null) return;
 
             File.WriteAllText(configFile, JsonConvert.SerializeObject(_config));
@@ -362,6 +398,8 @@ namespace AssetInventory
 
         public static void ResetConfig()
         {
+            DBAdapter.Close(); // in case DB path changes
+
             _config = new AssetInventorySettings();
             SaveConfig();
             AssetDatabase.Refresh();
@@ -369,6 +407,7 @@ namespace AssetInventory
 
         public static async Task<AssetPurchases> FetchOnlineAssets()
         {
+            AssetStore.CancellationRequested = false;
             AssetPurchases assets = await AssetStore.RetrievePurchases();
 
             CurrentMain = "Updating assets";
@@ -380,7 +419,8 @@ namespace AssetInventory
             {
                 MainProgress = i + 1;
                 MetaProgress.Report(progressId, i + 1, MainCount, string.Empty);
-                if (i % BREAK_INTERVAL == 0) await Task.Yield(); // let editor breath
+                if (i % BreakInterval == 0) await Task.Yield(); // let editor breath
+                if (AssetStore.CancellationRequested) break;
 
                 AssetPurchase purchase = assets.results[i];
 
@@ -399,7 +439,7 @@ namespace AssetInventory
                 if (existing != null)
                 {
                     existing.AssetSource = Asset.Source.AssetStorePackage;
-                    existing.DisplayName = purchase.displayName;
+                    existing.DisplayName = purchase.displayName.Trim();
                     existing.ForeignId = purchase.packageId;
                     if (string.IsNullOrEmpty(existing.SafeName)) existing.SafeName = purchase.CalculatedSafeName;
                     DBAdapter.DB.Update(existing);
@@ -436,7 +476,8 @@ namespace AssetInventory
 
                 MainProgress = i + 1;
                 MetaProgress.Report(progressId, i + 1, MainCount, string.Empty);
-                if (i % BREAK_INTERVAL == 0) await Task.Yield(); // let editor breath
+                if (i % BreakInterval == 0) await Task.Yield(); // let editor breath
+                if (AssetStore.CancellationRequested) break;
 
                 AssetDetails details = await AssetStore.RetrieveAssetDetails(id, assets[i].ETag);
                 if (details == null) continue; // happens if unchanged through etag
@@ -497,7 +538,7 @@ namespace AssetInventory
             MetaProgress.Remove(progressId);
         }
 
-        public static int CountPurchasedAssets(List<AssetInfo> assets)
+        public static int CountPurchasedAssets(IEnumerable<AssetInfo> assets)
         {
             return assets.Count(a => a.AssetSource == Asset.Source.AssetStorePackage);
         }
@@ -575,6 +616,119 @@ namespace AssetInventory
             }
 
             return null;
+        }
+
+        public static void MoveDatabase(string targetFolder)
+        {
+            string targetDBFile = Path.Combine(targetFolder, Path.GetFileName(DBAdapter.GetDBPath()));
+            if (File.Exists(targetDBFile)) File.Delete(targetDBFile);
+            string oldStorageFolder = GetStorageFolder();
+            DBAdapter.Close();
+
+            bool success = false;
+            try
+            {
+                // for safety copy first, then delete old state after everything is done
+                EditorUtility.DisplayProgressBar("Moving Database", "Copying database to new location...", 0.2f);
+                File.Copy(DBAdapter.GetDBPath(), targetDBFile);
+                EditorUtility.ClearProgressBar();
+
+                EditorUtility.DisplayProgressBar("Moving Preview Images", "Copying preview images to new location...", 0.4f);
+                IOUtils.CopyDirectory(GetPreviewFolder(), GetPreviewFolder(targetFolder));
+                EditorUtility.ClearProgressBar();
+
+                // set new location
+                SwitchDatabase(targetFolder);
+                success = true;
+            }
+            catch
+            {
+                EditorUtility.DisplayDialog("Error Moving Data", "There were errors moving the existing database to a new location. Check the error log for details. Current database location remains unchanged.", "OK");
+            }
+
+            if (success)
+            {
+                EditorUtility.DisplayProgressBar("Freeing Up Space", "Removing backup files from old location...", 0.8f);
+                Directory.Delete(oldStorageFolder, true);
+                EditorUtility.ClearProgressBar();
+            }
+        }
+
+        public static void SwitchDatabase(string targetFolder)
+        {
+            DBAdapter.Close();
+            Config.customStorageLocation = targetFolder;
+            SaveConfig();
+        }
+
+        public static void ForgetAsset(int id)
+        {
+            DBAdapter.DB.Query<AssetFile>("delete from AssetFile where AssetId=?", id);
+            DBAdapter.DB.Query<Asset>("delete from Asset where Id=?", id);
+        }
+
+        public static async Task<string> CopyTo(AssetInfo assetInfo, string selectedPath, bool withDependencies = false, bool withScripts = false)
+        {
+            string result = null;
+            string sourcePath = await EnsureMaterializedAsset(assetInfo);
+            if (sourcePath != null)
+            {
+                string finalPath = selectedPath;
+
+                // put into subfolder if multiple files are affected
+                if (withDependencies)
+                {
+                    finalPath = Path.Combine(finalPath, Path.GetFileNameWithoutExtension(assetInfo.FileName));
+                    if (!Directory.Exists(finalPath)) Directory.CreateDirectory(finalPath);
+                }
+
+                string targetPath = Path.Combine(finalPath, Path.GetFileName(sourcePath));
+                DoCopyTo(sourcePath, targetPath);
+                result = targetPath;
+
+                if (withDependencies)
+                {
+                    List<AssetFile> deps = withScripts ? assetInfo.Dependencies : assetInfo.MediaDependencies;
+                    for (int i = 0; i < deps.Count; i++)
+                    {
+                        // check if already in target
+                        if (!string.IsNullOrEmpty(deps[i].Guid))
+                        {
+                            if (!string.IsNullOrWhiteSpace(AssetDatabase.GUIDToAssetPath(deps[i].Guid))) continue;
+                        }
+
+                        sourcePath = await EnsureMaterializedAsset(assetInfo.ToAsset(), deps[i]);
+                        targetPath = Path.Combine(finalPath, Path.GetFileName(deps[i].Path));
+                        DoCopyTo(sourcePath, targetPath);
+                    }
+                }
+
+                AssetDatabase.Refresh();
+                assetInfo.ProjectPath = AssetDatabase.GUIDToAssetPath(assetInfo.Guid);
+            }
+
+            return result;
+        }
+
+        private static void DoCopyTo(string sourcePath, string targetPath)
+        {
+            File.Copy(sourcePath, targetPath, true);
+
+            string sourceMetaPath = sourcePath + ".meta";
+            string targetMetaPath = targetPath + ".meta";
+            if (File.Exists(sourceMetaPath)) File.Copy(sourceMetaPath, targetMetaPath, true);
+        }
+
+        public static async Task PlayAudio(AssetInfo assetInfo)
+        {
+            string targetPath = await EnsureMaterializedAsset(assetInfo);
+
+            EditorAudioUtility.StopAllPreviewClips();
+            if (targetPath != null)
+            {
+                AudioClip clip = await AssetUtils.LoadAudioFromFile(targetPath);
+                if (clip != null) EditorAudioUtility.PlayPreviewClip(clip);
+            }
         }
     }
 }

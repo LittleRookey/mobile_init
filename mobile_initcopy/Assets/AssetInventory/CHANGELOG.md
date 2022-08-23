@@ -1,2 +1,36 @@
-## 1.0.0 (2022-07-11)
+## 1.1.0 (2022-08-08)
+    - Ability to move cache database to different location, use other existing database or create a new database
+    - Support global (default) and project-specific configurations
+    - Support sorting
+    - Filter by image dimensions or audio length
+    - Asset grouping by category
+    - Unify display of path slashes
+    - Don't immediately search while typing
+    - Option to reindex individual assets
+    - Allow direct import of package from asset list
+    - First preview version of Reporting feature listing all detected assets in a project
+    - Auto-upgrade database
+    - Improved asset view, grouping, details pane, UI alignment
+    - Add more supported file types for type clustering
+    - Add 2022.1 hint
+    - Officially support 2019.4
+    - Prepare for future bulk import of packages
+    - Show ratings for assets if available
+    - Show last updated date of assets
+    - Disable paging arrows when no further pages are available
+    - Customizable search view: Tile size, Tile titles, Auto-Ping on select
+    - Improved search field UX
+    - Switch to first result page after different search
+    - Show version in About
+    - Extent documentation with installation and configuration guide
+    - Calculate guessed display catagory during package import if asset store data was not finalized yet
+    - Fix audio preview not stopping
+    - Fix incorrect _ escaping in search when other conditions are used as well
+    - Fix audio preview causing duplicate extraction
+    - Fix sound files with # or + in their name not being able to be played
+    - Fix massive performance degradation with many files in the database
+    - Fix long break between asset imports
+    - Fix UI becoming very slow if search term was not found
+
+## 1.0.0 (2022-07-26)
     - Initial release

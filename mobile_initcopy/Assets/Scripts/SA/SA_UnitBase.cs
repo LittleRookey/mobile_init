@@ -96,6 +96,7 @@ public class SA_UnitBase : MonoBehaviour
     protected float patrolTime = 0;
     protected float turnOffTime = 2f;
 
+
     public enum UnitState
     {
         idle,
@@ -120,7 +121,8 @@ public class SA_UnitBase : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         circleColl = GetComponent<CircleCollider2D>();
         if (spriteParts == null)
-            spriteParts = _animAction.GetAllParts();
+            spriteParts = _animAction.GetAllParts().ToArray();
+        
         spriteMat = spriteParts[0].material;
     }
 
@@ -153,7 +155,7 @@ public class SA_UnitBase : MonoBehaviour
 
     protected void TurnOffCharacter(SA_UnitBase sa)
     {
-        Invoke("DeathEffect", 1f);
+        Invoke("DeathEffect", 1.5f);
         
         Invoke("TurnOff", turnOffTime);
     }
@@ -371,6 +373,8 @@ public class SA_UnitBase : MonoBehaviour
 
     protected void DoAttack()
     {
+        if (_target == null)
+            return;
         isAttacking = true;
         canMove = false;
         hitTargetID = _target.ID;
@@ -543,8 +547,6 @@ public class SA_UnitBase : MonoBehaviour
 
     protected IEnumerator HitEffect()
     {
-        if (spriteParts == null)
-            spriteParts = _animAction.GetAllParts();
         foreach (SpriteRenderer sp in spriteParts)
         {
             sp.material.SetFloat("_HitEffectBlend", 1f);

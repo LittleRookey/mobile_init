@@ -53,7 +53,7 @@ namespace AssetInventory
 
         public override string ToString()
         {
-            return $"Asset '{SafeName}' ({Location})";
+            return $"Asset '{GetDisplayName}' ({Location})";
         }
     }
 }

@@ -10,7 +10,9 @@ namespace AssetInventory
         private const string URL_USER_INFO = "https://api.unity.com/v1/users";
         private const string URL_ASSET_DETAILS = "https://packages-v2.unity.com/-/api/product";
         private const string URL_ASSET_DOWNLOAD = "https://packages-v2.unity.com/-/api/legacy-package-download-info";
-        private const int PAGE_SIZE = 100;
+        private const int PAGE_SIZE = 100; // more is not supported by Asset Store
+
+        public static bool CancellationRequested { get; set; }
 
         public static async Task<AssetPurchases> RetrievePurchases()
         {
@@ -32,6 +34,7 @@ namespace AssetInventory
                 {
                     AssetInventory.MainProgress = i + 1;
                     MetaProgress.Report(progressId, i + 1, pageCount + 1, string.Empty);
+                    if (CancellationRequested) break;
 
                     AssetPurchases pageResult = await AssetUtils.FetchAPIData<AssetPurchases>($"{URL_PURCHASES}?offset={i * PAGE_SIZE}&limit={PAGE_SIZE}", token);
                     result.results.AddRange(pageResult.results);

@@ -137,7 +137,7 @@ public class StatManager : MonoBehaviour
     public static readonly string ko_vitality = "내구력: ";
     public static readonly string ko_maxHP = "최대 체력: ";
     public static readonly string ko_mana = "마나: ";
-    public static readonly string ko_attack = "물리 공격력: ";
+    public static readonly string ko_attack = "공격력: ";
     public static readonly string ko_magicattack = "마법 공격력: ";
     public static readonly string ko_defense = "물리 방어력: ";
     public static readonly string ko_magicdefense = "마법 방어력: ";

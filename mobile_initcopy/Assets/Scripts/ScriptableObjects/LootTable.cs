@@ -19,30 +19,8 @@ public class LootTable : ScriptableObject
     }
 
     public string _lootID;
-    public string lootName => _lootName;
 
-    private string _lootName;
     [SerializeField] private ItemDrop[] _lootTable;
-    //List<Item> droppedItems;
-
-    //public List<Item> DropItems()
-    //{
-    //    droppedItems.Clear();
-    //    for (int i = 0; i < _lootTable.Length; i++)
-    //    {
-    //        if(ProbabilityCheck.GetThisChanceResult_Percentage(_lootTable[i].dropRate))
-    //        {
-    //            droppedItems[i] = _lootTable[i].item.CreateItem();
-    //        }
-    //    }
-    //    return droppedItems;
-    //}
-
-    public void Set(string tName, string id)
-    {
-        _lootName = tName;
-        _lootID = id;
-    } 
 
     public ItemDrop[] GetLootTableInfo()
     {

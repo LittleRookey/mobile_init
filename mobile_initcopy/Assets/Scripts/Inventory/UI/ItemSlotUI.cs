@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using DG.Tweening;
 
 namespace Litkey.InventorySystem
 {
@@ -44,6 +44,10 @@ namespace Litkey.InventorySystem
         [SerializeField] private float _highlightFadeDuration = 0.2f;
 
         [SerializeField] private Image _itemNameBG;
+        [SerializeField] private Image _progressBar;
+        [SerializeField] private TextMeshProUGUI _progressText;
+        [SerializeField] private Image _progressMagnifier;
+
         #endregion
         /***********************************************************************
         *                               Properties
@@ -112,6 +116,8 @@ namespace Litkey.InventorySystem
         /// <summary> 비활성화된 아이콘 색상 </summary>
         private static readonly Color InaccessibleIconColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 
+        private Vector3 mag_initPos;
+
         #endregion
         /***********************************************************************
         *                               Unity Events
@@ -121,6 +127,8 @@ namespace Litkey.InventorySystem
         {
             //InitComponents();
             //InitValues();
+            mag_initPos = _progressMagnifier.transform.localPosition;
+            UpdateProgress(0f);
         }
 
         #endregion
@@ -397,7 +405,42 @@ namespace Litkey.InventorySystem
 
         }
 
+        Vector3 firstMove = new Vector3(-45f, 45f, 0f);
+        Vector3 secondMove = new Vector3(0f, -90f, 0f);
+        Vector3 thirdMove = new Vector3(90f, 0f, 0f);
+        Vector3 fourthMove = new Vector3(0f, 90f, 0f);
+        Vector3 fifthMove = new Vector3(-45f, -45f, 0f);
 
+        public void StartProgress()
+        {
+            //_progressMagnifier.transform.localPosition = Vector3.zero;
+            UpdateProgress(0f);
+            _progressMagnifier.transform.localPosition = mag_initPos;
+            _progressBar.gameObject.SetActive(true);
+
+            //Sequence sq = DOTween.Sequence()
+            //    .Append(_progressMagnifier.transform.DOLocalMove(firstMove, 0.4f).SetEase(Ease.Linear).SetRelative(true))
+            //    .Append(_progressMagnifier.transform.DOLocalMove(secondMove, 0.4f).SetEase(Ease.Linear).SetRelative(true))
+            //    .Append(_progressMagnifier.transform.DOLocalMove(thirdMove, 0.4f).SetEase(Ease.Linear).SetRelative(true))
+            //    .Append(_progressMagnifier.transform.DOLocalMove(fourthMove, 0.4f).SetEase(Ease.Linear).SetRelative(true))
+            //    .Append(_progressMagnifier.transform.DOLocalMove(fifthMove, 0.4f).SetEase(Ease.Linear).SetRelative(true));
+            //.OnComplete(() => StopProgress());
+            //sq.Kill();
+            //sq.OnComplete(() => { sq.Kill(); });
+        }
+
+        public void StopProgress()
+        {
+            _progressBar.gameObject.SetActive(false);
+        }
+
+        string perc = "%";
+        // total 1 second to see 
+        public void UpdateProgress(float val)
+        {
+            _progressBar.fillAmount = val;
+            _progressText.text = (val*100).ToString("F0") + perc;
+        }
 
         public void DeselectSlot()
         {

@@ -9,9 +9,19 @@ namespace AssetInventory
         [PrimaryKey] public string Name { get; set; }
         public string Value { get; set; }
 
+        public AppProperty()
+        {
+        }
+
+        public AppProperty(string name, string value)
+        {
+            Name = name;
+            Value = value;
+        }
+
         public override string ToString()
         {
-            return $"DB Info ({Name})";
+            return $"App Property '{Name}' ({Value})";
         }
     }
 }
